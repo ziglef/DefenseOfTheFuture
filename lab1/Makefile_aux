@@ -1,0 +1,15 @@
+# This makefile CANNOT be used for compilation in Minix
+
+EMUL=EMUL
+
+lab1: lab1.o vt_info.o video_txt.o
+	gcc -Wall vt_info.o video_txt.o lab1.o -o lab1
+  
+lab1.o: lab1.c vt_info.h video_txt.h
+	gcc -D${EMUL} -c -Wall lab1.c
+
+vt_info.o: vt_info.c vt_info.h
+	gcc -D${EMUL} -c -Wall vt_info.c
+
+video_txt.o: video_txt.c vt_info.h video_txt.h
+	gcc -D${EMUL} -c -Wall video_txt.c

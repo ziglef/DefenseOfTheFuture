@@ -17,6 +17,13 @@ int main(int argc, char **argv) {
 
 	sef_startup();
 
+	// Testing Purposes
+	/*
+	vg_init(0x105);
+	sleep(5);
+	vg_exit();
+	*/
+	
 	if (argc == 1) {
 		print_usage(argv);
 		return 0;

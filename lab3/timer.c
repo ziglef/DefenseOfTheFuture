@@ -107,7 +107,7 @@ int timer_test_int(unsigned long time) {
 		return 1;
 	}
 
-	while(counter < 101){
+	while(counter < time){
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0){
 			printf("driver_receive failed with: %d\n", r);

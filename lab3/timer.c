@@ -100,13 +100,14 @@ int timer_test_int(unsigned long time) {
 	int ipc_status;
 	message msg;
 	int r;
+	int counter = 0;
 
 	if(timer_subscribe_int() < 0){
 		printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON TIMER 0\n");
 		return 1;
 	}
 
-	while(1){
+	while(counter < 101){
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0){
 			printf("driver_receive failed with: %d\n", r);
@@ -125,6 +126,7 @@ int timer_test_int(unsigned long time) {
 		} else {
 
 		}
+		counter++;
 	}
 
 	return 0;

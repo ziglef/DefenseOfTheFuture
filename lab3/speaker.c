@@ -1,5 +1,6 @@
 #include <minix/syslib.h>
 #include <minix/drivers.h>
+#include "i8254.h"
 
 int speaker_ctrl(unsigned char on) {
  if(on == 0){

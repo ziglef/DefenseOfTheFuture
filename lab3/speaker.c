@@ -15,15 +15,15 @@ int speaker_ctrl(unsigned char on) {
 
 int speaker_test(unsigned long freq, unsigned long time) {
 
- if(speaker_ctrl(1))
- {
-  printf("Speaker_ctrl Failed!\n");
-  return 1;
- }
-
  if(timer_set_square(2,freq))
  {
   printf("Timer_set_square Failed!\n");
+  return 1;
+ }
+
+ if(speaker_ctrl(1))
+ {
+  printf("Speaker_ctrl Failed!\n");
   return 1;
  }
 

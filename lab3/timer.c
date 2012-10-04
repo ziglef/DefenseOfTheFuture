@@ -2,17 +2,14 @@
 #include <minix/drivers.h>
 #include "i8254.h"
 
+#define TIMER_BIT_MASK 0x04
+
 typedef struct{
 	int bit;
-	int *address;
+	int counter;
 }Timer;
 
-typedef struct{
-	Timer timer;
-	int counter;
-}TimerInterrupter;
-
-TimerInterrupter timerInt;
+Timer timerInt = {2, 0};
 
 int timer_set_square(unsigned long timer, unsigned long freq) {
 
@@ -52,26 +49,25 @@ int timer_set_square(unsigned long timer, unsigned long freq) {
 
 int timer_subscribe_int(void ) {
 
-	if(sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, timerInt.timer.address) != OK){
+	if(sys_irqsetpolicy(TIMER0_IRQ, IRQ_REENABLE, &(timerInt.bit)) != OK){
 		printf("ERROR SETTING POLICY!\n");
 		return -1;
 	}
-	if(sys_irqenable(timerInt.timer.address) != OK){
+	if(sys_irqenable(&(timerInt.bit)) != OK){
 		printf("ERROR ENABLING SUBSCRIPTION!\n");
 		return -1;
 	}
 
 	timerInt.counter = 0;
-	return timerInt.timer.bit;
+	return timerInt.bit;
 }
 
 int timer_unsubscribe_int() {
 
-	if(sys_irqrmpolicy(timerInt.timer.address) != OK){
-		printf("ERROR REMOVING POLICY!\n");
+	if(sys_irqrmpolicy(&(timerInt.bit)) != OK){
 		return 1;
 	}
-	if(sys_irqdisable(timerInt.timer.address) != OK){
+	if(sys_irqdisable(&(timerInt.bit)) != OK){
 		printf("ERROR DISABLING SUBSCRIPTION!\n");
 		return 1;
 	}
@@ -80,7 +76,7 @@ int timer_unsubscribe_int() {
 }
 
 void timer_int_handler() {
-	timerInt.counter++;
+	printf("COUNTER IS AT %d!\n", timerInt.counter/60);
 }
 
 int timer_test_square(unsigned long freq) {
@@ -95,19 +91,16 @@ int timer_test_square(unsigned long freq) {
 }
 
 int timer_test_int(unsigned long time) {
-
-
 	int ipc_status;
 	message msg;
 	int r;
-	int counter = 0;
 
 	if(timer_subscribe_int() < 0){
 		printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON TIMER 0\n");
 		return 1;
 	}
 
-	while(counter < time){
+	while(timerInt.counter <= (time*60)){
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0){
 			printf("driver_receive failed with: %d\n", r);
@@ -116,8 +109,8 @@ int timer_test_int(unsigned long time) {
 		if(is_ipc_notify(ipc_status)){
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					if(msg.NOTIFY_ARG & timerInt.timer.bit){
-						printf("COUNTER IS AT %d!\n", timerInt.counter);
+					if((msg.NOTIFY_ARG & TIMER_BIT_MASK) && (timerInt.counter % 60 == 0)){
+						timer_int_handler();
 					}
 					break;
 				default:
@@ -126,7 +119,7 @@ int timer_test_int(unsigned long time) {
 		} else {
 
 		}
-		counter++;
+		timerInt.counter++;
 	}
 
 	return 0;

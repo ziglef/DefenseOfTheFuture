@@ -35,38 +35,44 @@ static int proc_args(int argc, char *argv[]) {
 
 	unsigned long freq, time, returnVal;
 
-	/* check the function to test: if the first characters match, accept it */
 	if (strncmp(argv[1], "square", strlen("square")) == 0) {
 		if (argc != 3) {
 			printf("timer: wrong no of arguments for test of timer_test_square() \n");
 			return 1;
 		}
+
 		if ((freq = parse_ulong(argv[2], 16)) == ULONG_MAX)
 			return 1;
+
 		timer_test_square(freq);
 		printf("\n");
 		return returnVal;
+
 	} else if (strncmp(argv[1], "int", strlen("int")) == 0) {
 		if (argc != 3) {
 			printf(
 					"timer: wrong no of arguments for test of timer_test_int() \n");
 			return 1;
 		}
+
 		if ((time = parse_ulong(argv[2], 16)) == ULONG_MAX)
 			return 1;
+
 		timer_test_int(time);
-		printf("\n");
 		return returnVal;
+
 	} else if (strncmp(argv[1], "speaker", strlen("speaker")) == 0) {
 		if (argc != 4) {
 			printf(
 					"timer: wrong no of arguments for test of test_speaker() \n");
 			return 1;
 		}
+
 		if ((freq = parse_ulong(argv[2], 16)) == ULONG_MAX)
 			return 1;
 		if ((time = parse_ulong(argv[3], 16)) == ULONG_MAX)
 			return 1;
+
 		speaker_test(freq, time);
 		printf("\n");
 		return returnVal;

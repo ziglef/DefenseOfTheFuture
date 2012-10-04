@@ -41,7 +41,7 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 		}
 
-		if ((freq = parse_ulong(argv[2], 16)) == ULONG_MAX)
+		if ((freq = parse_ulong(argv[2], 10)) == ULONG_MAX)
 			return 1;
 
 		timer_test_square(freq);
@@ -55,7 +55,7 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 		}
 
-		if ((time = parse_ulong(argv[2], 16)) == ULONG_MAX)
+		if ((time = parse_ulong(argv[2], 10)) == ULONG_MAX)
 			return 1;
 
 		timer_test_int(time);
@@ -68,9 +68,9 @@ static int proc_args(int argc, char *argv[]) {
 			return 1;
 		}
 
-		if ((freq = parse_ulong(argv[2], 16)) == ULONG_MAX)
+		if ((freq = parse_ulong(argv[2], 10)) == ULONG_MAX)
 			return 1;
-		if ((time = parse_ulong(argv[3], 16)) == ULONG_MAX)
+		if ((time = parse_ulong(argv[3], 10)) == ULONG_MAX)
 			return 1;
 
 		speaker_test(freq, time);

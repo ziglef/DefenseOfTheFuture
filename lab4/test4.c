@@ -1,5 +1,6 @@
 #include <minix/syslib.h>
 #include <minix/drivers.h>
+#include "i8042.h"
 
 int kbc_subscribe_exclusive(void) {
 

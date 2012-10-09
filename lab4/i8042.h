@@ -1,0 +1,1 @@
+#define KBC_IRQ 0x01

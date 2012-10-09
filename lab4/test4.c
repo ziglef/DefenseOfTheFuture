@@ -8,6 +8,7 @@
 
 #define ESC_BREAKCODE 		0x81
 #define NO_OF_TRIES			10
+#define BREAKCODE_MASK		0x80
 
 KeyBoardController KBC = {KBC_BIT, 0, 0};
 unsigned char scancode;
@@ -64,7 +65,7 @@ int kbc_read(){
 					return -1;
 				} else {
 					if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0)
-						return data;
+						return 0;
 					else
 						return -1;
 				}
@@ -117,7 +118,7 @@ int test_scan(void) {
 		if(is_ipc_notify(ipc_status)){
 			if((msg.NOTIFY_ARG & KBC.hook_id)) kbc_handler(_ENDPOINT_P(msg.m_source));
 		}
-	}while(scancode != ESC_BREAKCODE)
+	}while(scancode != ESC_BREAKCODE);
 
 	if(kbc_unsubscribe())
 			return 1;

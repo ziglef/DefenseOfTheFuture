@@ -1,8 +1,7 @@
 #include <minix/drivers.h>
 
-#include "timer.h"
-#include "speaker.h"
-#include "i8254.h"
+#include "test4.h"
+#include "i8042.h"
 
 static int proc_args(int argc, char *argv[]);
 static unsigned long parse_ulong(char *str, int base);
@@ -26,7 +25,7 @@ static void print_usage(char *argv[]) {
 	printf(
 			"Usage: one of the following:\n"
 					"\t service run %s -args \"test_scan\" \n"
-					"\t service run %s -args \"test_leds <size> <leds>\" \n"
+					"\t service run %s -args \"test_leds <size> <leds>\" \n",
 			argv[0], argv[0]);
 }
 

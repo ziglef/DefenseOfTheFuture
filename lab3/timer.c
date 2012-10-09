@@ -122,5 +122,8 @@ int timer_test_int(unsigned long time) {
 		timerInt.counter++;
 	}
 
-	return 0;
+	if(timer_unsubscribe_int())
+		return 1;
+	else
+		return 0;
 }

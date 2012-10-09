@@ -1,10 +1,10 @@
+// System Libraries
 #include <minix/syslib.h>
 #include <minix/drivers.h>
-#include "i8042.h"
+#include <minix/sysutil.h>
 
-typedef struct{
-	int hook_id;
-} KeyBoardController;
+// User Libraries
+#include "i8042.h"
 
 KeyBoardController KBC = {KBC_BIT};
 
@@ -42,6 +42,7 @@ int test_scan(void) {
 	}
 
 	/* CODE HERE */
+	// When implemented the code should wait 20ms for each command. For that purpose use: tickdelay(micros_to_ticks(DELAY_US));
 
 	if(kbc_unsubscribe())
 			return 1;
@@ -50,5 +51,5 @@ int test_scan(void) {
 }
 
 int test_leds(unsigned short n, unsigned short *leds) {
-    /* To be completed */
+	/* CODE HERE */
 }

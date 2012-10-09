@@ -7,10 +7,11 @@
 #include "i8042.h"
 
 KeyBoardController KBC = {KBC_BIT};
+unsigned char scancode;
 
 int kbc_subscribe_exclusive(void) {
 
-	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE & IRQ_EXCLUSIVE), &(KBC.hook_id)) != OK){
+	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE | IRQ_EXCLUSIVE), &(KBC.hook_id)) != OK){
 		printf("ERROR SETTING POLICY!\n");
 		return -1;
 	}
@@ -35,6 +36,15 @@ int kbc_unsubscribe() {
 	return 0;
 }
 
+void kbc_handler(unsigned char code) {
+	scancode = code;
+
+	if(scancode & BREAKCODE_MASK)
+		printf("Breakcode: 0x%X\n", code);
+	else
+		printf("Makecode: 0x%X\n", code);
+}
+
 int test_scan(void) {
 	if(kbc_subscribe_exclusive() < 0){
 			printf("ERROR SUBSCRIBING TO KBC!\n");
@@ -43,6 +53,32 @@ int test_scan(void) {
 
 	/* CODE HERE */
 	// When implemented the code should wait 20ms for each command. For that purpose use: tickdelay(micros_to_ticks(DELAY_US));
+	/* Code @lab3/timer.c for reference
+	  	while(timerInt.counter <= (time*60)){
+		r = driver_receive(ANY, &msg, &ipc_status);
+		if( r != 0){
+			printf("driver_receive failed with: %d\n", r);
+			continue;
+		}
+		if(is_ipc_notify(ipc_status)){
+			switch(_ENDPOINT_P(msg.m_source)){
+				case HARDWARE:
+					if((msg.NOTIFY_ARG & TIMER_BIT_MASK) && (timerInt.counter % 60 == 0)){
+						timer_int_handler();
+					}
+					break;
+				default:
+					break;
+			}
+		} else {
+
+		}
+		timerInt.counter++;
+	}
+	 */
+
+
+
 
 	if(kbc_unsubscribe())
 			return 1;

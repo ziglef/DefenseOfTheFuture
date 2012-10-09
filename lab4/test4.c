@@ -98,47 +98,26 @@ int kbc_send_command(unsigned char cmd){
 
 
 int test_scan(void) {
+	int ipc_status;
+	message msg;
+	int r;
+
 	if(kbc_subscribe_exclusive() < 0){
 			printf("ERROR SUBSCRIBING TO KBC!\n");
 			return 1;
 	}
 
-	/* CODE HERE */
-	// When implemented the code should wait 20ms for each command. For that purpose use: tickdelay(micros_to_ticks(DELAY_US));
-	/* Code @lab3/timer.c for reference
-	  	while(timerInt.counter <= (time*60)){
+	do{
 		r = driver_receive(ANY, &msg, &ipc_status);
-		if( r != 0){
-			printf("driver_receive failed with: %d\n", r);
+		if( r != 0 ){
+			printf("driver_receive failed with %d\n", r);
 			continue;
 		}
+
 		if(is_ipc_notify(ipc_status)){
-			switch(_ENDPOINT_P(msg.m_source)){
-				case HARDWARE:
-					if((msg.NOTIFY_ARG & TIMER_BIT_MASK) && (timerInt.counter % 60 == 0)){
-						timer_int_handler();
-					}
-					break;
-				default:
-					break;
-			}
-		} else {
-
+			if((msg.NOTIFY_ARG & KBC.hook_id)) kbc_handler(_ENDPOINT_P(msg.m_source));
 		}
-		timerInt.counter++;
-	}
-	 */
-
-	do{
-
-
-
-
-
-
 	}while(scancode != ESC_BREAKCODE)
-
-
 
 	if(kbc_unsubscribe())
 			return 1;

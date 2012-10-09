@@ -1,14 +1,19 @@
-// Constants for KBC implementation
+/* Notes on the i8042: All commands must
+ * be called using IN/OUT assembly instructions
+ * or the library functions
+ * Sys_inb()/sys_outb() of the kernel API */
 
 typedef struct{
 	int hook_id;
+	unsigned char status;
 } KeyBoardController;
 
 // KBC Constants
 #define KBC_IRQ 				1			// The IRQ line going to be used by the KBC
 #define KBC_BIT 				1			// The hook_id for the KBC
 #define KBC_IO_BUF				0x60		// Port for IN_BUF
-#define KBC_STATUS				0x64		// Port for the STAT_REG and for issuing KBC commands (here arguments should be passed in the IN_BUF adress)
+#define KBC_CMD					0x64		// Port used for issuing commands to the KBC (here arguments should be passed in the KBC_IO_BUF address)
+#define KBC_STAT				0x64		// Port for the STAT_REG
 /* KBC STAT_REG DATA:
  * BIT 0: OBF If set, the OUT_BUF is full, thus data is available for reading.
  * BIT 1: IBF If set, the IN_BUF is full, thus commands and arguments shouldn't be written.
@@ -19,6 +24,14 @@ typedef struct{
  * BIT 6: Timeout If set means Timeout error, invalid data.
  * BIT 7: Parity If set means Parity error - invalid data.
  */
+#define KBC_STAT_OBF 			0
+#define KBC_STAT_IBF 			1
+#define KBC_STAT_SYS			2
+#define KBC_STAT_A2				3
+#define KBC_STAT_INH			4
+#define KBC_STAT_AUX			5
+#define KBC_STAT_TIMEOUT		6
+#define KBC_STAT_PARITY			7
 
 // KBC Commands - Must be written to KBC_STATUS port, arguments if any are passed in KBC_IO_BUF by the IN_BUF, return values are passed in KBC_IO_BUF by the OUT_BUF
 #define	KBC_READ				0x20		// Reads command byte, returns command byte
@@ -45,6 +58,7 @@ typedef struct{
 #define	KBD_RATE_DELAY			0xF3		// Changes KBD repetition rate/delay (bits 0-4 for rate and bits 5-6 for delay)
 #define KBD_LEDS				0xED		// Turns on/off the KBD LEDs uses bits 0-2
 // NOTE: The commands that have arguments must also write them to the IN_BUF and will also be acknowledged.
+// Always use KBC_IO_BUF for KBD commands
 
 
 // Time constant

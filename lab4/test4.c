@@ -6,7 +6,10 @@
 // User Libraries
 #include "i8042.h"
 
-KeyBoardController KBC = {KBC_BIT};
+#define ESC_BREAKCODE 		0x81
+#define NO_OF_TRIES			10
+
+KeyBoardController KBC = {KBC_BIT, 0};
 unsigned char scancode;
 
 int kbc_subscribe_exclusive(void) {
@@ -45,6 +48,29 @@ void kbc_handler(unsigned char code) {
 		printf("Makecode: 0x%X\n", code);
 }
 
+int kbc_send_command(unsigned char cmd){
+	int counter = 0;
+
+	while(counter < NO_OF_TRIES){
+		if(sysinb(KBC_STAT, &(KBC.status)) != OK){
+			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
+			return 1;
+		}
+
+		tickdelay(micro_to_ticks(DELAY_US)); 		// Wait the appropriate time
+
+		if( (KBC.status & KBC_STAT_TIMEOUT) == 0){
+			if( (KBC.status & KBC_STAT_IBF) == 0){ 	// If Input Buffer not full...
+				sys_outb(KBC_CMD, cmd); 			// Issue a non argument command
+				return 0;
+			}
+		}
+		tickdelay(micro_to_ticks(DELAY_US)); 		// Wait the appropriate time
+		counter++;
+	}
+}
+
+
 int test_scan(void) {
 	if(kbc_subscribe_exclusive() < 0){
 			printf("ERROR SUBSCRIBING TO KBC!\n");
@@ -77,6 +103,14 @@ int test_scan(void) {
 	}
 	 */
 
+	do{
+
+
+
+
+
+
+	}while(scancode != ESC_BREAKCODE)
 
 
 

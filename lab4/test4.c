@@ -48,7 +48,7 @@ void kbc_handler(unsigned char code) {
 		printf("Makecode: 0x%X\n", code);
 }
 
-int kbc_send_command(unsigned char cmd){
+int kbc_read(unsigned char *data){
 	int counter = 0;
 
 	while(counter < NO_OF_TRIES){
@@ -57,7 +57,33 @@ int kbc_send_command(unsigned char cmd){
 			return 1;
 		}
 
-		tickdelay(micro_to_ticks(DELAY_US)); 		// Wait the appropriate time
+		if( (KBC.status & KBC_STAT_TIMEOUT) == 0){
+			if( (KBC.status & KBC_STAT_OBF)){ 										// If Output Buffer is full...
+				if(sys_inb(KBC_IO_BUF, data) != OK){								// Read the data
+					printf("ERROR READING KBC_IO_BUF!\n");
+					return -1;
+				} else {
+					if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0)
+						return data;
+					else
+						return -1;
+				}
+			}
+		}
+		tickdelay(micro_to_ticks(DELAY_US)); 										// Wait the appropriate time
+		counter++;
+	}
+}
+
+
+int kbc_send_command(unsigned char cmd){
+	int counter = 0;
+
+	while(counter < NO_OF_TRIES){
+		if(sysinb(KBC_STAT, &(KBC.status)) != OK){
+			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
+			return 1;
+		}
 
 		if( (KBC.status & KBC_STAT_TIMEOUT) == 0){
 			if( (KBC.status & KBC_STAT_IBF) == 0){ 	// If Input Buffer not full...

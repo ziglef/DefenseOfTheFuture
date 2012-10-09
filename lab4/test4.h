@@ -4,3 +4,4 @@ int kbc_subscribe_exclusive(void);
 int kbc_unsubscribe();
 void kbc_handler(unsigned char scancode);
 int kbc_send_command(unsigned char cmd);
+int kbc_read(unsigned char *data);

@@ -11,7 +11,7 @@
 #define BREAKCODE_MASK		0x80
 
 KeyBoardController KBC = {KBC_BIT, 0, 0};
-unsigned char scancode;
+unsigned char scancode = 0;
 
 int kbc_subscribe_exclusive(void) {
 
@@ -53,7 +53,7 @@ int kbc_read(){
 	int counter = 0;
 
 	while(counter < NO_OF_TRIES){
-		if(sysinb(KBC_STAT, &(KBC.status)) != OK){
+		if(sys_inb(KBC_STAT, &(KBC.status)) != OK){
 			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
 			return 1;
 		}
@@ -71,7 +71,7 @@ int kbc_read(){
 				}
 			}
 		}
-		tickdelay(micro_to_ticks(DELAY_US)); 										// Wait the appropriate time
+		tickdelay(micros_to_ticks(DELAY_US)); 										// Wait the appropriate time
 		counter++;
 	}
 }
@@ -81,7 +81,7 @@ int kbc_send_command(unsigned char cmd){
 	int counter = 0;
 
 	while(counter < NO_OF_TRIES){
-		if(sysinb(KBC_STAT, &(KBC.status)) != OK){
+		if(sys_inb(KBC_STAT, &(KBC.status)) != OK){
 			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
 			return 1;
 		}
@@ -92,7 +92,7 @@ int kbc_send_command(unsigned char cmd){
 				return 0;
 			}
 		}
-		tickdelay(micro_to_ticks(DELAY_US)); 		// Wait the appropriate time
+		tickdelay(micros_to_ticks(DELAY_US)); 		// Wait the appropriate time
 		counter++;
 	}
 }

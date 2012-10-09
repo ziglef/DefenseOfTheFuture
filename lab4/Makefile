@@ -8,8 +8,8 @@ SRCS=	test4.c lab4.c
 
 CCFLAGS= -Wall
 
-DPADD+=	${LIBDRIVER} ${LIBSYS}
-LDADD+=	-ldriver -lsys -lm
+DPADD+=	${LIBDRIVER} ${LIBSYS} ${UTILSYS}
+LDADD+=	-ldriver -lsys -lm -lutil
 
 LDFLAGS+= -L.
 

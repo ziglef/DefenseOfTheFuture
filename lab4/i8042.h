@@ -6,6 +6,7 @@
 typedef struct{
 	int hook_id;
 	unsigned char status;
+	unsigned char data;
 } KeyBoardController;
 
 // KBC Constants

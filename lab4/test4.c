@@ -9,7 +9,7 @@
 #define ESC_BREAKCODE 		0x81
 #define NO_OF_TRIES			10
 
-KeyBoardController KBC = {KBC_BIT, 0};
+KeyBoardController KBC = {KBC_BIT, 0, 0};
 unsigned char scancode;
 
 int kbc_subscribe_exclusive(void) {
@@ -48,7 +48,7 @@ void kbc_handler(unsigned char code) {
 		printf("Makecode: 0x%X\n", code);
 }
 
-int kbc_read(unsigned char *data){
+int kbc_read(){
 	int counter = 0;
 
 	while(counter < NO_OF_TRIES){
@@ -59,7 +59,7 @@ int kbc_read(unsigned char *data){
 
 		if( (KBC.status & KBC_STAT_TIMEOUT) == 0){
 			if( (KBC.status & KBC_STAT_OBF)){ 										// If Output Buffer is full...
-				if(sys_inb(KBC_IO_BUF, data) != OK){								// Read the data
+				if(sys_inb(KBC_IO_BUF, &(KBC.data)) != OK){							// Read the data
 					printf("ERROR READING KBC_IO_BUF!\n");
 					return -1;
 				} else {

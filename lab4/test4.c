@@ -12,11 +12,7 @@ KeyBoardController KBC = {0, 0, 0};
 unsigned char scancode = 0;
 
 int kbc_subscribe_exclusive(void) {
-/*
-	int *HOOK_ID;
-	HOOK_ID = (int*)malloc(sizeof(int));
-	*HOOK_ID = 0;
-*/
+
 	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE|IRQ_EXCLUSIVE), &(KBC.hook_id)) != OK){
 		printf("ERROR SETTING POLICY!\n");
 		return -1;
@@ -26,7 +22,6 @@ int kbc_subscribe_exclusive(void) {
 		return -1;
 	}
 
-	//KBC.hook_id = *HOOK_ID;
 	return 0;
 }
 

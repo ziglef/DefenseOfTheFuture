@@ -6,11 +6,6 @@
 // User Libraries
 #include "i8042.h"
 
-#define ESC_BREAKCODE 		0x81
-#define NO_OF_TRIES			500
-#define BREAKCODE_MASK		0x80
-#define KBC_BIT_MASK		0x02
-
 KeyBoardController KBC = {KBC_BIT, 0, 0};
 unsigned char scancode = 0;
 
@@ -56,18 +51,22 @@ int kbc_read(){
 	while(counter < NO_OF_TRIES){
 		if(sys_inb(KBC_STAT, &(KBC.status)) != OK){
 			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
-			return 1;
+			return -1;
 		}
 
 		if( (KBC.status & KBC_STAT_OBF)){ 										// If Output Buffer is full...
-			if(sys_inb(KBC_IO_BUF, &(KBC.data)) != OK){							// Read the data
-				printf("ERROR READING KBC_IO_BUF!\n");
+			if(sys_inb(KBC_O_BUF, &(KBC.data)) != OK){							// Read the data
+				printf("ERROR READING KBC_O_BUF!\n");
 				return -1;
 			} else {
-				if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0)
+				if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0){
+					printf("GOT DATA!\n");
 					return KBC.data;
-				else
+				}
+				else{
+					printf("PARITY OR TIMEOUT ERROR!\n");
 					return -1;
+				}
 			}
 		}
 		tickdelay(micros_to_ticks(DELAY_US)); 										// Wait the appropriate time
@@ -115,8 +114,13 @@ int test_scan(void) {
 		}
 		printf("I'm here\n");
 		if(is_ipc_notify(ipc_status)){
-			printf("i may even get here\n");
-			if((msg.NOTIFY_ARG & KBC_BIT_MASK)){ printf("or who knows, HERE!\n"); kbc_read(); kbc_handler(); printf("HALLO");}
+			switch (_ENDPOINT_P(msg.m_source))
+			{
+			case HARDWARE: /* hardware interrupt notification */
+				printf("i may even get here\n");
+				if((msg.NOTIFY_ARG & KBC_BIT_MASK)){ printf("or who knows, HERE!\n"); kbc_read(); kbc_handler(); printf("HALLO"); break;}
+			default: break;
+			}
 		}
 	}
 	printf("but not here\n");
@@ -130,7 +134,6 @@ int test_leds(unsigned short n, unsigned short *leds) {
 	int i;
 	unsigned long var=1;
 	for(i=0; i<n; i++){
-		kbc_send_command(KBD_LEDS);
-		sys_inb(KBC_IO_BUF, &var);
+
 	}
 }

@@ -9,10 +9,16 @@ typedef struct{
 	unsigned long data;
 } KeyBoardController;
 
+#define ESC_BREAKCODE 			0x81
+#define NO_OF_TRIES				25
+#define BREAKCODE_MASK			0x80
+#define KBC_BIT_MASK			0x02
+
 // KBC Constants
-#define KBC_IRQ 				1			// The IRQ line going to be used by the KBC
+#define KBC_IRQ 				0x0			// The IRQ line going to be used by the KBC
 #define KBC_BIT 				1			// The hook_id for the KBC
-#define KBC_IO_BUF				0x60		// Port for IN_BUF
+#define KBC_O_BUF				0x60		// Port for OUT_BUF
+#define KBC_I_BUF				0x64		// Port for the IN_BUF
 #define KBC_CMD					0x64		// Port used for issuing commands to the KBC (here arguments should be passed in the KBC_IO_BUF address)
 #define KBC_STAT				0x64		// Port for the STAT_REG
 /* KBC STAT_REG DATA:
@@ -25,14 +31,15 @@ typedef struct{
  * BIT 6: Timeout If set means Timeout error, invalid data.
  * BIT 7: Parity If set means Parity error - invalid data.
  */
-#define KBC_STAT_OBF 			0
-#define KBC_STAT_IBF 			1
-#define KBC_STAT_SYS			2
-#define KBC_STAT_A2				3
-#define KBC_STAT_INH			4
-#define KBC_STAT_AUX			5
-#define KBC_STAT_TIMEOUT		6
-#define KBC_STAT_PARITY			7
+#define BIT(n) (0x01<<(n))
+#define KBC_STAT_OBF 			BIT(0)
+#define KBC_STAT_IBF 			BIT(1)
+#define KBC_STAT_SYS			BIT(2)
+#define KBC_STAT_A2				BIT(3)
+#define KBC_STAT_INH			BIT(4)
+#define KBC_STAT_AUX			BIT(5)
+#define KBC_STAT_TIMEOUT		BIT(6)
+#define KBC_STAT_PARITY			BIT(7)
 
 // KBC Commands - Must be written to KBC_STATUS port, arguments if any are passed in KBC_IO_BUF by the IN_BUF, return values are passed in KBC_IO_BUF by the OUT_BUF
 #define	KBC_READ				0x20		// Reads command byte, returns command byte

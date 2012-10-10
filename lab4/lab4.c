@@ -32,6 +32,8 @@ static void print_usage(char *argv[]) {
 static int proc_args(int argc, char *argv[]) {
 
 	unsigned long freq, time, returnVal;
+	unsigned short n;
+	unsigned short *leds;
 
 	if (strncmp(argv[1], "test_scan", strlen("test_scan")) == 0) {
 		if (argc != 2) {
@@ -44,15 +46,26 @@ static int proc_args(int argc, char *argv[]) {
 		return returnVal;
 
 	} else if (strncmp(argv[1], "test_leds", strlen("test_leds")) == 0) {
-		if (argc != 4) {
-			printf(
-					"keyboard: wrong no of arguments for test of test_leds() \n");
-			return 1;
-		}
+        if (argc != 4) {
+                printf("test_leds: wrong n¼ of arguments for test of test_leds() \n");
+                return 1;
+        }
 
-		/* NEEDS IMPLEMENTATION */
-		test_leds(1,0);
-		return returnVal;
+        if ((n = parse_ulong(argv[3], 10)) == ULONG_MAX)
+                return 1;
+
+        unsigned short vec[n];
+        unsigned int i;
+
+       for(i=0; i<n;i++)
+       {
+    	   if ((vec[i] = parse_ulong(argv[4], 10)) == ULONG_MAX)
+    		   return 1;
+       }
+
+        test_leds(n, leds);
+        printf("\n");
+        return returnVal;
 
 	} else {
 		printf("keyboard: non valid function \"%s\" to test\n", argv[1]);

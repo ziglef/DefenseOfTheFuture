@@ -81,7 +81,6 @@ int kbc_read(){
 	return -1;
 }
 
-
 int kbc_send_command(unsigned long port, unsigned char cmd){
 	int counter = 0;
 
@@ -101,7 +100,6 @@ int kbc_send_command(unsigned long port, unsigned char cmd){
 	}
 	return -1;
 }
-
 
 int test_scan(void) {
 	int ipc_status;
@@ -140,9 +138,70 @@ int test_scan(void) {
 }
 
 int test_leds(unsigned short n, unsigned short *leds) {
-	int i;
-	unsigned long var=1;
-	for(i=0; i<n; i++){
 
+	int ipc_status;
+	message msg;
+	int r, i, j;
+	int ScrollLock = 0;
+	int NumLock = 0;
+	int CapsLock = 0;
+	unsigned long LEDS;
+
+	for(i=0; i<n; i++){
+		kbc_send_command(KBD_PORT, KBD_LEDS);
+		sys_inb(KBD_PORT, &(KBC.data));
+
+		if(KBC.data == CKBD_ERROR){
+			printf("ERROR IN THE SEQUENCE\n");
+			i = 0;
+		} else if(KBC.data == CKBD_RESEND) {
+			printf("ERROR IN THE LAST LED VALUE\n");
+			i--;
+		} else {
+			switch(leds[i]){
+				case 0:
+					if(ScrollLock == 0){
+						ScrollLock = 1;
+						printf("SCROLL LOCK ON!\n");
+					} else {
+						ScrollLock = 0;
+						printf("SCROLL LOCK OFF!\n");
+					}
+					break;
+				case 1:
+					if(NumLock == 0){
+						NumLock = 1;
+						printf("NUM LOCK ON!\n");
+					} else {
+						NumLock = 0;
+						printf("NUM LOCK OFF!\n");
+					}
+					break;
+				case 2:
+					if(CapsLock == 0){
+						CapsLock = 1;
+						printf("CAPS LOCK ON!\n");
+					} else {
+						CapsLock = 0;
+						printf("CAPS LOCK OFF!\n");
+					}
+					break;
+				default: printf("ERROR IN POSITION %d VALUE OUT OF BOUNDS!\n",i); break;
+			}
+
+			LEDS = ScrollLock | NumLock | CapsLock;
+			kbc_send_command(KBD_PORT, LEDS);
+			sys_inb(KBD_PORT, &(KBC.data));
+
+			if(KBC.data == CKBD_ERROR){
+				printf("ERROR IN THE SEQUENCE\n");
+				i = 0;
+			} else if(KBC.data == CKBD_RESEND) {
+				printf("ERROR IN THE LAST LED VALUE\n");
+				i--;
+			} else {
+				timer_test_int(1);
+			}
+		}
 	}
 }

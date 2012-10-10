@@ -58,6 +58,9 @@ typedef struct{
 #define CKBD_RESEND				0xFE		// C@KBD asking for a resend of the data
 #define CKBD_ERROR				0xFC		// C@KBD reporting an error
 
+// Keyboard Port
+#define KBD_PORT				0x60		// Keyboard Port used for issuing commands and receiving aknowlegement
+
 // Keyboard Commands
 #define KBD_RESET				0xFF		// Resets the KBD
 #define KBD_DEFAULT_ENABLE		0xF6		// Sets default values on the KBD and enables it

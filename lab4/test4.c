@@ -11,7 +11,7 @@ unsigned char scancode = 0;
 
 int kbc_subscribe_exclusive(void) {
 
-	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE | IRQ_EXCLUSIVE), &(KBC.hook_id)) != OK){
+	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE|IRQ_EXCLUSIVE), &(KBC.hook_id)) != OK){
 		printf("ERROR SETTING POLICY!\n");
 		return -1;
 	}
@@ -20,12 +20,13 @@ int kbc_subscribe_exclusive(void) {
 		return -1;
 	}
 
-	return KBC.hook_id;
+	return 0;
 }
 
 int kbc_unsubscribe() {
 
 	if(sys_irqrmpolicy(&(KBC.hook_id)) != OK){
+		printf("ERROR DISABLING POLICY\n");
 		return 1;
 	}
 	if(sys_irqdisable(&(KBC.hook_id)) != OK){
@@ -37,6 +38,8 @@ int kbc_unsubscribe() {
 }
 
 void kbc_handler() {
+	kbc_read();
+
 	scancode = KBC.data;
 
 	if(scancode & BREAKCODE_MASK)
@@ -61,7 +64,7 @@ int kbc_read(){
 			} else {
 				if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0){
 					printf("GOT DATA!\n");
-					return KBC.data;
+					return 0;
 				}
 				else{
 					printf("PARITY OR TIMEOUT ERROR!\n");
@@ -118,7 +121,7 @@ int test_scan(void) {
 			{
 			case HARDWARE: /* hardware interrupt notification */
 				printf("i may even get here\n");
-				if((msg.NOTIFY_ARG & KBC_BIT_MASK)){ printf("or who knows, HERE!\n"); kbc_read(); kbc_handler(); printf("HALLO"); break;}
+				if((msg.NOTIFY_ARG & KBC_BIT_MASK)){ printf("or who knows, HERE!\n"); kbc_handler(); printf("HALLO"); break;}
 			default: break;
 			}
 		}

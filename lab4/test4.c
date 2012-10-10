@@ -7,7 +7,7 @@
 #include "i8042.h"
 
 #define ESC_BREAKCODE 		0x81
-#define NO_OF_TRIES			10
+#define NO_OF_TRIES			500
 #define BREAKCODE_MASK		0x80
 #define KBC_BIT_MASK		0x02
 
@@ -59,19 +59,19 @@ int kbc_read(){
 			return 1;
 		}
 
-		if( (KBC.status & KBC_STAT_TIMEOUT) == 0){
+		//if( (KBC.status & KBC_STAT_TIMEOUT) == 0){
 			if( (KBC.status & KBC_STAT_OBF)){ 										// If Output Buffer is full...
 				if(sys_inb(KBC_IO_BUF, &(KBC.data)) != OK){							// Read the data
 					printf("ERROR READING KBC_IO_BUF!\n");
 					return -1;
 				} else {
 					if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0)
-						return 0;
+						return KBC.data;
 					else
 						return -1;
 				}
 			}
-		}
+		//}
 		tickdelay(micros_to_ticks(DELAY_US)); 										// Wait the appropriate time
 		counter++;
 	}
@@ -109,7 +109,7 @@ int test_scan(void) {
 			return 1;
 	}
 
-	do{
+	while(scancode != ESC_BREAKCODE){
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
 			printf("driver_receive failed with %d\n", r);
@@ -118,9 +118,9 @@ int test_scan(void) {
 		printf("I'm here\n");
 		if(is_ipc_notify(ipc_status)){
 			printf("i may even get here\n");
-			if((msg.NOTIFY_ARG & KBC_BIT_MASK)){ printf("or who knows, HERE!\n"); kbc_read(); kbc_handler();}
+			if((msg.NOTIFY_ARG & KBC_BIT_MASK)){ printf("or who knows, HERE!\n"); kbc_read(); kbc_handler(); printf("HALLO");}
 		}
-	}while(scancode != ESC_BREAKCODE);
+	}
 	printf("but not here\n");
 	if(kbc_unsubscribe())
 			return 1;
@@ -129,5 +129,5 @@ int test_scan(void) {
 }
 
 int test_leds(unsigned short n, unsigned short *leds) {
-	/* CODE HERE */
+
 }

@@ -51,7 +51,7 @@ static int proc_args(int argc, char *argv[]) {
 		}
 
 		/* NEEDS IMPLEMENTATION */
-
+		test_leds(1,0);
 		return returnVal;
 
 	} else {

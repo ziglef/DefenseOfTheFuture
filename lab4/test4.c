@@ -59,19 +59,17 @@ int kbc_read(){
 			return 1;
 		}
 
-		//if( (KBC.status & KBC_STAT_TIMEOUT) == 0){
-			if( (KBC.status & KBC_STAT_OBF)){ 										// If Output Buffer is full...
-				if(sys_inb(KBC_IO_BUF, &(KBC.data)) != OK){							// Read the data
-					printf("ERROR READING KBC_IO_BUF!\n");
+		if( (KBC.status & KBC_STAT_OBF)){ 										// If Output Buffer is full...
+			if(sys_inb(KBC_IO_BUF, &(KBC.data)) != OK){							// Read the data
+				printf("ERROR READING KBC_IO_BUF!\n");
+				return -1;
+			} else {
+				if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0)
+					return KBC.data;
+				else
 					return -1;
-				} else {
-					if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0)
-						return KBC.data;
-					else
-						return -1;
-				}
 			}
-		//}
+		}
 		tickdelay(micros_to_ticks(DELAY_US)); 										// Wait the appropriate time
 		counter++;
 	}
@@ -129,5 +127,10 @@ int test_scan(void) {
 }
 
 int test_leds(unsigned short n, unsigned short *leds) {
-
+	int i;
+	unsigned long var=1;
+	for(i=0; i<n; i++){
+		kbc_send_command(KBD_LEDS);
+		sys_inb(KBC_IO_BUF, &var);
+	}
 }

@@ -116,7 +116,7 @@ int test_scan(void) {
 		}
 
 		if(is_ipc_notify(ipc_status)){
-			if((msg.NOTIFY_ARG & KBC.hook_id)) kbc_handler(_ENDPOINT_P(msg.m_source));
+			if((msg.NOTIFY_ARG & KBC.hook_id)) kbc_handler(kbc_read());
 		}
 	}while(scancode != ESC_BREAKCODE);
 

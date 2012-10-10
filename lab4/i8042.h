@@ -63,4 +63,4 @@ typedef struct{
 
 
 // Time constant
-#define DELAY_US 				20		// IBM's specification on the amount of time the i8042 waits for a command
+#define DELAY_US 				20000		// IBM's specification on the amount of time the i8042 waits for a command

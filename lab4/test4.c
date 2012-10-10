@@ -9,6 +9,7 @@
 #define ESC_BREAKCODE 		0x81
 #define NO_OF_TRIES			10
 #define BREAKCODE_MASK		0x80
+#define KBC_BIT_MASK		0x02
 
 KeyBoardController KBC = {KBC_BIT, 0, 0};
 unsigned char scancode = 0;
@@ -40,13 +41,13 @@ int kbc_unsubscribe() {
 	return 0;
 }
 
-void kbc_handler(unsigned char code) {
-	scancode = code;
+void kbc_handler() {
+	scancode = KBC.data;
 
 	if(scancode & BREAKCODE_MASK)
-		printf("Breakcode: 0x%X\n", code);
+		printf("Breakcode: 0x%X\n", scancode);
 	else
-		printf("Makecode: 0x%X\n", code);
+		printf("Makecode: 0x%X\n", scancode);
 }
 
 int kbc_read(){
@@ -114,12 +115,13 @@ int test_scan(void) {
 			printf("driver_receive failed with %d\n", r);
 			continue;
 		}
-
+		printf("I'm here\n");
 		if(is_ipc_notify(ipc_status)){
-			if((msg.NOTIFY_ARG & KBC.hook_id)) kbc_handler(kbc_read());
+			printf("i may even get here\n");
+			if((msg.NOTIFY_ARG & KBC_BIT_MASK)){ printf("or who knows, HERE!\n"); kbc_read(); kbc_handler();}
 		}
 	}while(scancode != ESC_BREAKCODE);
-
+	printf("but not here\n");
 	if(kbc_unsubscribe())
 			return 1;
 		else

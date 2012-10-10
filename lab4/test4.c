@@ -11,7 +11,11 @@ unsigned char scancode = 0;
 
 int kbc_subscribe_exclusive(void) {
 
-	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE|IRQ_EXCLUSIVE), &(KBC.hook_id)) != OK){
+	int *HOOK_ID;
+	HOOK_ID = (int*)malloc(sizeof(int));
+	*HOOK_ID = 8;
+
+	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE|IRQ_EXCLUSIVE), HOOK_ID) != OK){
 		printf("ERROR SETTING POLICY!\n");
 		return -1;
 	}
@@ -20,17 +24,19 @@ int kbc_subscribe_exclusive(void) {
 		return -1;
 	}
 
+	KBC.hook_id = *HOOK_ID;
 	return 0;
 }
 
 int kbc_unsubscribe() {
 
-	if(sys_irqrmpolicy(&(KBC.hook_id)) != OK){
-		printf("ERROR DISABLING POLICY\n");
-		return 1;
-	}
 	if(sys_irqdisable(&(KBC.hook_id)) != OK){
 		printf("ERROR DISABLING SUBSCRIPTION!\n");
+		return 1;
+	}
+
+	if(sys_irqrmpolicy(&(KBC.hook_id)) != OK){
+		printf("ERROR DISABLING POLICY\n");
 		return 1;
 	}
 
@@ -51,7 +57,7 @@ void kbc_handler() {
 int kbc_read(){
 	int counter = 0;
 
-	while(1/*counter < NO_OF_TRIES*/){
+	while(counter < NO_OF_TRIES){
 		if(sys_inb(KBC_STAT, &(KBC.status)) != OK){
 			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
 			return -1;
@@ -73,12 +79,14 @@ int kbc_read(){
 			}
 		}
 		tickdelay(micros_to_ticks(DELAY_US)); 										// Wait the appropriate time
-		//counter++;
+		counter++;
 	}
+
+	return -1;
 }
 
 
-int kbc_send_command(unsigned char cmd){
+int kbc_send_command(unsigned long port, unsigned char cmd){
 	int counter = 0;
 
 	while(counter < NO_OF_TRIES){
@@ -87,15 +95,15 @@ int kbc_send_command(unsigned char cmd){
 			return 1;
 		}
 
-		if( (KBC.status & KBC_STAT_TIMEOUT) == 0){
-			if( (KBC.status & KBC_STAT_IBF) == 0){ 	// If Input Buffer not full...
-				sys_outb(KBC_CMD, cmd); 			// Issue a non argument command
-				return 0;
-			}
+		if( (KBC.status & KBC_STAT_IBF) == 0){ 		// If Input Buffer not full...
+			sys_outb(port, cmd); 					// Issue a command
+			return 0;
 		}
+
 		tickdelay(micros_to_ticks(DELAY_US)); 		// Wait the appropriate time
 		counter++;
 	}
+	return -1;
 }
 
 
@@ -110,22 +118,30 @@ int test_scan(void) {
 	}
 
 	while(scancode != ESC_BREAKCODE){
+
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
 			printf("driver_receive failed with %d\n", r);
 			continue;
 		}
-		printf("I'm here\n");
+
+		//printf("I'm here\n");
+
 		if(is_ipc_notify(ipc_status)){
-			switch (_ENDPOINT_P(msg.m_source))
-			{
-			case HARDWARE: /* hardware interrupt notification */
-				printf("i may even get here\n");
-				if((msg.NOTIFY_ARG & KBC_BIT_MASK)){ printf("or who knows, HERE!\n"); kbc_handler(); printf("HALLO"); break;}
-			default: break;
+
+			switch(_ENDPOINT_P(msg.m_source)){
+				case HARDWARE:
+					printf("message: %d\n", msg.NOTIFY_ARG);
+					if((msg.NOTIFY_ARG & KBC_IRQ)){
+						printf("or who knows, HERE!\n");
+						kbc_handler();
+						printf("HALLO");
+					} break;
+				default: break;
 			}
 		}
 	}
+
 	printf("but not here\n");
 	if(kbc_unsubscribe())
 			return 1;

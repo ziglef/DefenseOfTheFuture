@@ -13,12 +13,12 @@ typedef struct{
 
 #define ESC_BREAKCODE 			0x81
 #define NO_OF_TRIES				25
-#define BREAKCODE_MASK			0x80
-#define KBC_BIT_MASK			0x02
+#define BREAKCODE_MASK			BIT(7)
+#define KBC_BIT_MASK			BIT(3)
 
 // KBC Constants
-#define KBC_IRQ 				0x0			// The IRQ line going to be used by the KBC
-#define KBC_BIT 				BIT(0)		// The hook_id for the KBC
+#define KBC_IRQ 				0x01		// The IRQ line going to be used by the KBC
+#define KBC_BIT 				BIT(3)		// The hook_id for the KBC
 #define KBC_O_BUF				0x60		// Port for OUT_BUF
 #define KBC_I_BUF				0x64		// Port for the IN_BUF
 #define KBC_CMD					0x64		// Port used for issuing commands to the KBC (here arguments should be passed in the KBC_IO_BUF address)

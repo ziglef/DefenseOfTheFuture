@@ -5,17 +5,19 @@
 
 // User Libraries
 #include "i8042.h"
+#include "i8254.h"
+#include "timer.h"
 
-KeyBoardController KBC = {KBC_BIT, 0, 0};
+KeyBoardController KBC = {0, 0, 0};
 unsigned char scancode = 0;
 
 int kbc_subscribe_exclusive(void) {
-
+/*
 	int *HOOK_ID;
 	HOOK_ID = (int*)malloc(sizeof(int));
-	*HOOK_ID = 8;
-
-	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE|IRQ_EXCLUSIVE), HOOK_ID) != OK){
+	*HOOK_ID = 0;
+*/
+	if(sys_irqsetpolicy(KBC_IRQ, (IRQ_REENABLE|IRQ_EXCLUSIVE), &(KBC.hook_id)) != OK){
 		printf("ERROR SETTING POLICY!\n");
 		return -1;
 	}
@@ -24,7 +26,7 @@ int kbc_subscribe_exclusive(void) {
 		return -1;
 	}
 
-	KBC.hook_id = *HOOK_ID;
+	//KBC.hook_id = *HOOK_ID;
 	return 0;
 }
 
@@ -69,7 +71,6 @@ int kbc_read(){
 				return -1;
 			} else {
 				if( (KBC.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0){
-					printf("GOT DATA!\n");
 					return 0;
 				}
 				else{
@@ -125,24 +126,18 @@ int test_scan(void) {
 			continue;
 		}
 
-		//printf("I'm here\n");
-
 		if(is_ipc_notify(ipc_status)){
 
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					printf("message: %d\n", msg.NOTIFY_ARG);
 					if((msg.NOTIFY_ARG & KBC_IRQ)){
-						printf("or who knows, HERE!\n");
 						kbc_handler();
-						printf("HALLO");
 					} break;
 				default: break;
 			}
 		}
 	}
 
-	printf("but not here\n");
 	if(kbc_unsubscribe())
 			return 1;
 		else

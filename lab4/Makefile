@@ -4,12 +4,12 @@ COMPILER_TYPE= gnu
 CC=gcc
 
 PROG=	lab4
-SRCS=	test4.c lab4.c
+SRCS=	test4.c lab4.c timer.c
 
 CCFLAGS= -Wall
 
-DPADD+=	${LIBDRIVER} ${LIBSYS} ${UTILSYS}
-LDADD+=	-ldriver -lsys -lm -lutil
+DPADD+=	${LIBDRIVER} ${LIBSYS}
+LDADD+=	-ldriver -lsys -lm
 
 LDFLAGS+= -L.
 

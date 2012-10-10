@@ -48,7 +48,7 @@ void kbc_handler() {
 int kbc_read(){
 	int counter = 0;
 
-	while(counter < NO_OF_TRIES){
+	while(1/*counter < NO_OF_TRIES*/){
 		if(sys_inb(KBC_STAT, &(KBC.status)) != OK){
 			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
 			return -1;
@@ -70,7 +70,7 @@ int kbc_read(){
 			}
 		}
 		tickdelay(micros_to_ticks(DELAY_US)); 										// Wait the appropriate time
-		counter++;
+		//counter++;
 	}
 }
 

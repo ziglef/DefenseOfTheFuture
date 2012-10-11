@@ -3,12 +3,6 @@
  * or the library functions
  * Sys_inb()/sys_outb() of the kernel API */
 
-typedef struct{
-	int hook_id;
-	unsigned long status;
-	unsigned long data;
-} KeyBoardController;
-
 #define BIT(n) 					(0x01<<(n))
 
 #define TWOBYTE_CODE			0xE0

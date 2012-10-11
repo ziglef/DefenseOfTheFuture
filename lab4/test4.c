@@ -1,4 +1,15 @@
-#include "lab4.h"
+// System Libraries
+#include <minix/syslib.h>
+#include <minix/drivers.h>
+#include <minix/sysutil.h>
+
+#include "i8042.h"
+#include "i8254.h"
+#include "timer.h"
+#include "kbc.h"
+
+KeyBoardController KBCs = {0, 0, 0};
+unsigned char kscancode = 0;
 
 int test_scan(void) {
 	int ipc_status;
@@ -10,7 +21,7 @@ int test_scan(void) {
 			return 1;
 	}
 
-	while(scancode != ESC_BREAKCODE){
+	while(kscancode != ESC_BREAKCODE){
 
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
@@ -23,7 +34,7 @@ int test_scan(void) {
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
 					if((msg.NOTIFY_ARG & KBC_IRQ)){
-						kbc_handler();
+						kscancode = kbc_handler();
 					} break;
 				default: break;
 			}
@@ -46,12 +57,12 @@ int test_leds(unsigned short n, unsigned short *leds) {
 
 	for(i=0; i<n; i++){
 		kbc_send_command(KBD_PORT, KBD_LEDS);
-		sys_inb(KBD_PORT, &(KBC.data));
+		sys_inb(KBD_PORT, &(KBCs.data));
 
-		if(KBC.data == CKBD_ERROR){
+		if(KBCs.data == CKBD_ERROR){
 			printf("ERROR IN THE SEQUENCE\n");
 			i = 0;
-		} else if(KBC.data == CKBD_RESEND) {
+		} else if(KBCs.data == CKBD_RESEND) {
 			printf("ERROR IN THE LAST LED VALUE\n");
 			i--;
 		} else {
@@ -88,12 +99,12 @@ int test_leds(unsigned short n, unsigned short *leds) {
 
 			LEDS = (ScrollLock | NumLock | CapsLock);
 			kbc_send_command(KBD_PORT, LEDS);
-			sys_inb(KBD_PORT, &(KBC.data));
+			sys_inb(KBD_PORT, &(KBCs.data));
 
-			if(KBC.data == CKBD_ERROR){
+			if(KBCs.data == CKBD_ERROR){
 				printf("ERROR IN THE SEQUENCE\n");
 				i = 0;
-			} else if(KBC.data == CKBD_RESEND) {
+			} else if(KBCs.data == CKBD_RESEND) {
 				printf("ERROR IN THE LAST LED VALUE\n");
 				i--;
 			} else {

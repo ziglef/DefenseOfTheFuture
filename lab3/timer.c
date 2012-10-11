@@ -64,11 +64,12 @@ int timer_subscribe_int(void ) {
 
 int timer_unsubscribe_int() {
 
-	if(sys_irqrmpolicy(&(timerInt.bit)) != OK){
-		return 1;
-	}
 	if(sys_irqdisable(&(timerInt.bit)) != OK){
 		printf("ERROR DISABLING SUBSCRIPTION!\n");
+		return 1;
+	}
+
+	if(sys_irqrmpolicy(&(timerInt.bit)) != OK){
 		return 1;
 	}
 

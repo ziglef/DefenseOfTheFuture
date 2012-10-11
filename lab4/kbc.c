@@ -118,3 +118,23 @@ int kbc_send_command(unsigned long port, unsigned char cmd){
 	}
 	return -1;
 }
+
+int send_kbc_command(unsigned char cmd){
+	int counter = 0;
+
+	while(counter < NO_OF_TRIES){
+		if(sys_inb(KBC_STAT, &(KBC.status)) != OK){
+			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
+			return 1;
+		}
+
+		if( (KBC.status & KBC_STAT_IBF) == 0){ 			// If Input Buffer not full...
+			switch(cmd)
+
+			sys_outb(KBC_CMD, cmd); 					// Issue a command
+		}
+
+		tickdelay(micros_to_ticks(DELAY_US)); 		// Wait the appropriate time
+		counter++;
+	}
+}

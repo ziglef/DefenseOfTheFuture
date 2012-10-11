@@ -139,15 +139,7 @@ int test_scan(void) {
 
 int test_leds(unsigned short n, unsigned short *leds) {
 
-	printf("N is %d\n",n);
-	int x;
-	for(x=0;x<n;x++){
-		printf("N[%d] is %d\n",x,leds[x]);
-	}
-
-	int ipc_status;
-	message msg;
-	int r, i, j;
+	int r, i;
 	int ScrollLock = 0;
 	int NumLock = 0;
 	int CapsLock = 0;
@@ -206,7 +198,7 @@ int test_leds(unsigned short n, unsigned short *leds) {
 				printf("ERROR IN THE LAST LED VALUE\n");
 				i--;
 			} else {
-				timer_test_int(2);
+				timer_test_int(1);
 			}
 		}
 	}

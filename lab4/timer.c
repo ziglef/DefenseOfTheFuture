@@ -64,14 +64,14 @@ int timer_subscribe_int(void ) {
 
 int timer_unsubscribe_int() {
 
-	if(sys_irqrmpolicy(&(timerInt.bit)) != OK){
-		return 1;
-	}
 	if(sys_irqdisable(&(timerInt.bit)) != OK){
 		printf("ERROR DISABLING SUBSCRIPTION!\n");
 		return 1;
 	}
 
+	if(sys_irqrmpolicy(&(timerInt.bit)) != OK){
+		return 1;
+	}
 	return 0;
 }
 
@@ -110,7 +110,7 @@ int timer_test_int(unsigned long time) {
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
 					if((msg.NOTIFY_ARG & TIMER_BIT_MASK) && (timerInt.counter % 60 == 0)){
-						timer_int_handler();
+						// timer_int_handler();
 					}
 					break;
 				default:

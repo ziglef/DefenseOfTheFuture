@@ -139,6 +139,12 @@ int test_scan(void) {
 
 int test_leds(unsigned short n, unsigned short *leds) {
 
+	printf("N is %d\n",n);
+	int x;
+	for(x=0;x<n;x++){
+		printf("N[%d] is %d\n",x,leds[x]);
+	}
+
 	int ipc_status;
 	message msg;
 	int r, i, j;
@@ -161,7 +167,7 @@ int test_leds(unsigned short n, unsigned short *leds) {
 			switch(leds[i]){
 				case 0:
 					if(ScrollLock == 0){
-						ScrollLock = 1;
+						ScrollLock = BIT(0);
 						printf("SCROLL LOCK ON!\n");
 					} else {
 						ScrollLock = 0;
@@ -170,7 +176,7 @@ int test_leds(unsigned short n, unsigned short *leds) {
 					break;
 				case 1:
 					if(NumLock == 0){
-						NumLock = 1;
+						NumLock = BIT(1);
 						printf("NUM LOCK ON!\n");
 					} else {
 						NumLock = 0;
@@ -179,7 +185,7 @@ int test_leds(unsigned short n, unsigned short *leds) {
 					break;
 				case 2:
 					if(CapsLock == 0){
-						CapsLock = 1;
+						CapsLock = BIT(2);
 						printf("CAPS LOCK ON!\n");
 					} else {
 						CapsLock = 0;
@@ -189,7 +195,7 @@ int test_leds(unsigned short n, unsigned short *leds) {
 				default: printf("ERROR IN POSITION %d VALUE OUT OF BOUNDS!\n",i); break;
 			}
 
-			LEDS = ScrollLock | NumLock | CapsLock;
+			LEDS = (ScrollLock | NumLock | CapsLock);
 			kbc_send_command(KBD_PORT, LEDS);
 			sys_inb(KBD_PORT, &(KBC.data));
 
@@ -200,7 +206,7 @@ int test_leds(unsigned short n, unsigned short *leds) {
 				printf("ERROR IN THE LAST LED VALUE\n");
 				i--;
 			} else {
-				timer_test_int(1);
+				timer_test_int(2);
 			}
 		}
 	}

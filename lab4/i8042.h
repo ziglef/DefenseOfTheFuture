@@ -11,6 +11,7 @@ typedef struct{
 
 #define BIT(n) 					(0x01<<(n))
 
+#define TWOBYTE_CODE			0xE0
 #define ESC_BREAKCODE 			0x81
 #define NO_OF_TRIES				25
 #define BREAKCODE_MASK			BIT(7)

@@ -10,6 +10,7 @@
 
 KeyBoardController KBC = {0, 0, 0};
 unsigned char scancode = 0;
+int doublebyte = 0;
 
 int kbc_subscribe_exclusive(void) {
 
@@ -45,10 +46,26 @@ void kbc_handler() {
 
 	scancode = KBC.data;
 
-	if(scancode & BREAKCODE_MASK)
-		printf("Breakcode: 0x%X\n", scancode);
-	else
-		printf("Makecode: 0x%X\n", scancode);
+	if(doublebyte != 2){
+		if(scancode == TWOBYTE_CODE)
+			doublebyte = 2;
+		else
+			doublebyte = 0;
+	} else {
+		doublebyte = 1;
+	}
+
+	if(doublebyte == 0){
+		if(scancode & BREAKCODE_MASK)
+			printf("Breakcode: 0x%X\n", scancode);
+		else
+			printf("Makecode: 0x%X\n", scancode);
+	} else if(doublebyte == 1) {
+		if(scancode & BREAKCODE_MASK)
+			printf("Breakcode: 0xE0%X\n", scancode);
+		else
+			printf("Makecode: 0xE0%X\n", scancode);
+	}
 }
 
 int kbc_read(){

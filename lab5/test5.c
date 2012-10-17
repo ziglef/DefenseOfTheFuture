@@ -1,3 +1,5 @@
+#include "mouse.h"
+
 int test_packet() {
     /* To be completed ... */
 }

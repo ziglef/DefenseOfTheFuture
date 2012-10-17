@@ -121,6 +121,7 @@ int mouse_send(unsigned long port, unsigned char cmd){
 
 void turn_mouse_on(){
 
+	mouse_send(0x64,0xA8);
 	mouse_send(0x64,0xD4);
 	mouse_send(0x60,0xF4);
 

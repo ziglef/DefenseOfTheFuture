@@ -9,9 +9,10 @@
 unsigned short mousecounter = 0;
 MouseController mouse = {0x0C,0,0,0,0,{0,0,0}};
 
-void return_vars(unsigned short *counter, MouseController *mmouse){
+void return_vars(unsigned short *counter, MouseController *mmouse, unsigned char *packet){
 	counter = &mousecounter;
 	mmouse = &mouse;
+	packet = mouse.bytes;
 }
 
 int mouse_subscribe_exclusive() {
@@ -116,4 +117,11 @@ int mouse_send(unsigned long port, unsigned char cmd){
 		counter++;
 	}
 	return -1;
+}
+
+void turn_mouse_on(){
+
+	mouse_send(0x64,0xD4);
+	mouse_send(0x60,0xF4);
+
 }

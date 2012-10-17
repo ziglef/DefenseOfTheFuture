@@ -7,9 +7,10 @@ typedef struct{
 	unsigned char bytes[3];
 } MouseController;
 
-void return_vars(unsigned short *counter, MouseController *mmouse);
+void return_vars(unsigned short *counter, MouseController *mmouse, unsigned char *packet);
 int mouse_subscribe_exclusive();
 int mouse_unsubscribe();
 int mouse_handler();
 int mouse_read();
 int mouse_send(unsigned long port, unsigned char cmd);
+void turn_mouse_on();

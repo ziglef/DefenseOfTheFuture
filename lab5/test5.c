@@ -7,10 +7,11 @@
 
 unsigned short lemousecounter = 0;
 MouseController lemouse = {0x0C,0,0,0,0,{0,0,0}};
+unsigned char *packet;
+
 
 int test_packet() {
-	return_vars(&lemousecounter, &lemouse);
-
+	return_vars(&lemousecounter, &lemouse, packet);
 	int ipc_status;
 	message msg;
 	int r;
@@ -20,8 +21,9 @@ int test_packet() {
 			return 1;
 	}
 
-	while(lemousecounter < 30){
+	turn_mouse_on();
 
+	while(lemousecounter < 30){
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
 			printf("driver_receive failed with %d\n", r);
@@ -29,10 +31,9 @@ int test_packet() {
 		}
 
 		if(is_ipc_notify(ipc_status)){
-
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					if((msg.NOTIFY_ARG & M_IRQ)){
+					if((msg.NOTIFY_ARG /*& M_IRQ*/)){
 						mouse_handler();
 						printf("MOUSE INFO: 0x%X\n", lemouse.data);
 					} break;

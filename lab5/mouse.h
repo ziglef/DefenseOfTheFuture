@@ -1,2 +1,8 @@
-unsigned char mousebytes[3];
-unsigned short counter = 0;
+unsigned short mousecounter = 0;
+
+typedef struct{
+	int hook_id;
+	unsigned long status;
+	unsigned long data;
+	unsigned char bytes[3];
+} MouseController;

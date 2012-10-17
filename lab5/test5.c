@@ -1,6 +1,16 @@
+#include <minix/syslib.h>
+#include <minix/drivers.h>
+#include <minix/sysutil.h>
+
+#include "i8042.h"
 #include "mouse.h"
 
+unsigned short lemousecounter = 0;
+MouseController lemouse = {0x0C,0,0,0,0,{0,0,0}};
+
 int test_packet() {
+	return_vars(&lemousecounter, &lemouse);
+
 	int ipc_status;
 	message msg;
 	int r;
@@ -10,7 +20,7 @@ int test_packet() {
 			return 1;
 	}
 
-	while(counter < 30){
+	while(lemousecounter < 30){
 
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
@@ -24,10 +34,13 @@ int test_packet() {
 				case HARDWARE:
 					if((msg.NOTIFY_ARG & M_IRQ)){
 						mouse_handler();
+						printf("MOUSE INFO: 0x%X\n", lemouse.data);
 					} break;
 				default: break;
 			}
 		}
+		if(lemouse.initialized)
+			lemousecounter++;
 	}
 
 	if(mouse_unsubscribe())

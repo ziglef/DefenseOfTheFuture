@@ -6,9 +6,15 @@
 #include "i8042.h"
 #include "mouse.h"
 
-MouseController mouse = {0x0C,0,0,{0,0,0}};
+unsigned short mousecounter = 0;
+MouseController mouse = {0x0C,0,0,0,0,{0,0,0}};
 
-int mouse_subscribe_exclusive(void) {
+void return_vars(unsigned short *counter, MouseController *mmouse){
+	counter = &mousecounter;
+	mmouse = &mouse;
+}
+
+int mouse_subscribe_exclusive() {
 
 	if(sys_irqsetpolicy(M_IRQ, (IRQ_REENABLE|IRQ_EXCLUSIVE), &(mouse.hook_id)) != OK){
 		printf("ERROR SETTING POLICY!\n");
@@ -40,7 +46,25 @@ int mouse_unsubscribe() {
 int mouse_handler() {
 	mouse_read();
 
+	if(!mouse.initialized){
+		if(mouse.data & BIT(3)){
+			mouse.pos = 0;
+			mouse.bytes[mouse.pos] = mouse.data;
+			mouse.pos++;
+			mouse.initialized = 1;
+			return 0;
+		}
+	} else {
+		mouse.bytes[mouse.pos] = mouse.data;
+		if(mouse.pos == 2)
+			mouse.pos = 0;
+		else
+			mouse.pos++;
 
+		return 0;
+	}
+
+	return -1;
 }
 
 int mouse_read(){
@@ -74,16 +98,16 @@ int mouse_read(){
 	return -1;
 }
 
-int kbc_send(unsigned long port, unsigned char cmd){
+int mouse_send(unsigned long port, unsigned char cmd){
 	int counter = 0;
 
 	while(counter < NO_OF_TRIES){
-		if(sys_inb(KBC_STAT, &(KBC.status)) != OK){
+		if(sys_inb(KBC_STAT, &(mouse.status)) != OK){
 			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
 			return 1;
 		}
 
-		if( (KBC.status & KBC_STAT_IBF) == 0){ 		// If Input Buffer not full...
+		if( (mouse.status & KBC_STAT_IBF) == 0){ 		// If Input Buffer not full...
 			sys_outb(port, cmd); 					// Issue a command
 			return 0;
 		}

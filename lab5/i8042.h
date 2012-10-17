@@ -11,6 +11,9 @@
 #define BREAKCODE_MASK			BIT(7)
 #define KBC_BIT_MASK			BIT(3)
 
+// MOUSE Constants
+#define M_IRQ					0x0C
+
 // KBC Constants
 #define KBC_IRQ 				0x01		// The IRQ line going to be used by the KBC
 #define KBC_O_BUF				0x60		// Port for OUT_BUF

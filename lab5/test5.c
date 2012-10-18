@@ -63,13 +63,19 @@ int test_packet() {
 }
 
 int test_asynch(unsigned short duration) {
-	int ipc_status;
+		int ipc_status;
 		message msg;
 		int r;
+		int timer_counter = 0;
 
 		if(mouse_subscribe_exclusive() < 0){
 				printf("ERROR SUBSCRIBING TO KBC!\n");
 				return 1;
+		}
+
+		if(timer_subscribe_int() < 0){
+			printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON TIMER 0\n");
+			return 1;
 		}
 
 		turn_mouse_on();
@@ -80,7 +86,7 @@ int test_asynch(unsigned short duration) {
 				sys_inb(KBC_O_BUF, &byte);
 		}while(lemouse.status & KBC_STAT_OBF);
 
-		while(counter < 30){
+		while((timerInt.counter % 60) < duration){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -98,10 +104,24 @@ int test_asynch(unsigned short duration) {
 						} break;
 					default: break;
 				}
+			} else {
+				if(is_ipc_notify(ipc_status)){
+					switch(_ENDPOINT_P(msg.m_source)){
+						case HARDWARE:
+							if((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+								timer_counter++;
+							}
+							break;
+						default:
+							break;
+					}
+				}
 			}
 		}
 
 		if(mouse_unsubscribe())
+			return 1;
+		if(timer_unsubscribe_int())
 			return 1;
 
 		do{

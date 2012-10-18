@@ -2,6 +2,8 @@
 #include <minix/drivers.h>
 #include <minix/sysutil.h>
 
+#include <stdbool.h>
+
 #include "i8042.h"
 #include "i8254.h"
 #include "mouse.h"
@@ -17,6 +19,9 @@ int test_packet() {
 	int ipc_status;
 	message msg;
 	int r;
+	bool LMB_PRESSED = false;
+	bool close = false;
+
 
 	if(mouse_subscribe_exclusive() < 0){
 			printf("ERROR SUBSCRIBING TO KBC!\n");
@@ -31,7 +36,7 @@ int test_packet() {
 			sys_inb(KBC_O_BUF, &byte);
 	}while(lemouse.status & KBC_STAT_OBF);
 
-	while(counter < 30){
+	while(!close){
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
 			printf("driver_receive failed with %d\n", r);
@@ -46,6 +51,17 @@ int test_packet() {
 						packet[1] = lemouse.bytes[1];
 						packet[2] = lemouse.bytes[2];
 						counter = lemouse.counter;
+
+						if(!LMB_PRESSED){
+							if(packet[0] & BIT(0))
+								LMB_PRESSED = true;
+						} else {
+							if(packet[0] & BIT(1))
+								close = true;
+							else
+								LMB_PRESSED = false;
+						}
+
 					} break;
 				default: break;
 			}

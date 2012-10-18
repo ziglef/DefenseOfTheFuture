@@ -15,3 +15,4 @@ MouseController mouse_handler();
 int mouse_read();
 int mouse_send(unsigned long port, unsigned char cmd);
 void turn_mouse_on();
+void turn_mouse_off();

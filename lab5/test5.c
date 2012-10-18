@@ -12,7 +12,6 @@ unsigned char packet[3];
 unsigned long byte;
 
 int test_packet() {
-	printf("1\n");
 	int ipc_status;
 	message msg;
 	int r;
@@ -26,32 +25,25 @@ int test_packet() {
 
 	do{
 		sys_inb(KBC_STAT, &(lemouse.status));
-		sys_inb(KBC_O_BUF, &byte);
+		if(lemouse.status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &byte);
 	}while(lemouse.status & KBC_STAT_OBF);
 
-	printf("2!\n");
 	while(counter < 30){
-		printf("3!\n");
-		//sys_inb(KBC_O_BUF, &byte);
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
 			printf("driver_receive failed with %d\n", r);
 			continue;
 		}
-
-		printf("4!\n");
 		if(is_ipc_notify(ipc_status)){
-			printf("5!\n");
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					if((msg.NOTIFY_ARG /*& lemouse.hook_id*/)){
-						printf("6!\n");
+					if((msg.NOTIFY_ARG & BIT(M_IRQ))){
 						lemouse = mouse_handler();
 						packet[0] = lemouse.bytes[0];
 						packet[1] = lemouse.bytes[1];
 						packet[2] = lemouse.bytes[2];
 						counter = lemouse.counter;
-						printf("7?!\n");
 					} break;
 				default: break;
 			}
@@ -62,6 +54,7 @@ int test_packet() {
 			return 1;
 		else
 			return 0;
+	return 1;
 }
 
 int test_asynch(unsigned short duration) {

@@ -24,6 +24,8 @@ int mouse_subscribe_exclusive() {
 
 int mouse_unsubscribe() {
 
+	turn_mouse_off();
+
 	if(sys_irqdisable(&(mouse.hook_id)) != OK){
 		printf("ERROR DISABLING SUBSCRIPTION!\n");
 		return 1;
@@ -46,18 +48,24 @@ MouseController mouse_handler() {
 			mouse.bytes[mouse.pos] = mouse.data;
 			mouse.pos++;
 			mouse.initialized = 1;
-			printf("0x%X", mouse.data);
 			mouse.counter++;
 			return mouse;
 		}
 	} else {
 		mouse.bytes[mouse.pos] = mouse.data;
-		if(mouse.pos == 2)
+		if(mouse.pos == 2){
 			mouse.pos = 0;
+			printf("B1=0x%X B2=0x%X B3=0x%X LB=%d MB=%d RB=%d XOV=%d YOV=%d X=%d Y=%d\n",
+					mouse.bytes[0],mouse.bytes[1],mouse.bytes[2],
+					mouse.bytes[0]&BIT(0),mouse.bytes[0]&BIT(2),mouse.bytes[0]&BIT(1),
+					mouse.bytes[0]&BIT(6),mouse.bytes[0]&BIT(7),
+					mouse.bytes[1],mouse.bytes[2]);
+
+
+		}
 		else
 			mouse.pos++;
 
-		printf("0x%X", mouse.data);
 		mouse.counter++;
 		return mouse;
 	}
@@ -120,5 +128,11 @@ void turn_mouse_on(){
 	mouse_send(0x64,0xA8);
 	mouse_send(0x64,0xD4);
 	mouse_send(0x60,0xF4);
+}
 
+void turn_mouse_off(){
+
+	mouse_send(0x64,0xD4);
+	mouse_send(0x60,0xF5);
+	mouse_send(0x64,0xA7);
 }

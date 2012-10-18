@@ -184,5 +184,6 @@ int test_config(void) {
 						lemouse.bytes[0],lemouse.bytes[1],lemouse.bytes[2]);
 			}
 		}
+		break;
 	}
 }

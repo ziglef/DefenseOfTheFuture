@@ -5,14 +5,13 @@
 #include "i8042.h"
 #include "mouse.h"
 
-unsigned short lemousecounter = 0;
-MouseController lemouse = {0x0C,0,0,0,0,{0,0,0}};
-unsigned char *packet;
+MouseController lemouse = {0x0C,0,0,0,0,0,{0,0,0}};
+unsigned short counter;
+unsigned char packet[3];
 
 unsigned long byte;
 
 int test_packet() {
-	return_vars(&lemousecounter, &lemouse, packet);
 	printf("1\n");
 	int ipc_status;
 	message msg;
@@ -25,10 +24,15 @@ int test_packet() {
 
 	turn_mouse_on();
 
-	printf("2!\n");
-	while(lemousecounter < 30){
-		printf("3!\n");
+	do{
+		sys_inb(KBC_STAT, &(lemouse.status));
 		sys_inb(KBC_O_BUF, &byte);
+	}while(lemouse.status & KBC_STAT_OBF);
+
+	printf("2!\n");
+	while(counter < 30){
+		printf("3!\n");
+		//sys_inb(KBC_O_BUF, &byte);
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
 			printf("driver_receive failed with %d\n", r);
@@ -40,17 +44,18 @@ int test_packet() {
 			printf("5!\n");
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					if((msg.NOTIFY_ARG /*& M_IRQ*/)){
+					if((msg.NOTIFY_ARG /*& lemouse.hook_id*/)){
 						printf("6!\n");
-						mouse_handler();
-						//printf("MOUSE INFO: 0x%X\n", lemouse.data);
+						lemouse = mouse_handler();
+						packet[0] = lemouse.bytes[0];
+						packet[1] = lemouse.bytes[1];
+						packet[2] = lemouse.bytes[2];
+						counter = lemouse.counter;
 						printf("7?!\n");
 					} break;
 				default: break;
 			}
 		}
-		if(lemouse.initialized)
-			lemousecounter++;
 	}
 
 	if(mouse_unsubscribe())

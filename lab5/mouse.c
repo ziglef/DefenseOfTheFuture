@@ -6,14 +6,7 @@
 #include "i8042.h"
 #include "mouse.h"
 
-unsigned short mousecounter = 0;
-MouseController mouse = {0x0C,0,0,0,0,{0,0,0}};
-
-void return_vars(unsigned short *counter, MouseController *mmouse, unsigned char *packet){
-	counter = &mousecounter;
-	mmouse = &mouse;
-	packet = mouse.bytes;
-}
+MouseController mouse = {0x0C,0,0,0,0,0,{0,0,0}};
 
 int mouse_subscribe_exclusive() {
 
@@ -44,7 +37,7 @@ int mouse_unsubscribe() {
 	return 0;
 }
 
-int mouse_handler() {
+MouseController mouse_handler() {
 	mouse_read();
 
 	if(!mouse.initialized){
@@ -54,7 +47,8 @@ int mouse_handler() {
 			mouse.pos++;
 			mouse.initialized = 1;
 			printf("0x%X", mouse.data);
-			return 0;
+			mouse.counter++;
+			return mouse;
 		}
 	} else {
 		mouse.bytes[mouse.pos] = mouse.data;
@@ -64,10 +58,11 @@ int mouse_handler() {
 			mouse.pos++;
 
 		printf("0x%X", mouse.data);
-		return 0;
+		mouse.counter++;
+		return mouse;
 	}
 
-	return -1;
+	return mouse;
 }
 
 int mouse_read(){
@@ -85,7 +80,6 @@ int mouse_read(){
 				return -1;
 			} else {
 				if( (mouse.status & (KBC_STAT_TIMEOUT | KBC_STAT_PARITY)) == 0){
-					mousecounter++;
 					return 0;
 				}
 				else{

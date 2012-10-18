@@ -24,8 +24,6 @@ int mouse_subscribe_exclusive() {
 
 int mouse_unsubscribe() {
 
-	turn_mouse_off();
-
 	if(sys_irqdisable(&(mouse.hook_id)) != OK){
 		printf("ERROR DISABLING SUBSCRIPTION!\n");
 		return 1;

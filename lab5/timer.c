@@ -2,8 +2,6 @@
 #include <minix/drivers.h>
 #include "i8254.h"
 
-#define TIMER_BIT_MASK 0x04
-
 typedef struct{
 	int bit;
 	int counter;

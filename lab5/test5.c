@@ -3,7 +3,9 @@
 #include <minix/sysutil.h>
 
 #include "i8042.h"
+#include "i8254.h"
 #include "mouse.h"
+#include "timer.h"
 
 MouseController lemouse = {0x0C,0,0,0,0,0,{0,0,0}};
 unsigned short counter;
@@ -86,7 +88,7 @@ int test_asynch(unsigned short duration) {
 				sys_inb(KBC_O_BUF, &byte);
 		}while(lemouse.status & KBC_STAT_OBF);
 
-		while((timerInt.counter % 60) < duration){
+		while((timer_counter / 60) < duration){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -101,20 +103,12 @@ int test_asynch(unsigned short duration) {
 							packet[1] = lemouse.bytes[1];
 							packet[2] = lemouse.bytes[2];
 							counter = lemouse.counter;
-						} break;
-					default: break;
-				}
-			} else {
-				if(is_ipc_notify(ipc_status)){
-					switch(_ENDPOINT_P(msg.m_source)){
-						case HARDWARE:
+						} else {
 							if((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 								timer_counter++;
 							}
-							break;
-						default:
-							break;
-					}
+						}break;
+					default: break;
 				}
 			}
 		}

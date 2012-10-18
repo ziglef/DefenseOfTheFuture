@@ -1,6 +1,8 @@
 #ifndef _LCOM_I8254_H_
 #define _LCOM_I8254_H_
 
+#define TIMER_BIT_MASK 0x04
+
 /** @defgroup i8254 i8254
  * @{
  *

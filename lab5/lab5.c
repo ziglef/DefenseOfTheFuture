@@ -51,8 +51,8 @@ static void print_usage(char *argv[]) {
 static void print_usage(char *argv[]) {
   printf("Usage: one of the following:\n"
 	 "\t service run %s -args \"packet\"  \n"
-	 "\t service run %s -args \"asynch\" <short duration> \n"
-	 "\t service run %s -args \"config\" <void> \n",
+	 "\t service run %s -args \"asynch <short duration>\" \n"
+	 "\t service run %s -args \"config <void>\" \n",
 	argv[0], argv[0], argv[0]);
 }
 

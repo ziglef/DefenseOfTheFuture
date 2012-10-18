@@ -145,6 +145,11 @@ int test_asynch(unsigned short duration) {
 
 int test_config(void) {
 
+	// turn off streaming
+	// read to know if the byte is send by the mouse
+	// read it
+	// display it
+
 	turn_mouse_off();
 
 	while(1){

@@ -144,5 +144,45 @@ int test_asynch(unsigned short duration) {
 }
 
 int test_config(void) {
-    /* To be completed ... */
+
+	while(1){
+		mouse_send(0x64,0xD4);
+		tickdelay(micros_to_ticks(DELAY_US));
+		sys_inb(KBC_O_BUF, &(lemouse.data));
+		tickdelay(micros_to_ticks(DELAY_US));
+
+		if(lemouse.data == CKBD_ERROR){
+			printf("ERROR IN THE SEQUENCE\n");
+			continue;
+		} else if(lemouse.data == CKBD_RESEND) {
+			printf("ERROR IN THE LAST VALUE\n");
+			continue;
+		} else {
+			mouse_send(0x60,0xE9);
+			tickdelay(micros_to_ticks(DELAY_US));
+			sys_inb(KBC_O_BUF, &(lemouse.data));
+			tickdelay(micros_to_ticks(DELAY_US));
+
+			if(lemouse.data == CKBD_ERROR){
+				printf("ERROR IN THE SEQUENCE\n");
+				continue;
+			} else if(lemouse.data == CKBD_RESEND) {
+				printf("ERROR IN THE LAST VALUE\n");
+				continue;
+			} else {
+				sys_inb(KBC_O_BUF, &(lemouse.data));
+				lemouse.bytes[0] = lemouse.data;
+				tickdelay(micros_to_ticks(DELAY_US));
+				sys_inb(KBC_O_BUF, &(lemouse.data));
+				lemouse.bytes[1] = lemouse.data;
+				tickdelay(micros_to_ticks(DELAY_US));
+				sys_inb(KBC_O_BUF, &(lemouse.data));
+				lemouse.bytes[2] = lemouse.data;
+				tickdelay(micros_to_ticks(DELAY_US));
+
+				printf("Byte1: 0x%X\nByte2: 0x%X\nByte3: 0x%X\n",
+						lemouse.bytes[0],lemouse.bytes[1],lemouse.bytes[2]);
+			}
+		}
+	}
 }

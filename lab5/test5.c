@@ -145,6 +145,8 @@ int test_asynch(unsigned short duration) {
 
 int test_config(void) {
 
+	turn_mouse_off();
+
 	while(1){
 		mouse_send(0x64,0xD4);
 		tickdelay(micros_to_ticks(DELAY_US));

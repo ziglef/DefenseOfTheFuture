@@ -43,7 +43,7 @@ int test_packet() {
 					if((msg.NOTIFY_ARG /*& M_IRQ*/)){
 						printf("6!\n");
 						mouse_handler();
-						printf("MOUSE INFO: 0x%X\n", lemouse.data);
+						//printf("MOUSE INFO: 0x%X\n", lemouse.data);
 						printf("7?!\n");
 					} break;
 				default: break;

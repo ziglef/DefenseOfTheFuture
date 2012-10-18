@@ -53,6 +53,7 @@ int mouse_handler() {
 			mouse.bytes[mouse.pos] = mouse.data;
 			mouse.pos++;
 			mouse.initialized = 1;
+			printf("0x%X", mouse.data);
 			return 0;
 		}
 	} else {
@@ -62,6 +63,7 @@ int mouse_handler() {
 		else
 			mouse.pos++;
 
+		printf("0x%X", mouse.data);
 		return 0;
 	}
 

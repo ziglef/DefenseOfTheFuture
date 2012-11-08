@@ -4,6 +4,39 @@
 
 #include "rtc.h"
 
+typedef struct{
+	int hook_id;
+}RTC_STRUCT;
+
+RTC_STRUCT rtc = {1};
+
+int rtc_subscribe(void ) {
+
+	if(sys_irqsetpolicy(RTC_IRQ, IRQ_REENABLE, &(rtc.hook_id)) != OK){
+		printf("ERROR SETTING POLICY!\n");
+		return -1;
+	}
+	if(sys_irqenable(&(rtc.hook_id)) != OK){
+		printf("ERROR ENABLING SUBSCRIPTION!\n");
+		return -1;
+	}
+
+	return rtc.hook_id;
+}
+
+int rtc_unsubscribe() {
+
+	if(sys_irqdisable(&(rtc.hook_id)) != OK){
+		printf("ERROR DISABLING SUBSCRIPTION!\n");
+		return 1;
+	}
+
+	if(sys_irqrmpolicy(&(rtc.hook_id)) != OK){
+		return 1;
+	}
+	return 0;
+}
+
 void enable(){
 	endpoint_t ep;
 	char name[256];

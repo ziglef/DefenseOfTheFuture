@@ -9,6 +9,9 @@
 // RTC IRQ
 #define RTC_IRQ 				8
 
+// RTC HOOK_ID BITMASK
+#define RTC_BIT_MASK 			BIT(1)
+
 // RTC TIME REGISTERS
 #define RTC_SECONDS 			0			// Range 0-59
 #define RTC_MINUTES 			2			// Range 0-59

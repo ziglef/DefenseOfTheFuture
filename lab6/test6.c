@@ -19,37 +19,37 @@ int test_conf(void) {
 
 int test_date(void) {
 	int ipc_status;
-		message msg;
-		int r;
+	message msg;
+	int r;
 
-		if(rtc_subscribe() < 0){
-			printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON RTC\n");
-			return 1;
+	unsigned long REGB;
+
+	rtc_read(RTC_REGB, &REGB);
+	rtc_write(RTC_REGB, (REGB ^ RTC_UIE));
+
+	if(rtc_subscribe() < 0){
+		printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON RTC\n");
+		return 1;
+	}
+
+	while(1){
+		r = driver_receive(ANY, &msg, &ipc_status);
+		if( r != 0){
+			printf("driver_receive failed with: %d\n", r);
+			continue;
 		}
-
-		while(1){
-			r = driver_receive(ANY, &msg, &ipc_status);
-			if( r != 0){
-				printf("driver_receive failed with: %d\n", r);
-				continue;
-			}
-			if(is_ipc_notify(ipc_status)){
-				switch(_ENDPOINT_P(msg.m_source)){
-					case HARDWARE:
-						if(msg.NOTIFY_ARG & RTC_BIT_MASK){
-							if(rtc_handler()) break;
-						}
-						break;
-					default:
-						break;
-				}
+		if(is_ipc_notify(ipc_status)){
+			switch(_ENDPOINT_P(msg.m_source)){
+				case HARDWARE:
+					if(msg.NOTIFY_ARG & RTC_BIT_MASK){
+						if(rtc_handler()) if(rtc_unsubscribe()) return 1; else; return 0;
+					}
+					break;
+				default:
+					break;
 			}
 		}
-
-		if(rtc_unsubscribe())
-			return 1;
-		else
-			return 0;
+	}
 }
 
 int test_int(/* to be defined in class */) {

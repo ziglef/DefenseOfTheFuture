@@ -90,3 +90,5 @@ void enable();
 void disable();
 void rtc_read(unsigned long reg, unsigned long *byte);
 void rtc_write(unsigned long reg, unsigned long byte);
+unsigned long DEC_to_BCD(unsigned long decimalByte);
+unsigned long BCD_to_DEC(unsigned long bcdByte);

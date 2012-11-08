@@ -92,8 +92,17 @@ int rtc_handler(){
 
 void print_date(DATE_STRUCT DATE){
 
-	char dow[16];
-	char ext[2];
+	char dow[32] = "";
+	char ext[32] = "";
+	char month[32] = "";
+
+	DATE.seconds = BCD_to_DEC(DATE.seconds);
+	DATE.minutes = BCD_to_DEC(DATE.minutes);
+	DATE.hours = BCD_to_DEC(DATE.hours);
+	DATE.dayOfWeek = BCD_to_DEC(DATE.dayOfWeek);
+	DATE.dayOfMonth = BCD_to_DEC(DATE.dayOfMonth);
+	DATE.month = BCD_to_DEC(DATE.month);
+	DATE.year = BCD_to_DEC(DATE.year);
 
 	switch(DATE.dayOfWeek){
 		case 1:
@@ -149,5 +158,55 @@ void print_date(DATE_STRUCT DATE){
 			break;
 	}
 
-	printf("Today is %s, the %d%s of %d of %d.\nIt's %d:%d:%d.", dow, DATE.dayOfMonth, ext, DATE.month, DATE.year, DATE.hours, DATE.minutes, DATE.seconds);
+	switch(DATE.month){
+		case 1:
+			strcpy(month, "January");
+			break;
+		case 2:
+			strcpy(month, "February");
+			break;
+		case 3:
+			strcpy(month, "March");
+			break;
+		case 4:
+			strcpy(month, "April");
+			break;
+		case 5:
+			strcpy(month, "May");
+			break;
+		case 6:
+			strcpy(month, "June");
+			break;
+		case 7:
+			strcpy(month, "July");
+			break;
+		case 8:
+			strcpy(month, "August");
+			break;
+		case 9:
+			strcpy(month, "September");
+			break;
+		case 10:
+			strcpy(month, "October");
+			break;
+		case 11:
+			strcpy(month, "November");
+			break;
+		case 12:
+			strcpy(month, "December");
+			break;
+		default:
+			strcpy(month, "ERROR");
+			break;
+	}
+
+	printf("Today is %s, the %d%s of %s of 20%d.\nIt's %d:%d:%d.", dow, DATE.dayOfMonth, ext, month, DATE.year, DATE.hours, DATE.minutes, DATE.seconds);
+}
+
+unsigned long BCD_to_DEC(unsigned long bcdByte){
+	return (((bcdByte & 0xF0) >> 4) * 10) + (bcdByte & 0x0F);
+}
+
+unsigned long DEC_to_BCD(unsigned long decimalByte){
+	return (((decimalByte / 10) << 4) | (decimalByte % 10));
 }

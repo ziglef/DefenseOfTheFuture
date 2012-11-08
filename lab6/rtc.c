@@ -1,3 +1,7 @@
+#include <minix/syslib.h>
+#include <minix/drivers.h>
+#include <minix/sysutil.h>
+
 #include "rtc.h"
 
 void enable(){
@@ -33,7 +37,7 @@ void rtc_read(unsigned long reg, unsigned long *byte){
 
 void rtc_write(unsigned long reg, unsigned long byte){
 	disable();
-	sys_outb(RTC_ADDRESS_REG, rtc_reg);
+	sys_outb(RTC_ADDRESS_REG, reg);
 	sys_outb(RTC_DATA_REG, byte);
 	enable();
 }

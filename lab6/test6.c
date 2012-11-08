@@ -1,3 +1,5 @@
+#include "rtc.h"
+
 int test_conf(void) {
 	unsigned long regA, regB, regC, regD;
 

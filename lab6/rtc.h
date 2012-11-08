@@ -1,3 +1,7 @@
+#include <minix/syslib.h>
+#include <minix/drivers.h>
+#include <minix/sysutil.h>
+
 // RTC DEFINES AND CONSTANTS
 
 #define BIT(n) 					(0x01<<(n))
@@ -66,9 +70,22 @@
 #define RTC_D_1					BIT(1)		// Always 0
 #define RTC_D_0					BIT(0)		// Always 0
 
+typedef struct{
+	int hook_id;
+}RTC_STRUCT;
 
-void print_date(DATE_STRUCT DATE);
+typedef struct{
+	unsigned long seconds;
+	unsigned long minutes;
+	unsigned long hours;
+	unsigned long dayOfWeek;
+	unsigned long dayOfMonth;
+	unsigned long month;
+	unsigned long year;
+}DATE_STRUCT;
+
 int rtc_handler();
+void print_date(DATE_STRUCT DATE);
 void enable();
 void disable();
 void rtc_read(unsigned long reg, unsigned long *byte);

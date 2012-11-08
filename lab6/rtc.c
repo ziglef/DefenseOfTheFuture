@@ -1,22 +1,4 @@
-#include <minix/syslib.h>
-#include <minix/drivers.h>
-#include <minix/sysutil.h>
-
 #include "rtc.h"
-
-typedef struct{
-	int hook_id;
-}RTC_STRUCT;
-
-typedef struct{
-	unsigned long seconds;
-	unsigned long minutes;
-	unsigned long hours;
-	unsigned long dayOfWeek;
-	unsigned long dayOfMonth;
-	unsigned long month;
-	unsigned long year;
-}DATE_STRUCT;
 
 RTC_STRUCT rtc = {1};
 
@@ -90,16 +72,16 @@ int rtc_handler(){
 	DATE_STRUCT DATE;
 
 
-	rtc_read(RTC_REGC, REG_C);
+	rtc_read(RTC_REGC, &REG_C);
 
 	if(((REG_C & RTC_UF)&&RTC_UF)){
-		rtc_read(RTC_SECONDS, DATE.seconds);
-		rtc_read(RTC_MINUTES, DATE.minutes);
-		rtc_read(RTC_HOURS, DATE.hours);
-		rtc_read(RTC_DOW, DATE.dow);
-		rtc_read(RTC_DOM, DATE.dom);
-		rtc_read(RTC_MONTH, DATE.month);
-		rtc_read(RTC_YEAR, DATE.year);
+		rtc_read(RTC_SECONDS, &(DATE.seconds));
+		rtc_read(RTC_MINUTES, &(DATE.minutes));
+		rtc_read(RTC_HOURS, &(DATE.hours));
+		rtc_read(RTC_DOW, &(DATE.dayOfWeek));
+		rtc_read(RTC_DOM, &(DATE.dayOfMonth));
+		rtc_read(RTC_MONTH, &(DATE.month));
+		rtc_read(RTC_YEAR, &(DATE.year));
 
 		print_date(DATE);
 		return 1;
@@ -113,7 +95,7 @@ void print_date(DATE_STRUCT DATE){
 	char dow[16];
 	char ext[2];
 
-	switch(DATE.dow){
+	switch(DATE.dayOfWeek){
 		case 1:
 			strcpy(dow, "Sunday");
 			break;
@@ -140,32 +122,32 @@ void print_date(DATE_STRUCT DATE){
 			break;
 	}
 
-	switch(DATE.dom){
+	switch(DATE.dayOfMonth){
 		case 1:
-			strcpy(dom, "st");
+			strcpy(ext, "st");
 			break;
 		case 2:
-			strcpy(dom, "nd");
+			strcpy(ext, "nd");
 			break;
 		case 3:
-			strcpy(dom, "rd");
+			strcpy(ext, "rd");
 			break;
 		case 21:
-			strcpy(dom, "st");
+			strcpy(ext, "st");
 			break;
 		case 22:
-			strcpy(dom, "nd");
+			strcpy(ext, "nd");
 			break;
 		case 23:
-			strcpy(dom, "rd");
+			strcpy(ext, "rd");
 			break;
 		case 31:
-			strcpy(dom, "st");
+			strcpy(ext, "st");
 			break;
 		default:
-			strcpy(dom, "th");
+			strcpy(ext, "th");
 			break;
 	}
 
-	printf("Today is %s, the %d%s of %d of %d.\nIt's %d:%d:%d.", dow, DATE.dom, dom, DATE.month, DATE.year, DATE.hours, DATE.minutes, DATE.seconds);
+	printf("Today is %s, the %d%s of %d of %d.\nIt's %d:%d:%d.", dow, DATE.dayOfMonth, ext, DATE.month, DATE.year, DATE.hours, DATE.minutes, DATE.seconds);
 }

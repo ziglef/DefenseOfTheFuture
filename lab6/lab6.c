@@ -10,7 +10,6 @@
 
 #include <minix/drivers.h>
 
-
 #endif
 
 #include "test6.h"

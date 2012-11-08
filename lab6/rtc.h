@@ -67,7 +67,8 @@
 #define RTC_D_0					BIT(0)		// Always 0
 
 
-void rtc_handler();
+void print_date(DATE_STRUCT DATE);
+int rtc_handler();
 void enable();
 void disable();
 void rtc_read(unsigned long reg, unsigned long *byte);

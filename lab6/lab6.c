@@ -49,7 +49,7 @@ static void print_usage(char *argv[]) {
   printf("Usage: one of the following:\n"
 	 "\t service run %s -args \"config\"  \n"
 	 "\t service run %s -args \"date\" \n"
-	 "\t service run %s -args \"period ???\" \n",
+	 "\t service run %s -args \"int <delta>\" \n",
 	argv[0], argv[0], argv[0]);
 }
 
@@ -57,6 +57,7 @@ static void print_usage(char *argv[]) {
 
 static int proc_args(int argc, char *argv[]) {
 
+		unsigned long delta;
 
         if (strncmp(argv[1], "config", strlen("config")) == 0) {
                 if (argc != 2) {
@@ -70,15 +71,25 @@ static int proc_args(int argc, char *argv[]) {
 
         } else if (strncmp(argv[1], "date", strlen("date")) == 0) {
                 if (argc != 2) {
-                        printf("test_asynch: wrong number of arguments for test of test_date() \n");
+                        printf("test_date: wrong number of arguments for test of test_date() \n");
                         return 1;
                 }
 
                 test_date();
                 printf("\n");
                 return 0;
-        }
-             else {
+        } else if (strncmp(argv[1], "int", strlen("int")) == 0) {
+                        if (argc != 3) {
+                                printf("test_int: wrong number of arguments for test of test_date() \n");
+                                return 1;
+                        }
+
+                        if ((delta = parse_ulong(argv[2], 10)) == ULONG_MAX) return 1;
+
+                        test_int(delta);
+                        printf("\n");
+                        return 0;
+        } else {
                 printf("test: non valid function \"%s\" to test\n", argv[1]);
                 return 1;
         }

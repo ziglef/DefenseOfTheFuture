@@ -73,7 +73,7 @@ int rtc_handler(){
 
 	rtc_read(RTC_REGC, &REG_C);
 
-	if(((REG_C & RTC_UF)&&RTC_UF)){
+	if((REG_C & RTC_UF)){
 		rtc_read(RTC_SECONDS, &(DATE.seconds));
 		rtc_read(RTC_MINUTES, &(DATE.minutes));
 		rtc_read(RTC_HOURS, &(DATE.hours));
@@ -86,7 +86,7 @@ int rtc_handler(){
 		return 1;
 	}
 
-	if(((REG_C & RTC_AF)&&RTC_AF)){
+	if((REG_C & RTC_AF)){
 		return 2;
 	}
 

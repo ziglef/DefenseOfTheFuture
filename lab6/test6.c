@@ -42,7 +42,7 @@ int test_date(void) {
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
 					if(msg.NOTIFY_ARG & RTC_BIT_MASK){
-						if(rtc_handler()) if(rtc_unsubscribe()) return 1; else; return 0;
+						if(rtc_handler()) if(rtc_unsubscribe()) return 1; else return 0;
 					}
 					break;
 				default:
@@ -59,6 +59,7 @@ int test_int(unsigned long delta) {
 
 	int handler_ret = 0;
 	unsigned long REGB;
+	unsigned long REGC;
 	unsigned long seconds, minutes, hours;
 
 	hours = delta / 3600;
@@ -66,7 +67,7 @@ int test_int(unsigned long delta) {
 	seconds = (delta-(hours*3600)-(minutes*60));
 
 	rtc_read(RTC_REGB, &REGB);
-	rtc_write(RTC_REGB, ((REGB ^ RTC_UIE) ^ RTC_AIE));
+	rtc_write(RTC_REGB, (((REGB ^ RTC_UIE) ^ RTC_AIE) ^ RTC_PIE));
 
 	DEC_to_BCD(seconds);
 	DEC_to_BCD(minutes);
@@ -75,6 +76,8 @@ int test_int(unsigned long delta) {
 	rtc_write(RTC_SECONDS_ALARM, seconds);
 	rtc_write(RTC_MINUTES_ALARM, minutes);
 	rtc_write(RTC_HOURS_ALARM, hours);
+
+	printf("test_int: Setting alarm within %d s\n", delta);
 
 	if(rtc_subscribe() < 0){
 		printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON RTC\n");
@@ -91,20 +94,20 @@ int test_int(unsigned long delta) {
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
 					if(msg.NOTIFY_ARG & RTC_BIT_MASK){
-						handler_ret = rtc_handler();
-						if(handler_ret){
-							if(rtc_unsubscribe())
-								return 1;
-							else
-								return 0;
-						}else if(handler_ret == 2){
-							printf("test_int: Alarm raised after %d s", delta);
+						rtc_read(RTC_REGC, &REGC);
+						if(!((REGC & RTC_UF)&&RTC_UF)){
+							handler_ret = rtc_handler();
+							if(handler_ret == 2){
+								printf("test_int: Alarm raised after %d s", delta);
+								if(rtc_unsubscribe()) return 1; else return 0;
+							}
 						}
-					}
 					break;
 				default:
 					break;
+					}
 			}
 		}
 	}
+	if(rtc_unsubscribe()) return 1; else return 0;
 }

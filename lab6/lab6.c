@@ -79,16 +79,16 @@ static int proc_args(int argc, char *argv[]) {
                 printf("\n");
                 return 0;
         } else if (strncmp(argv[1], "int", strlen("int")) == 0) {
-                        if (argc != 3) {
-                                printf("test_int: wrong number of arguments for test of test_date() \n");
-                                return 1;
-                        }
+				if (argc != 3) {
+						printf("test_int: wrong number of arguments for test of test_int() \n");
+						return 1;
+				}
 
-                        if ((delta = parse_ulong(argv[2], 10)) == ULONG_MAX) return 1;
+				if ((delta = parse_ulong(argv[2], 10)) == ULONG_MAX) return 1;
 
-                        test_int(delta);
-                        printf("\n");
-                        return 0;
+				test_int(delta);
+				printf("\n");
+				return 0;
         } else {
                 printf("test: non valid function \"%s\" to test\n", argv[1]);
                 return 1;

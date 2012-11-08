@@ -7,6 +7,7 @@
 #define RTC_DATA_REG			0x71
 
 // RTC REGISTER A
+#define RTC_REGA				10
 #define RTC_UIP					BIT(7)
 #define RTC_DV2					BIT(6)
 #define RTC_DV1					BIT(5)
@@ -17,6 +18,7 @@
 #define RTC_RS0					BIT(0)
 
 // RTC REGISTER B
+#define RTC_REGA				11
 #define RTC_SET					BIT(7)
 #define RTC_PIE					BIT(6)
 #define RTC_AIE					BIT(5)
@@ -27,6 +29,7 @@
 #define RTC_DSE					BIT(0)
 
 // RTC REGISTER C
+#define RTC_REGA				12
 #define RTC_IRQF				BIT(7)
 #define RTC_PF					BIT(6)
 #define RTC_AF					BIT(5)
@@ -37,6 +40,7 @@
 #define RTC_C_0					BIT(0)
 
 // RTC REGISTER D
+#define RTC_REGA				13
 #define RTC_VRT					BIT(7)
 #define RTC_D_6					BIT(6)
 #define RTC_D_5					BIT(5)
@@ -45,3 +49,9 @@
 #define RTC_D_2					BIT(2)
 #define RTC_D_1					BIT(1)
 #define RTC_D_0					BIT(0)
+
+
+void enable();
+void disable();
+void rtc_read(unsigned long reg, unsigned long *byte);
+void rtc_write(unsigned long reg, unsigned long byte);

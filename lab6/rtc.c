@@ -71,7 +71,6 @@ int rtc_handler(){
 	unsigned long REG_C;
 	DATE_STRUCT DATE;
 
-
 	rtc_read(RTC_REGC, &REG_C);
 
 	if(((REG_C & RTC_UF)&&RTC_UF)){
@@ -85,6 +84,10 @@ int rtc_handler(){
 
 		print_date(DATE);
 		return 1;
+	}
+
+	if(((REG_C & RTC_AF)&&RTC_AF)){
+		return 2;
 	}
 
 	return 0;

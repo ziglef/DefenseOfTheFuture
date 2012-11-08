@@ -52,6 +52,59 @@ int test_date(void) {
 	}
 }
 
-int test_int(/* to be defined in class */) {
-	/* To be completed */
+int test_int(unsigned long delta) {
+	int ipc_status;
+	message msg;
+	int r;
+
+	int handler_ret = 0;
+	unsigned long REGB;
+	unsigned long seconds, minutes, hours;
+
+	hours = delta / 3600;
+	minutes = (delta-(hours*3600)) / 60;
+	seconds = (delta-(hours*3600)-(minutes*60));
+
+	rtc_read(RTC_REGB, &REGB);
+	rtc_write(RTC_REGB, ((REGB ^ RTC_UIE) ^ RTC_AIE));
+
+	DEC_to_BCD(seconds);
+	DEC_to_BCD(minutes);
+	DEC_to_BCD(hours);
+
+	rtc_write(RTC_SECONDS_ALARM, seconds);
+	rtc_write(RTC_MINUTES_ALARM, minutes);
+	rtc_write(RTC_HOURS_ALARM, hours);
+
+	if(rtc_subscribe() < 0){
+		printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON RTC\n");
+		return 1;
+	}
+
+	while(1){
+		r = driver_receive(ANY, &msg, &ipc_status);
+		if( r != 0){
+			printf("driver_receive failed with: %d\n", r);
+			continue;
+		}
+		if(is_ipc_notify(ipc_status)){
+			switch(_ENDPOINT_P(msg.m_source)){
+				case HARDWARE:
+					if(msg.NOTIFY_ARG & RTC_BIT_MASK){
+						handler_ret = rtc_handler();
+						if(handler_ret){
+							if(rtc_unsubscribe())
+								return 1;
+							else
+								return 0;
+						}else if(handler_ret == 2){
+							printf("test_int: Alarm raised after %d s", delta);
+						}
+					}
+					break;
+				default:
+					break;
+			}
+		}
+	}
 }

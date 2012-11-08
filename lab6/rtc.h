@@ -18,8 +18,11 @@
 
 // RTC TIME REGISTERS
 #define RTC_SECONDS 			0			// Range 0-59
+#define RTC_SECONDS_ALARM		1			// Range 0-59
 #define RTC_MINUTES 			2			// Range 0-59
+#define RTC_MINUTES_ALARM		3			// Range 0-59
 #define RTC_HOURS 				4			// Range 1-12 || 0-23
+#define RTC_HOURS_ALARM			5			// Range 1-12 || 0-23
 #define RTC_DOW 				6			// Range 1-7 (Sunday = 1)
 #define RTC_DOM 				7			// Range 1-31
 #define RTC_MONTH 				8 			// Range 1-12

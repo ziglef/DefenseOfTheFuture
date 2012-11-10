@@ -24,8 +24,6 @@ int main(int argc, char **argv) {
 /* Initialize service */
 sef_startup();
 
-
-
 if (argc == 1) {
 	print_usage(argv);
     return 0;
@@ -81,7 +79,7 @@ static int proc_args(int argc, char *argv[]) {
                         return 1;
                 }
 
-                test_date();
+
                 printf("\n");
                 return 0;
         } else if (strncmp(argv[1], "int", strlen("int")) == 0) {
@@ -92,7 +90,7 @@ static int proc_args(int argc, char *argv[]) {
 
 
 
-				test_int();
+
 				printf("\n");
 				return 0;
         } else {

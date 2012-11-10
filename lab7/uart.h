@@ -3,8 +3,8 @@
 #include <minix/sysutil.h>
 
 // FUNCTIONS
-void uart_read(unsigned long base_addr, unsigned short OFFSET, unsigned long *byte);
-void uart_write(unsigned long base_addr, unsigned short OFFSET, unsigned long byte);
+void uart_read(unsigned short base_addr, unsigned short OFFSET, unsigned long *byte);
+void uart_write(unsigned short base_addr, unsigned short OFFSET, unsigned long byte);
 
 // BIT FUNCTION
 #define BIT(n)					(0x01 << n)

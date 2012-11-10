@@ -2,8 +2,7 @@ int test_conf(unsigned short base_addr) {
     /* To be completed */
 }
 
-int test_set(unsigned short base_addr, unsigned long bits, unsigned long stop, 
-	     long parity, unsigned long rate) { 
+int test_set(unsigned short base_addr, unsigned long bits, unsigned long stop, long parity, unsigned long rate) {
     /* To be completed */
 }
 

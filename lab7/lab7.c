@@ -61,7 +61,7 @@ static void print_usage(char *argv[]) {
 
 static int proc_args(int argc, char *argv[]) {
 
-		unsigned long BASE;
+		unsigned short BASE;
 
         if (strncmp(argv[1], "config", strlen("config")) == 0) {
                 if (argc != 2) {

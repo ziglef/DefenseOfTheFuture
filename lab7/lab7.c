@@ -90,7 +90,7 @@ static int proc_args(int argc, char *argv[]) {
 						return 1;
 				}
 
-				if ((delta = parse_ulong(argv[2], 10)) == ULONG_MAX) return 1;
+
 
 				test_int(delta);
 				printf("\n");

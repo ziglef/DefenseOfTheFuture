@@ -92,7 +92,7 @@ static int proc_args(int argc, char *argv[]) {
 
 
 
-				test_int(delta);
+				test_int();
 				printf("\n");
 				return 0;
         } else {

@@ -67,7 +67,7 @@ static int proc_args(int argc, char *argv[]) {
    printf("test_conf: wrong number of arguments for test of test_conf() \n");
    return 1;
   }
-  if ((base_addr = parse_ulong(argv[2], 10)) == ULONG_MAX)
+  if ((base_addr = parse_ulong(argv[2], 16)) == ULONG_MAX)
    return 1;
 
   returnVal = test_conf((unsigned short)base_addr);

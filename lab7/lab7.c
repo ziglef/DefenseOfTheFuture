@@ -67,7 +67,7 @@ static int proc_args(int argc, char *argv[]) {
                         return 1;
                 }
 
-                if ((BASE = parse_ulong(argv[2], 10)) == ULONG_MAX) return 1;
+                if ((BASE = parse_ulong(argv[2], 16)) == ULONG_MAX) return 1;
 
                 test_conf(BASE);
                 printf("\n");

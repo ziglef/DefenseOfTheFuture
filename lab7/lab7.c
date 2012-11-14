@@ -37,18 +37,18 @@ return 0;
 #ifdef EMUL
 static void print_usage(char *argv[]) {
   printf("Usage: one of the following:\n"
-	 "\t %s config \n"
-	 "\t %s set \n"
+	 "\t %s config 1|2\n"
+	 "\t %s set 1|2 <short base_addr> <long bits> <long stop> <long parity> <long rate>\n"
 	 "\t %s poll \n"
 	 "\t %s int \n"
 	 "\t %s fifo \n",
-	 argv[0], argv[0]);
+	 argv[0], argv[0],argv[0],argv[0],argv[0]);
 }
 #else
 static void print_usage(char *argv[]) {
   printf("Usage: one of the following:\n"
-	 "\t service run %s -args \"config\"  \n"
-	 "\t service run %s -args \"set\" \n"
+	 "\t service run %s -args \"config 1|2\"  \n"
+	 "\t service run %s -args \"set 1|2 <short base_addr> <long bits> <long stop> <long parity> <long rate>\" \n"
 	 "\t service run %s -args \"poll\" \n"
 	 "\t service run %s -args \"int\" \n"
 	 "\t service run %s -args \"fifo\" \n",

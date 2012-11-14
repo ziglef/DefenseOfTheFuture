@@ -52,7 +52,7 @@ static void print_usage(char *argv[]) {
 	 "\t service run %s -args \"poll\" \n"
 	 "\t service run %s -args \"int\" \n"
 	 "\t service run %s -args \"fifo\" \n",
-	argv[0], argv[0], argv[0], argv[0], argv[0]);
+	argv[0], argv[0], argv[0]);
 }
 
 #endif
@@ -62,7 +62,7 @@ static int proc_args(int argc, char *argv[]) {
 		unsigned short BASE;
 
         if (strncmp(argv[1], "config", strlen("config")) == 0) {
-                if (argc != 3) {
+                if (argc != 2) {
                         printf("test_conf: wrong number of arguments for test of test_conf() \n");
                         return 1;
                 }

@@ -161,7 +161,7 @@ int test_poll(unsigned short base_addr, unsigned char tx, unsigned long bits,
 			}
 
 			uart_read(base_addr, UART_RBR, &ch);
-			printf("%c", ch);
+			printf("%c", (char)ch);
 
 			if(LSR & LSR_OVERRUN_ERR){
 				printf("OVERRUN ERROR!\n");
@@ -196,20 +196,20 @@ int test_int(unsigned short base_addr, unsigned char tx, unsigned long bits,
 		  unsigned long stop, long parity, unsigned long rate, int stringc,
 		  char *strings[]) {
 
-	if(base_addr = 0x3F8)
+	if(base_addr == 0x3F8)
 		uart_subscribe(0x04);
-	else if(base_addr = 0x2F8)
+	else if(base_addr == 0x2F8)
 		uart_subscribe(0x03);
 
-	unsigned long LSR;
+	unsigned long IER, IIR, LSR;
 	unsigned long ch = '\0';
 
 	unsigned int i,aux=0;
 	char j='\0';
 
-	uart_read(base_addr, UART_LSR, &LSR);
-
 	test_set(base_addr, bits, stop, parity, rate);
+	uart_read(base_addr, UART_IER, &IER);
+	uart_write(base_addr, UART_IER, ((IER&0xF9) ^ 0x06));
 
 	if(tx == 0){ // Receiver Mode
 		while(ch != '.'){

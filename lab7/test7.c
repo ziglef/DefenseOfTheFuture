@@ -3,8 +3,6 @@
 int test_conf(unsigned short base_addr) {
     unsigned long RBR, DLL, IER, DLH, IIR, LCR, MCR, SR;
 
-    printf("0x%X\n\n",base_addr);
-
     // SETTING DLAB TO 0
     uart_write(base_addr, UART_LCR, (LCR & 0x7F));
     // DLAB = 0
@@ -29,7 +27,7 @@ int test_conf(unsigned short base_addr) {
     printf("LCR: 0x%X\n", LCR);
     printf("MCR: 0x%X\n", MCR);
     printf("SR: 0x%X\n", SR);
-    printf("DLL: 0x%X\n", DLL); // passar para baixo
+    printf("DLL: 0x%X\n", DLL);
     printf("DLH: 0x%X\n", DLH);
 
     int wordlength;

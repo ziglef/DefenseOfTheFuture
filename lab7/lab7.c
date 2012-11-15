@@ -67,15 +67,18 @@ static int proc_args(int argc, char *argv[]) {
                         return 1;
                 }
 
-                if ((BASE = parse_ulong(argv[2], 16)) == ULONG_MAX) return 1;
+                if ((BASE = parse_ulong(argv[2], 10)) == ULONG_MAX) return 1;
 
-                test_conf(BASE);
+                if(BASE == 1)
+                	test_conf(0x3F8);
+                else
+                	test_conf(0x2F8);
                 printf("\n");
                 return 0;
 
-        } else if (strncmp(argv[1], "date", strlen("date")) == 0) {
+        } else if (strncmp(argv[1], "set", strlen("set")) == 0) {
                 if (argc != 2) {
-                        printf("test_date: wrong number of arguments for test of test_date() \n");
+                        printf("test_set: wrong number of arguments for test of test_set() \n");
                         return 1;
                 }
 

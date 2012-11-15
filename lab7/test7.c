@@ -84,14 +84,10 @@ int test_set(unsigned short base_addr, unsigned long bits, unsigned long stop, l
 
 	unsigned long LCR, DL;
 
-	printf("%d\n%d\n%d\n%d\n", bits, stop, parity, rate);
-
-
 	// SETTING DLAB TO 0
 	uart_write(base_addr, UART_LCR, (LCR & 0x7F));
 	// READING LCR
 	uart_read(base_addr, UART_LCR, &LCR);
-	printf("LCR: 0x%X\n", LCR);
 
 	if(bits == 5)
 		LCR = ((LCR >> 2) << 2);
@@ -129,7 +125,6 @@ int test_set(unsigned short base_addr, unsigned long bits, unsigned long stop, l
 
 	// WRITE LCR
 	uart_write(base_addr, UART_LCR, LCR);
-	printf("LCR: 0x%X\n", LCR);
 
 	// SETTING DLAB TO 1
 	uart_write(base_addr, UART_LCR, (LCR | 0x80));

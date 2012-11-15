@@ -112,13 +112,13 @@ int test_set(unsigned short base_addr, unsigned long bits, unsigned long stop, l
 
 	if(parity == 1)
 		LCR = ((LCR&0xC7) ^ 0x08);
-	else if(parity == 3)
+	else if(parity == 0)
 		LCR = ((LCR&0xC7) ^ 0x18);
 	else if(parity == 5)
 		LCR = ((LCR&0xC7) ^ 0x28);
 	else if(parity == 7)
 		LCR = ((LCR&0xC7) ^ 0x38);
-	else if((parity >= 0) && (parity <= 6))
+	else if(parity == -1)
 		LCR = (LCR&0xC7);
 	else
 		printf("Wrong value for parity\n");
@@ -138,8 +138,59 @@ int test_set(unsigned short base_addr, unsigned long bits, unsigned long stop, l
 	uart_write(base_addr, UART_LCR, (LCR & 0x7F));
 }
 
-int test_poll(/* details to be provided */) { 
-    /* To be completed */
+int test_poll(unsigned short base_addr, unsigned char tx, unsigned long bits,
+			  unsigned long stop, long parity, unsigned long rate, int stringc,
+			  char *strings[]) {
+
+	unsigned long LSR;
+	unsigned long ch = '\0';
+
+	unsigned int i,aux=0;
+	char j='\0';
+
+	uart_read(base_addr, UART_LSR, &LSR);
+
+	test_set(base_addr, bits, stop, parity, rate);
+
+	if(tx == 0){ // Receiver Mode
+		while(ch != '.'){
+			while( !(LSR & LSR_DATA_READY) ) {
+				ticksdelay(DELAY_US);
+				uart_read(base_addr, UART_LSR, &LSR);
+			}
+
+			uart_read(base_addr, UART_RBR, ch);
+			printf("%c", ch);
+
+			if(LSR & LSR_OVERRUN_ERR){
+				printf("OVERRUN ERROR!\n");
+			}
+			if(LSR & LSR_PARITY_ERR){
+				printf("PARITY ERROR!\n");
+			}
+			if(LSR & LSR_FRAMING_ERR){
+				printf("FRAMING ERROR!\n");
+			}
+
+		}
+	}else if(tx == 1){ // Transmitter Mode
+
+		for(i=0; i<stringc; i++){
+			for(j=strings[i][aux]; j!='\0'; j=strings[i][aux]){
+				while( !(LSR & LSR_EMPTY_THR) ) {
+					ticksdelay(DELAY_US);
+					uart_read(base_addr, UART_LSR, &LSR);
+				}
+
+				uart_write(base_addr, UART_THR, j);
+
+				aux++;
+			}
+			aux = 0;
+		}
+
+
+	}
 }
 
 int test_int(/* details to be provided */) { 

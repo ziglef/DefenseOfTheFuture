@@ -91,14 +91,14 @@ void uart_write(unsigned short base_addr, unsigned short OFFSET, unsigned long b
 #define BIT(3) - AUXILIARY OUTPUT 2
 #define BIT(4) - LOOPBACK MODE
 #define BIT(5) - AUTOFLOW CONTROL ENABLED (16750)
-
+*/
 // LINE STATUS REGISTER (LSR)
-#define BIT(0) - DATA READY
-#define BIT(1) - OVERRUN ERRO
-#define BIT(2) - PARITY ERROR
-#define BIT(3) - FRAMING ERROR
-#define BIT(4) - BREAK INTERRUPT
-#define BIT(5) - EMPTY TRANSMITTER HOLDING REGISTER
+#define LSR_DATA_READY 		BIT(0)
+#define LSR_OVERRUN_ERR		BIT(1)
+#define LSR_PARITY_ERR		BIT(2)
+#define LSR_FRAMING_ERR		BIT(3)/*
+#define BIT(4) - BREAK INTERRUPT*/
+#define LSR_EMPTY_THR		BIT(5)/*
 #define BIT(6) - EMPTY DATA HOLDING REGISTER
 #define BIT(7) - ERROR IN RECEIVED FIFO
 
@@ -111,3 +111,5 @@ void uart_write(unsigned short base_addr, unsigned short OFFSET, unsigned long b
 #define BIT(5) - DATA SET READY
 #define BIT(6) - RING INDICATOR
 #define BIT(7) - CARRIOR DETECT*/
+
+#define DELAY_US 				20000

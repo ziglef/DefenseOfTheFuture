@@ -135,6 +135,40 @@ static int proc_args(int argc, char *argv[]) {
             test_poll(BASE, tx, bits, stop, parity, rate, stringc, strings);
             printf("\n");
             return 0;
+        } else if (strncmp(argv[1], "int", strlen("int")) == 0) {
+            if (argc < 10) {
+                    printf("test_int: wrong number of arguments for test of test_int() \n");
+                    return 1;
+            }
+            if ((BASE = parse_ulong(argv[2], 16)) == ULONG_MAX)
+                    return 1;
+            if((tx = parse_ulong(argv[3], 16)) == UCHAR_MAX)
+                    return 1;
+            if ((bits = parse_ulong(argv[4], 10)) == ULONG_MAX)
+                    return 1;
+            if ((stop = parse_ulong(argv[5], 10)) == ULONG_MAX)
+                    return 1;
+            if ((parity = parse_long(argv[6], 10)) == LONG_MAX)
+                    return 1;
+            if ((rate = parse_ulong(argv[7], 10)) == ULONG_MAX)
+                    return 1;
+            if ((stringc = parse_long(argv[8], 10)) == INT_MAX)
+                    return 1;
+            //parsing of char *
+            char vec[argc -(2+7)];
+            unsigned int i;
+            if (argc != 9)
+            {
+                    for(i=9; i<argc; i++)
+                    {
+                            if ((vec[i-9] = parse_ulong(argv[i], 10)) == UCHAR_MAX)
+                                    return 1;
+                    }
+            }
+
+            test_int(BASE, tx, bits, stop, parity, rate, stringc, strings);
+            printf("\n");
+            return 0;
         } else {
                 printf("test: non valid function \"%s\" to test\n", argv[1]);
                 return 1;

@@ -212,26 +212,7 @@ int test_int(unsigned short base_addr, unsigned char tx, unsigned long bits,
 	uart_write(base_addr, UART_IER, ((IER&0xF9) ^ 0x06));
 
 	if(tx == 0){ // Receiver Mode
-		while(ch != '.'){
-			while( !(LSR & LSR_DATA_READY) ) {
-				tickdelay(micros_to_ticks(DELAY_US));
-				uart_read(base_addr, UART_LSR, &LSR);
-			}
-
-			uart_read(base_addr, UART_RBR, &ch);
-			printf("%c", ch);
-
-			if(LSR & LSR_OVERRUN_ERR){
-				printf("OVERRUN ERROR!\n");
-			}
-			if(LSR & LSR_PARITY_ERR){
-				printf("PARITY ERROR!\n");
-			}
-			if(LSR & LSR_FRAMING_ERR){
-				printf("FRAMING ERROR!\n");
-			}
-
-		}
+		return 0;
 	}else{ // Transmitter Mode
 
 		for(i=0; i<stringc; i++){

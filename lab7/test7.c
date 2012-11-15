@@ -221,7 +221,7 @@ int test_int(unsigned short base_addr, unsigned char tx, unsigned long bits,
 				tickdelay(micros_to_ticks(DELAY_US));
 				uart_read(base_addr, UART_IIR, &IIR);
 			}
-			if(IIR&0x02){
+			if((IIR&0x02)&&(!(IIR&0x04))&&(!(IIR&0x08))){
 				for(i=0; i<stringc; i++){
 					for(j=strings[i][aux]; j!='\0'; j=strings[i][aux]){
 						while( !(LSR & LSR_EMPTY_THR) ) {
@@ -243,6 +243,8 @@ int test_int(unsigned short base_addr, unsigned char tx, unsigned long bits,
 	}
 }
 
-int test_fifo(/* details to be provided */) {
+int test_fifo(unsigned short base_addr, unsigned char tx, unsigned long bits,
+		  unsigned long stop, long parity, unsigned long rate, int stringc,
+		  char *strings[]){
     /* To be completed */
 }

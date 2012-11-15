@@ -107,9 +107,9 @@ int test_set(unsigned short base_addr, unsigned long bits, unsigned long stop, l
 		return -1;
   	}
 
-	if(bits == 1)
+	if(stop == 1)
 		LCR = (LCR & 0xFB);
-	else if(bits == 2)
+	else if(stop == 2)
 	    LCR = ((LCR & 0xFB) ^ 0x04);
 	else
 		printf("Wrong value for stop bits\n");

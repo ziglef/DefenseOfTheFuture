@@ -1,3 +1,5 @@
+#include <minix/sysutil.h>
+
 #include "uart.h"
 
 int test_conf(unsigned short base_addr) {
@@ -159,7 +161,7 @@ int test_poll(unsigned short base_addr, unsigned char tx, unsigned long bits,
 				uart_read(base_addr, UART_LSR, &LSR);
 			}
 
-			uart_read(base_addr, UART_RBR, ch);
+			uart_read(base_addr, UART_RBR, &ch);
 			printf("%c", ch);
 
 			if(LSR & LSR_OVERRUN_ERR){

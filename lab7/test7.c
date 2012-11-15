@@ -1,5 +1,4 @@
 #include <minix/sysutil.h>
-
 #include "uart.h"
 
 int test_conf(unsigned short base_addr) {
@@ -157,7 +156,7 @@ int test_poll(unsigned short base_addr, unsigned char tx, unsigned long bits,
 	if(tx == 0){ // Receiver Mode
 		while(ch != '.'){
 			while( !(LSR & LSR_DATA_READY) ) {
-				ticksdelay(DELAY_US);
+				tickdelay(micros_to_ticks(DELAY_US));
 				uart_read(base_addr, UART_LSR, &LSR);
 			}
 
@@ -175,12 +174,12 @@ int test_poll(unsigned short base_addr, unsigned char tx, unsigned long bits,
 			}
 
 		}
-	}else if(tx == 1){ // Transmitter Mode
+	}else{ // Transmitter Mode
 
 		for(i=0; i<stringc; i++){
 			for(j=strings[i][aux]; j!='\0'; j=strings[i][aux]){
 				while( !(LSR & LSR_EMPTY_THR) ) {
-					ticksdelay(DELAY_US);
+					tickdelay(micros_to_ticks(DELAY_US));
 					uart_read(base_addr, UART_LSR, &LSR);
 				}
 
@@ -190,13 +189,65 @@ int test_poll(unsigned short base_addr, unsigned char tx, unsigned long bits,
 			}
 			aux = 0;
 		}
-
-
 	}
 }
 
-int test_int(/* details to be provided */) { 
-    /* To be completed */
+int test_int(unsigned short base_addr, unsigned char tx, unsigned long bits,
+		  unsigned long stop, long parity, unsigned long rate, int stringc,
+		  char *strings[]) {
+
+	if(base_addr = 0x3F8)
+		uart_subscribe(0x04);
+	else if(base_addr = 0x2F8)
+		uart_subscribe(0x03);
+
+	unsigned long LSR;
+	unsigned long ch = '\0';
+
+	unsigned int i,aux=0;
+	char j='\0';
+
+	uart_read(base_addr, UART_LSR, &LSR);
+
+	test_set(base_addr, bits, stop, parity, rate);
+
+	if(tx == 0){ // Receiver Mode
+		while(ch != '.'){
+			while( !(LSR & LSR_DATA_READY) ) {
+				tickdelay(micros_to_ticks(DELAY_US));
+				uart_read(base_addr, UART_LSR, &LSR);
+			}
+
+			uart_read(base_addr, UART_RBR, &ch);
+			printf("%c", ch);
+
+			if(LSR & LSR_OVERRUN_ERR){
+				printf("OVERRUN ERROR!\n");
+			}
+			if(LSR & LSR_PARITY_ERR){
+				printf("PARITY ERROR!\n");
+			}
+			if(LSR & LSR_FRAMING_ERR){
+				printf("FRAMING ERROR!\n");
+			}
+
+		}
+	}else{ // Transmitter Mode
+
+		for(i=0; i<stringc; i++){
+			for(j=strings[i][aux]; j!='\0'; j=strings[i][aux]){
+				while( !(LSR & LSR_EMPTY_THR) ) {
+					tickdelay(micros_to_ticks(DELAY_US));
+					uart_read(base_addr, UART_LSR, &LSR);
+				}
+
+				uart_write(base_addr, UART_THR, j);
+
+				aux++;
+			}
+			aux = 0;
+		}
+	}
 }
 
 int test_fifo(/* details to be provided */) {

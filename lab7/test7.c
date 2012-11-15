@@ -81,7 +81,66 @@ int test_conf(unsigned short base_addr) {
 }
 
 int test_set(unsigned short base_addr, unsigned long bits, unsigned long stop, long parity, unsigned long rate) {
-    /* To be completed */
+
+	unsigned long LCR, DL;
+
+	printf("%d\n%d\n%d\n%d\n", bits, stop, parity, rate);
+
+
+	// SETTING DLAB TO 0
+	uart_write(base_addr, UART_LCR, (LCR & 0x7F));
+	// READING LCR
+	uart_read(base_addr, UART_LCR, &LCR);
+	printf("LCR: 0x%X\n", LCR);
+
+	if(bits == 5)
+		LCR = ((LCR >> 2) << 2);
+  	else if(bits == 6)
+  		LCR = ((LCR >> 2) << 2) + 0x01;
+  	else if(bits == 7)
+  		LCR = ((LCR >> 2) << 2) + 0x02;
+  	else if(bits == 8)
+  		LCR = ((LCR >> 2) << 2) + 0x03;
+  	else
+  	{
+  		printf("Wrong value for wordlength\n");
+		return -1;
+  	}
+
+	if(bits == 1)
+		LCR = (LCR & 0xFB);
+	else if(bits == 2)
+	    LCR = ((LCR & 0xFB) ^ 0x04);
+	else
+		printf("Wrong value for stop bits\n");
+
+	if(parity == 1)
+		LCR = ((LCR&0xC7) ^ 0x08);
+	else if(parity == 3)
+		LCR = ((LCR&0xC7) ^ 0x18);
+	else if(parity == 5)
+		LCR = ((LCR&0xC7) ^ 0x28);
+	else if(parity == 7)
+		LCR = ((LCR&0xC7) ^ 0x38);
+	else if((parity >= 0) && (parity <= 6))
+		LCR = (LCR&0xC7);
+	else
+		printf("Wrong value for parity\n");
+
+	// WRITE LCR
+	uart_write(base_addr, UART_LCR, LCR);
+	printf("LCR: 0x%X\n", LCR);
+
+	// SETTING DLAB TO 1
+	uart_write(base_addr, UART_LCR, (LCR | 0x80));
+
+	DL = 115200 / rate;
+
+	uart_write(base_addr, UART_DLH, (DL >> 8));
+	uart_write(base_addr, UART_DLL, (DL-((DL >> 8)<<8)));
+
+	// SETTING DLAB TO 0
+	uart_write(base_addr, UART_LCR, (LCR & 0x7F));
 }
 
 int test_poll(/* details to be provided */) { 

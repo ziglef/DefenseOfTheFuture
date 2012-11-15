@@ -38,7 +38,7 @@ return 0;
 static void print_usage(char *argv[]) {
   printf("Usage: one of the following:\n"
 	 "\t %s config 1|2\n"
-	 "\t %s set 1|2 <short base_addr> <long bits> <long stop> <long parity> <long rate>\n"
+	 "\t %s set 1|2 <long bits> <long stop> <long parity> <long rate>\n"
 	 "\t %s poll \n"
 	 "\t %s int \n"
 	 "\t %s fifo \n",
@@ -48,7 +48,7 @@ static void print_usage(char *argv[]) {
 static void print_usage(char *argv[]) {
   printf("Usage: one of the following:\n"
 	 "\t service run %s -args \"config 1|2\"  \n"
-	 "\t service run %s -args \"set 1|2 <short base_addr> <long bits> <long stop> <long parity> <long rate>\" \n"
+	 "\t service run %s -args \"set 1|2 <long bits> <long stop> <long parity> <long rate>\" \n"
 	 "\t service run %s -args \"poll\" \n"
 	 "\t service run %s -args \"int\" \n"
 	 "\t service run %s -args \"fifo\" \n",
@@ -60,6 +60,7 @@ static void print_usage(char *argv[]) {
 static int proc_args(int argc, char *argv[]) {
 
 		unsigned short BASE;
+		unsigned long bits, stop, parity, rate;
 
         if (strncmp(argv[1], "config", strlen("config")) == 0) {
                 if (argc != 3) {
@@ -77,12 +78,22 @@ static int proc_args(int argc, char *argv[]) {
                 return 0;
 
         } else if (strncmp(argv[1], "set", strlen("set")) == 0) {
-                if (argc != 2) {
+                if (argc != 7) {
                         printf("test_set: wrong number of arguments for test of test_set() \n");
                         return 1;
                 }
 
+                if ((BASE = parse_ulong(argv[2], 10)) == ULONG_MAX) return 1;
+                if ((bits = parse_ulong(argv[3], 10)) == ULONG_MAX) return 1;
+                if ((stop = parse_ulong(argv[4], 10)) == ULONG_MAX) return 1;
+                if ((parity = parse_ulong(argv[5], 10)) == ULONG_MAX) return 1;
+                if ((rate = parse_ulong(argv[6], 10)) == ULONG_MAX) return 1;
 
+
+                if(BASE == 1)
+					test_set(0x3F8, bits, stop, parity, rate);
+				else
+					test_set(0x2F8, bits, stop, parity, rate);
                 printf("\n");
                 return 0;
         } else if (strncmp(argv[1], "int", strlen("int")) == 0) {

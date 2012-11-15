@@ -215,18 +215,30 @@ int test_int(unsigned short base_addr, unsigned char tx, unsigned long bits,
 		return 0;
 	}else{ // Transmitter Mode
 
-		for(i=0; i<stringc; i++){
-			for(j=strings[i][aux]; j!='\0'; j=strings[i][aux]){
-				while( !(LSR & LSR_EMPTY_THR) ) {
-					tickdelay(micros_to_ticks(DELAY_US));
-					uart_read(base_addr, UART_LSR, &LSR);
-				}
-
-				uart_write(base_addr, UART_THR, j);
-
-				aux++;
+		uart_read(base_addr, UART_IIR, &IIR);
+		while(1){
+			while(!(IIR&0x01)){
+				tickdelay(micros_to_ticks(DELAY_US));
+				uart_read(base_addr, UART_IIR, &IIR);
 			}
-			aux = 0;
+			if(IIR&0x02){
+				for(i=0; i<stringc; i++){
+					for(j=strings[i][aux]; j!='\0'; j=strings[i][aux]){
+						while( !(LSR & LSR_EMPTY_THR) ) {
+							tickdelay(micros_to_ticks(DELAY_US));
+							uart_read(base_addr, UART_LSR, &LSR);
+						}
+
+						uart_write(base_addr, UART_THR, j);
+
+						aux++;
+					}
+					printf(" ");
+					aux = 0;
+				}
+				printf(".");
+				break;
+			}
 		}
 	}
 }

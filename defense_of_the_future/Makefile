@@ -4,7 +4,7 @@ COMPILER_TYPE= gnu
 CC=gcc
 
 PROG=	dotf
-SRCS=	vbe.c video_gr.c kbc.c mouse.c rtc.c speaker.c timer.c dotf.c
+SRCS=	vbe.c video_gr.c kbc.c mouse.c rtc.c speaker.c timer.c dotf.c read_xpm.c
 
 CCFLAGS= -Wall
 

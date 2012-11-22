@@ -28,9 +28,9 @@
 #include <stdint.h>
 
 // Pixmap Libraries
-#include <pixmap.h>
-#include <read_xpm.h>
-#include <sprite.h>
-#include <asprite.h>
+#include "pixmap.h"
+#include "read_xpm.h"
+#include "sprite.h"
+#include "asprite.h"
 
 #endif

@@ -6,6 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#define HRES 768
+#define VRES 1024
+
 char *read_xpm(char *map[], int *wd, int *ht)
 {
   int width, height, colors;

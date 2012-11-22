@@ -10,8 +10,7 @@ Sprite * create_sprite(char *pic[], char *base){
 	if( spr == NULL )
 		return NULL;
 
-	spr->width = itoa(strtok(pic[0], " "));
-	spr->height = itoa(strtok(NULL, " "));
+	sscanf(pic[0],"%d %d", &(spr->width), &(spr->height));
 
 	// read the sprite pixmap
 	spr->map = read_xpm(pic, &(spr->width), &(spr->height));

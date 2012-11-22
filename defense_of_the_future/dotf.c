@@ -97,9 +97,9 @@ int main(){
 	printf("Width: %d\n", spr->width);
 	printf("Height: %d\n", spr->height);
 
-	for(i=1; i<=spr->height; i++){
+	for(i=0; i<spr->height; i++){
 		for(j=0; j<spr->width; j++){
-			printf("%c", ((spr->map)+(i*j)));
+			printf("%c", *(spr->map+(2*(i*spr->width)+j+1)));
 		}
 		printf("\n");
 	}

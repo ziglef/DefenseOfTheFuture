@@ -1,0 +1,35 @@
+service dotf
+{
+		system
+				READBIOS
+				PRIVCTL
+				UMAP		# 14
+				INT86		# 20
+				DEVIO
+				IRQCTL
+				IOPENABLE		
+				;
+		ipc
+				SYSTEM	# to retrieve system information
+        		rs  	# for service initialization
+	    		vm	# to map video RAM
+	    		pm  	# for malloc, if needed
+	    		vfs
+				;
+		uid 
+				0
+				;		
+        io
+                40:4      # i8254 ports
+                60
+                61        # port for speaker control  
+                64
+                70:2	  # RTC
+                ;                       
+        irq
+                0         # TIMER 0 IRQ 
+                1		  # KBD IRQ
+                8		  # RTC
+                12 		  # AUX/MOUSE IRQ
+                ;       	
+};

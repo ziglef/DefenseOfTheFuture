@@ -1,4 +1,5 @@
 #include "sprite.h"
+#include "read_xpm.h"
 #include <stdio.h>
 #include <string.h>
 

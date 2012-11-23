@@ -86,17 +86,13 @@ int main(){
 	sef_startup();
 
 	int i,j;
-	char *video_mem = vg_init(0x101);
+	char *video_mem = vg_init(0x11A);
 
 	Sprite *spr = create_sprite(ship, 0);
 
-	for(i=0; i<spr->height; i++){
-		for(j=0; j<spr->width; j++){
-			vg_set_pixel(spr->x+j, spr->y+i, *(spr->map+((i*spr->width)+j)));
-		}
-	}
+	vg_draw_sprite(spr);
 
-	sleep(5);
+	sleep(1);
 
 	if(vg_exit())
 		return 1;

@@ -1,6 +1,8 @@
 #ifndef __VIDEO_GR_H
 #define __VIDEO_GR_H
 
+#include "sprite.h"
+
 /** @defgroup video_gr video_gr
  * @{
  *
@@ -69,6 +71,8 @@ long vg_get_pixel(unsigned long x, unsigned long y);
  */
 int vg_draw_line(unsigned long xi, unsigned long yi, 
 		           unsigned long xf, unsigned long yf, unsigned long color);
+
+void vg_draw_sprite(Sprite *spr);
 
  /**
  * @brief Returns to default Minix 3 text mode (0x03: 25 x 80, 16 colors)

@@ -5,6 +5,7 @@
 #include <sys/types.h>
 
 #include "vbe.h"
+#include "video_gr.h"
 
 /* Constants for VBE 0x105 mode */
 
@@ -300,6 +301,16 @@ int vg_draw_line(unsigned long xi, unsigned long yi,
 
 
 	return 0;
+}
+
+void vg_draw_sprite(Sprite *spr){
+	int i,j;
+
+	for(i=0; i<spr->height; i++){
+		for(j=0; j<spr->width; j++){
+			vg_set_pixel(spr->x+j, spr->y+i, *(spr->map+((i*spr->width)+j)));
+		}
+	}
 }
 
 int vg_exit() {

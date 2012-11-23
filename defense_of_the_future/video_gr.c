@@ -313,6 +313,18 @@ void vg_draw_sprite(Sprite *spr){
 	}
 }
 
+int vg_draw_rec(unsigned long xi, unsigned long yi,
+		 unsigned long xf, unsigned long yf, unsigned long color){
+	int i,j;
+
+	for(i=yi; i<yf; i++){
+		for(j=xi; j<xf; j++){
+			vg_set_pixel(j,i,color);
+		}
+	}
+
+}
+
 int vg_exit() {
   struct reg86u reg86;
 

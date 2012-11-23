@@ -3,20 +3,20 @@
 static char *ship[] = {
 /* columns rows colors */
 "56 62 14",
-": 0",
-"X 1",
-"o 2",
-"O 3",
-"+ 4",
-"@ 5",
-"# 6",
-"$ 7",
-"% 8",
-"& 9",
-"* 10",
-"= 11",
-"- 12",
-"; 13",
+": 16777215",
+"X 00465999",
+"o 02830421",
+"O 02243964",
+"+ 05923445",
+"@ 08650752",
+"# 13583360",
+"$ 15237632",
+"% 16759296",
+"& 03171229",
+"* 07305618",
+"= 03899574",
+"- 04958672",
+"; 08688049",
 "::::::::::::::::::::::::::::::::::::::::::::::::::::::::",
 ":::::::::::::::::::::::::::+*:::::::::::::::::::::::::::",
 ":::::::::::::::::::::::::::+*o::::::::::::::::::::::::::",
@@ -85,17 +85,47 @@ int main(){
 
 	sef_startup();
 
-	int i,j;
-	char *video_mem = vg_init(0x11A);
+	int i,j,k;
+	int color = 0;
+	char *video_mem = vg_init(0x117);
 
+	for(k=0; k<57; k++){
+		for(i=0; i<768; i+=26){
+			for(j=0; j<1024; j+=26){
+				vg_draw_rec(j,i,j+26,i+26,color);
+				color++;
+			}
+		}
+		sleep(1);
+	}
+
+/*
+	for(i=0; i<65535; i++){
+		vg_fill(i);
+		tickdelay(micros_to_ticks(20000));
+	}*/
+
+/*
 	Sprite *spr = create_sprite(ship, 0);
 
-	vg_draw_sprite(spr);
-
-	sleep(1);
-
+	for(i=0; i<spr->height; i++){
+		for(j=0; j<spr->width; j++){
+			vg_set_pixel(spr->x+j, spr->y+i, *(spr->true_color+((i*spr->width)+j)));
+		}
+	}
+*/
 	if(vg_exit())
 		return 1;
 	else
 		return 0;
+	/*
+	Sprite *spr = create_sprite(ship, 0);
+
+	for(i=0; i<spr->height; i++){
+		for(j=0; j<spr->width; j++){
+			printf("%d ",*(spr->true_color+((i*spr->width)+j)));
+		}
+		printf("\n");
+	}
+	 */
 }

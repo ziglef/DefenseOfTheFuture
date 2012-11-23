@@ -13,18 +13,15 @@ Sprite * create_sprite(char *pic[], char *base){
 	sscanf(pic[0],"%d %d", &(spr->width), &(spr->height));
 
 	// read the sprite pixmap
-	spr->map = read_xpm(pic, &(spr->width), &(spr->height));
-
-	if( spr->map == NULL ) {
+	spr->true_color = read_xpm(pic, &(spr->true_color), &(spr->width), &(spr->height));
+	if( spr->true_color == NULL ) {
 		free(spr);
 		return NULL;
 	}
-
 	spr->x = 100;
 	spr->y = 100;
 
 	spr->xspeed = 0;
 	spr->yspeed = 0;
-
 	return spr;
 }

@@ -17,4 +17,10 @@
  *   char *sprite = read_xpm(pic1, &wd, &hg);
  * </pre>
 */
-char *read_xpm(char *map[], int *width, int *height);
+
+typedef unsigned short uint16_t;
+typedef unsigned char uint8_t;
+
+uint16_t drawRGB24toRGB565(uint8_t r, uint8_t g, uint8_t b);
+
+unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *width, int *height);

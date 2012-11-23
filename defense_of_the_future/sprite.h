@@ -22,6 +22,7 @@ typedef struct {
   int width, height;   /**< sprite dimensions */
   int xspeed, yspeed;  /**< current speeds in the x and y direction */
   char *map;           /**< the sprite pixmap (use read_xpm()) */
+  unsigned long *true_color;
 } Sprite;
 
 /** Creates with random speeds (not zero) and position

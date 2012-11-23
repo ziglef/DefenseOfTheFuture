@@ -74,6 +74,9 @@ int vg_draw_line(unsigned long xi, unsigned long yi,
 
 void vg_draw_sprite(Sprite *spr);
 
+int vg_draw_rec(unsigned long xi, unsigned long yi,
+		 unsigned long xf, unsigned long yf, unsigned long color);
+
  /**
  * @brief Returns to default Minix 3 text mode (0x03: 25 x 80, 16 colors)
  * 

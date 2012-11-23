@@ -32,41 +32,39 @@ void * vg_init(unsigned long mode) {
 	
 	int r;
 	struct mem_range mr;
-	if(mode == 0x105){
-		reg86.u.w.ax = 0x4F02;
-		reg86.u.w.bx = 1<<14|mode;
-		reg86.u.b.intno = 0x10;
+
+	reg86.u.w.ax = 0x4F02;
+	reg86.u.w.bx = 1<<14|mode;
+	reg86.u.b.intno = 0x10;
+
+	if(sys_int86(&reg86) != OK) {
+		printf("set_vbe_mode: sys_int86() failed\n");
+		return NULL;
+	}
+	else {
+		vbe_get_mode_info(mode, &vmi);
+
+		h_res = vmi.XResolution;
+		v_res = vmi.YResolution;
+		bits_per_pixel = vmi.BitsPerPixel;
+
+		mr.mr_base = vmi.PhysBasePtr;
+		mr.mr_limit = mr.mr_base + (h_res * v_res * (bits_per_pixel / 8));
 		
-		if(sys_int86(&reg86) != OK) {
-			printf("set_vbe_mode: sys_int86() failed\n");
+		if((r = sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)) != OK) {
+			panic("vg_init: sys_privctl (ADD_MEM) failed: %d\n", r);
 			return NULL;
 		}
 		else {
-			vbe_get_mode_info(mode, &vmi);
+			video_mem = vm_map_phys(SELF, (void *)mr.mr_base, (h_res * v_res * (bits_per_pixel / 8)));
 
-			h_res = vmi.XResolution;
-			v_res = vmi.YResolution;
-			bits_per_pixel = vmi.BitsPerPixel;
-
-			mr.mr_base = vmi.PhysBasePtr;
-			mr.mr_limit = mr.mr_base + (h_res * v_res * (bits_per_pixel / 8));
-			
-			if((r = sys_privctl(SELF, SYS_PRIV_ADD_MEM, &mr)) != OK) {
-				panic("vg_init: sys_privctl (ADD_MEM) failed: %d\n", r);
+			if(video_mem == MAP_FAILED){
+				panic("vg_init: Couldn't map video memory!\n");
 				return NULL;
-			}
-			else {
-				video_mem = vm_map_phys(SELF, (void *)mr.mr_base, (h_res * v_res * (bits_per_pixel / 8)));
-
-				if(video_mem == MAP_FAILED){
-					panic("vg_init: Couldn't map video memory!\n");
-					return NULL;
-				} else
-					return video_mem;
-			}
+			} else
+				return video_mem;
 		}
-	}else
-		return NULL;
+	}
 
 	// -------------------
 	// -Hardcoded Version-

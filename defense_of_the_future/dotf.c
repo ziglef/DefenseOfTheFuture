@@ -1,7 +1,5 @@
 #include "dotf.h"
 
-#define		VIDEO_105		0x105
-
 static char *ship[] = {
 /* columns rows colors */
 "56 62 14",
@@ -88,7 +86,7 @@ int main(){
 	sef_startup();
 
 	int i,j;
-	char *video_mem = vg_init(VIDEO_105);
+	char *video_mem = vg_init(0x101);
 
 	Sprite *spr = create_sprite(ship, 0);
 

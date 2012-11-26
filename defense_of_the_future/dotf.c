@@ -3,7 +3,7 @@
 static char *ship[] = {
 /* columns rows colors */
 "56 62 14",
-": 16777215",
+": 0xFFFFFF",
 "X 00465999",
 "o 02830421",
 "O 02243964",
@@ -11,7 +11,7 @@ static char *ship[] = {
 "@ 08650752",
 "# 13583360",
 "$ 15237632",
-"% 16759296",
+"% 02243163",
 "& 03171229",
 "* 07305618",
 "= 03899574",
@@ -87,45 +87,34 @@ int main(){
 
 	int i,j,k;
 	int color = 0;
+	vg_exit();
 	char *video_mem = vg_init(0x117);
-
+/*
 	for(k=0; k<57; k++){
-		for(i=0; i<768; i+=26){
-			for(j=0; j<1024; j+=26){
+		for(i=7; i<761; i+=26){
+			for(j=5; j<1019; j+=26){
 				vg_draw_rec(j,i,j+26,i+26,color);
 				color++;
 			}
 		}
 		sleep(1);
 	}
-
+*/
 /*
 	for(i=0; i<65535; i++){
 		vg_fill(i);
 		tickdelay(micros_to_ticks(20000));
-	}*/
-
-/*
-	Sprite *spr = create_sprite(ship, 0);
-
-	for(i=0; i<spr->height; i++){
-		for(j=0; j<spr->width; j++){
-			vg_set_pixel(spr->x+j, spr->y+i, *(spr->true_color+((i*spr->width)+j)));
-		}
 	}
 */
+
+	Sprite *spr = create_sprite(ship, 0);
+
+	vg_draw_sprite(spr);
+
+	sleep(5);
+
 	if(vg_exit())
 		return 1;
 	else
 		return 0;
-	/*
-	Sprite *spr = create_sprite(ship, 0);
-
-	for(i=0; i<spr->height; i++){
-		for(j=0; j<spr->width; j++){
-			printf("%d ",*(spr->true_color+((i*spr->width)+j)));
-		}
-		printf("\n");
-	}
-	 */
 }

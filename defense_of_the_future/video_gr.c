@@ -144,7 +144,7 @@ int vg_set_pixel(unsigned long x, unsigned long y, unsigned long color) {
 
 	colour = color;
 	for (k=0; k<bits_per_pixel/8; k++) {
-		*write_address = (char) colour;
+		*write_address = colour & 0xFF;
 		write_address++;
 		colour >> 8;
 	}
@@ -308,7 +308,7 @@ void vg_draw_sprite(Sprite *spr){
 
 	for(i=0; i<spr->height; i++){
 		for(j=0; j<spr->width; j++){
-			vg_set_pixel(spr->x+j, spr->y+i, *(spr->map+((i*spr->width)+j)));
+			vg_set_pixel(spr->x+j, spr->y+i, *(spr->true_color+((i*spr->width)+j)));
 		}
 	}
 }
@@ -316,11 +316,14 @@ void vg_draw_sprite(Sprite *spr){
 int vg_draw_rec(unsigned long xi, unsigned long yi,
 		 unsigned long xf, unsigned long yf, unsigned long color){
 	int i,j;
+	char *write_address = video_mem;
 
 	for(i=yi; i<yf; i++){
 		for(j=xi; j<xf; j++){
-			vg_set_pixel(j,i,color);
+			write_address[j*4] = (color >> 8);
+			write_address[j*4 +1] = (color && 0xFF);
 		}
+		write_address += 2*h_res;
 	}
 
 }

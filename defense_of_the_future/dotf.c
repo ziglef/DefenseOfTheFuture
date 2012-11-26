@@ -88,7 +88,7 @@ int main(){
 	int i,j,k;
 	int color = 0;
 	vg_exit();
-	char *video_mem = vg_init(0x117);
+	//char *video_mem = vg_init(0x117);
 /*
 	for(k=0; k<57; k++){
 		for(i=7; i<761; i+=26){
@@ -109,7 +109,7 @@ int main(){
 
 	Sprite *spr = create_sprite(ship, 0);
 
-	vg_draw_sprite(spr);
+	//vg_draw_sprite(spr);
 
 	sleep(5);
 

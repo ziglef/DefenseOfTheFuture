@@ -5,8 +5,9 @@ void start_game();
 int main(){
 
 	sef_startup();
+	//start_game();
 
-	start_game();
+	vg_exit();
 }
 
 void start_game(){

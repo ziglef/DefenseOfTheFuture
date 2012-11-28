@@ -34,7 +34,12 @@
 #include "asprite.h"
 
 // Sprites for the Project
-#include "sprites.h"
+#include "Resources/bad.h"
+#include "Resources/boss.h"
+#include "Resources/bossbig.h"
+#include "Resources/missbad.h"
+#include "Resources/missgood.h"
+#include "Resources/ship.h"
 
 // Defines
 #define VIDEO_MODE	0x117

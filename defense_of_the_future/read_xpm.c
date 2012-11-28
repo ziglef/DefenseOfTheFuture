@@ -76,7 +76,7 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
 
   /* read symbols <-> colors */
   for (i=0; i<colors; i++) {
-    if (sscanf(map[i+1], "%c %d", &symbol, &col) != 2) {
+    if (sscanf(map[i+1], "%c %x", &symbol, &col) != 2) {
       printf("read_xpm: incorrect symbol, color at line %d\n", i+1);
       return NULL;
     }

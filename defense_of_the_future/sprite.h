@@ -30,7 +30,7 @@ typedef struct {
  * memory whose address is "base";
  * Returns NULL on invalid pixmap.
  */
-Sprite * create_sprite(char *pic[]);
+Sprite * create_sprite(char *pic[], int x, int y);
 
 /** Animate the sprite "fig" according to its attributes in memory,
  * whose address is "base".  The animation detects the screen borders

@@ -35,9 +35,11 @@ typedef unsigned char uint8_t;
 /**************************************************************************/
 uint16_t drawRGB24toRGB565(uint8_t r, uint8_t g, uint8_t b)
 {
+#ifdef DEBUG
 		printf("R:%d G:%d B:%d\n", r,g,b);
 		printf("%d\n", ( ((r / 8) << 11) | ((g / 4) << 5) | (b / 8)) );
 		sleep(1);
+#endif
 		return ( ((r / 8) << 11) | ((g / 4) << 5) | (b / 8) );
 }
 

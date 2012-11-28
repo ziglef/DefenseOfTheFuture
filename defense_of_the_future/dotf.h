@@ -33,4 +33,7 @@
 #include "sprite.h"
 #include "asprite.h"
 
+// Sprites for the Project
+#include "sprites.h"
+
 #endif

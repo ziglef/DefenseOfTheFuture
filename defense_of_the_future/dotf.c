@@ -11,9 +11,10 @@ int main(){
 
 void start_game(){
 
-	char *video_mem = vg_init(0x117);
+	// Initializes the video memory in VIDEO_MODE (0x117)
+	char *video_mem = vg_init(VIDEO_MODE);
 
-	Sprite *spr = create_sprite(ship, 0 );
+	Sprite *spr = create_sprite(ship);
 
 	vg_draw_sprite(spr);
 

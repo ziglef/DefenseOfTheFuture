@@ -36,4 +36,7 @@
 // Sprites for the Project
 #include "sprites.h"
 
+// Defines
+#define VIDEO_MODE	0x117
+
 #endif

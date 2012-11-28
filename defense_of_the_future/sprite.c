@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 
-Sprite * create_sprite(char *pic[], char *base){
+Sprite * create_sprite(char *pic[]){
 
 	Sprite *spr = (Sprite *) malloc ( sizeof(Sprite));
 

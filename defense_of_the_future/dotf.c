@@ -63,6 +63,7 @@ int start_game(){
 				}
 			}
 
+			// MAKE MOVEMENT FUNCTION
 			switch(kscancode){
 				case WMAKE:
 					vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
@@ -85,6 +86,8 @@ int start_game(){
 					vg_draw_sprite(player);
 					break;
 			}
+
+			// MAKE MUSIC FUNCTION
 	}
 
 	unsubscribe();
@@ -96,12 +99,20 @@ int subscribe(){
 			printf("ERROR SUBSCRIBING TO KBC!\n");
 			return 1;
 	}
+
+	if(timer_subscribe() < 0){
+			printf("ERROR SUBSCRIBING TO TIMER!\n");
+			return 1;
+	}
 	return 0;
 }
 
 int unsubscribe(){
 	if(kbc_unsubscribe())
-			return 1;
-		else
-			return 0;
+		return 1;
+
+	if(timer_unsubscribe_int())
+		return 1;
+
+	return 0;
 }

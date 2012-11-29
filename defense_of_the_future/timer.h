@@ -35,7 +35,7 @@ int timer_unsubscribe_int();
  *
  * Increments counter
  */
-void timer_int_handler();
+unsigned long timer_int_handler(unsigned long counter);
 
 
 /**

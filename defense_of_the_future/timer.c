@@ -73,8 +73,8 @@ int timer_unsubscribe_int() {
 	return 0;
 }
 
-void timer_int_handler() {
-	printf("COUNTER IS AT %d!\n", timerInt.counter/60);
+unsigned long timer_int_handler(unsigned long counter) {
+	return counter+1;
 }
 
 int timer_test_square(unsigned long freq) {

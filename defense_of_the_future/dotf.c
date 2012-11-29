@@ -27,11 +27,11 @@ int start_game(){
 	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	//char *video_mem = vg_init(VIDEO_MODE);
-	//vg_fill(0x0000);
+	char *video_mem = vg_init(VIDEO_MODE);
+	vg_fill(0x0000);
 
 	Sprite *player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);
-	//vg_draw_sprite(player);
+	vg_draw_sprite(player);
 
 	Sprite **enemies = (Sprite **)malloc(NO_ENEMIES * sizeof(Sprite));
 	for(i=0; i<NO_ENEMIES; i++){
@@ -42,7 +42,7 @@ int start_game(){
 	}
 
 	for(i=0; i<NO_ENEMIES; i++)
-		//vg_draw_sprite(enemies[i]);
+		vg_draw_sprite(enemies[i]);
 
 	while(kscancode != ESC_BREAKCODE){
 
@@ -62,17 +62,16 @@ int start_game(){
 					default: break;
 				}
 			}
-/*
+
 			if(kscancode == WMAKE){
-				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0x0000);
+				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
 				player->y -= 20;
 				vg_draw_sprite(player);
-			}*/
+			}
 	}
 
-	//sleep(5);
 	unsubscribe();
-	//vg_exit();
+	vg_exit();
 }
 
 int subscribe(){

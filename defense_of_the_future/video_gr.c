@@ -316,16 +316,27 @@ void vg_draw_sprite(Sprite *spr){
 int vg_draw_rec(unsigned long xi, unsigned long yi,
 		 unsigned long xf, unsigned long yf, unsigned long color){
 	int i,j;
-	char *write_address = video_mem;
+
+	for(i=yi; i<yf; i++){
+		for(j=xi; j<xf; j++){
+			vg_set_pixel(j,i, color);
+		}
+	}
+	// TODO: Needs fixing
+/*
+ * 	char *write_address = video_mem;
+
+	write_address += (bits_per_pixel/8)*((yi-1)*h_res+xi);
 
 	for(i=yi; i<yf; i++){
 		for(j=xi; j<xf; j++){
 			write_address[j*4] = (color >> 8);
 			write_address[j*4 +1] = (color && 0xFF);
 		}
-		write_address += 2*h_res;
+		write_address += h_res*(bits_per_pixel/8);
 	}
-
+ *
+ */
 }
 
 int vg_exit() {

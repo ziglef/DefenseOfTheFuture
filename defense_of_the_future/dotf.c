@@ -1,28 +1,37 @@
 #include "dotf.h"
 
-void start_game();
+int start_game();
+int subscribe();
+int unsubscribe();
+
+KeyBoardController KBCs = {0, 0, 0};
+unsigned char kscancode = 0;
 
 int main(){
 
 	sef_startup();
 
-	subscribe();
-
 	start_game();
 
 	//vg_exit();
+	return 0;
 }
 
-void start_game(){
+int start_game(){
 
+	int ipc_status;
+	message msg;
+	int r;
 	int i;
-	unsigned char keyPressed;
+
+	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	char *video_mem = vg_init(VIDEO_MODE);
+	//char *video_mem = vg_init(VIDEO_MODE);
+	//vg_fill(0x0000);
 
 	Sprite *player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);
-	vg_draw_sprite(player);
+	//vg_draw_sprite(player);
 
 	Sprite **enemies = (Sprite **)malloc(NO_ENEMIES * sizeof(Sprite));
 	for(i=0; i<NO_ENEMIES; i++){
@@ -33,58 +42,48 @@ void start_game(){
 	}
 
 	for(i=0; i<NO_ENEMIES; i++)
-		vg_draw_sprite(enemies[i]);
+		//vg_draw_sprite(enemies[i]);
 
+	while(kscancode != ESC_BREAKCODE){
 
-	while(keyPressed != WMAKE){
+			r = driver_receive(ANY, &msg, &ipc_status);
+			if( r != 0 ){
+				printf("driver_receive failed with %d\n", r);
+				continue;
+			}
 
+			if(is_ipc_notify(ipc_status)){
+
+				switch(_ENDPOINT_P(msg.m_source)){
+					case HARDWARE:
+						if((msg.NOTIFY_ARG & KBC_IRQ)){
+							kscancode = kbc_handler();
+						} break;
+					default: break;
+				}
+			}
+/*
+			if(kscancode == WMAKE){
+				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0x0000);
+				player->y -= 20;
+				vg_draw_sprite(player);
+			}*/
 	}
 
-
-
-	sleep(5);
-	kbc_unsubscribe();
-	vg_exit();
+	//sleep(5);
+	unsubscribe();
+	//vg_exit();
 }
 
-void subscribe(){
-	kbc_subscribe_exclusive();
-}
-
-
-KeyBoardController KBCs = {0, 0, 0};
-unsigned char kscancode = 0;
-
-int test_scan(void) {
-	int ipc_status;
-	message msg;
-	int r;
-
+int subscribe(){
 	if(kbc_subscribe_exclusive() < 0){
 			printf("ERROR SUBSCRIBING TO KBC!\n");
 			return 1;
 	}
+	return 0;
+}
 
-	while(kscancode != ESC_BREAKCODE){
-
-		r = driver_receive(ANY, &msg, &ipc_status);
-		if( r != 0 ){
-			printf("driver_receive failed with %d\n", r);
-			continue;
-		}
-
-		if(is_ipc_notify(ipc_status)){
-
-			switch(_ENDPOINT_P(msg.m_source)){
-				case HARDWARE:
-					if((msg.NOTIFY_ARG & KBC_IRQ)){
-						kscancode = kbc_handler();
-					} break;
-				default: break;
-			}
-		}
-	}
-
+int unsubscribe(){
 	if(kbc_unsubscribe())
 			return 1;
 		else

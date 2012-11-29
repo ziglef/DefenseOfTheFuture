@@ -51,6 +51,7 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
   char *tmp, *line;
   char symbol;
   unsigned long *pixtmp, *pix;
+  unsigned long col_aux;
 
   /* read width, height, colors */
   if (sscanf(map[0],"%d %d %d", &width, &height, &colors) != 3) {

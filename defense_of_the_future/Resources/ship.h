@@ -1,6 +1,6 @@
 /* XPM */
-//static char *ship1[] = {
-/* columns rows colors chars-per-pixel */
+static char *ship[] = {
+/* columns rows colors*/
 "56 62 16",
 "? 0xF7FBF7",
 ". 0x160134",
@@ -82,3 +82,4 @@
 "::::::::::::::::?OX::::::::::::::::::XO?::::::::::::::::",
 "::::::::::::::::?..::::::::::::::::::..?::::::::::::::::"
 };
+

@@ -63,10 +63,27 @@ int start_game(){
 				}
 			}
 
-			if(kscancode == WMAKE){
-				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
-				player->y -= 20;
-				vg_draw_sprite(player);
+			switch(kscancode){
+				case WMAKE:
+					vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+					player->y -= 20;
+					vg_draw_sprite(player);
+					break;
+				case SMAKE:
+					vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+					player->y += 20;
+					vg_draw_sprite(player);
+					break;
+				case AMAKE:
+					vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+					player->x -= 20;
+					vg_draw_sprite(player);
+					break;
+				case DMAKE:
+					vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+					player->x += 20;
+					vg_draw_sprite(player);
+					break;
 			}
 	}
 

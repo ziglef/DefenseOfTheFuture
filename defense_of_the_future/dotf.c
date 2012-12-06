@@ -13,6 +13,7 @@ void make_shooting_movement();
 int is_in_screen(Sprite *spr);
 int check_collision(Sprite *spr);
 void make_explosion();
+void remove_sprite(int x, int y);
 
 Sprite *player;
 Sprite **player_shots;
@@ -156,13 +157,26 @@ int check_collision(Sprite *spr){
 
 	for(i=0; i<spr->height; i++){
 		for(j=0; j<spr->width; j++){
-			if(vg_get_pixel(spr->y+i, spr->x+j) != 0)
+			if(vg_get_pixel(spr->y+i, spr->x+j) != 0){
+				remove_sprite(spr->y+i, spr->x+j);
 				return 1;
+			}
 		}
 	}
 
-
 	return 0;
+}
+
+void remove_sprite(int x, int y){
+	int i;
+
+	for(i=0; i<NO_ENEMIES; i++){
+		if((x >= enemies[i]->x) && (x < enemies[i]->x+enemies[i]->width) && (y >= enemies[i]->y) && (y < enemies[i]->y+enemies[i]->height)){
+			vg_draw_rec(enemies[i]->x, enemies[i]->y, enemies[i]->x+enemies[i]->width, enemies[i]->y+enemies[i]->height, 0x0000);
+			enemies[i]->x = -100;
+			enemies[i]->y = -100;
+		}
+	}
 }
 
 void make_explosion(){

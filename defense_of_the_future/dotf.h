@@ -40,7 +40,7 @@
 #include "Resources/missbad.h"
 #include "Resources/missgood.h"
 #include "Resources/ship.h"
-#include "REsources/explosions.h"
+#include "Resources/explosions.h"
 
 // Sounds for the Project
 #include "Resources/piano.h"

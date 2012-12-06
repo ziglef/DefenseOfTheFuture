@@ -3,7 +3,7 @@
 
 //http://tabnabber.com/view_Tab.asp?tabID=17601&sArtist=NYAN+CAT&sName=NYAN+VAT
 
-char theme_song[]=
+unsigned long theme_song[]=
 {
 		D5,no,e5,F5,no,no,b5,no,no,D5,e5,F5,no,b5,C6,no,D6,C6,no,A5,b5,no,no,F5,no,no,D5,e5,F5,no,no,D5,no,e5,F5,no,no,b5,no,no,C6,no,A5,b5,no,C6,e6,no,D6,e6,no,C6,F5,no,no,G5,no,no,D5,no,D5,F3,no,b4,d5,no,C5,b4,no,no,b4,no,no,C5,no,no,d5,no,no,
 

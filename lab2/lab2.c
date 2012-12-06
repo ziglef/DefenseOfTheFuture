@@ -59,7 +59,7 @@ static int proc_args(int argc, char *argv[]) {
 		if ((secs = parse_ulong(argv[4], 10)) == ULONG_MAX)
 			return 1;
 		vg_init(mode);
-		returnVal = vg_fill(color);
+		//returnVal = vg_fill(color);
 		sleep(secs);
 		vg_exit();
 		printf("\n");

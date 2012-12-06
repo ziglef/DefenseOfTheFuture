@@ -21,7 +21,7 @@ int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
   lm_alloc(VBE_MODE_INFO_SIZE, &memory);
   
   reg86.u.w.ax = 0x4F01;
-  reg86.u.w.cx =  1 << 14 | mode;
+  reg86.u.w.cx = 1 << 14 | mode;
   reg86.u.w.es = PB2BASE(memory.phys);
   reg86.u.w.di = PB2OFF(memory.phys);
   reg86.u.b.intno = 0x10;

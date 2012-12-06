@@ -26,11 +26,11 @@ void * vg_init(unsigned long mode) {
 	// -----------------------
 	// -Non-Hardcoded Version-
 	// -----------------------
-
-	struct reg86u reg86;
+/*
+	struct reg86u reg86;*/
 	vbe_mode_info_t vmi;
 	
-	int r;
+	/*int r;
 	struct mem_range mr;
 	if(mode == 0x105){
 		reg86.u.w.ax = 0x4F02;
@@ -41,10 +41,12 @@ void * vg_init(unsigned long mode) {
 			printf("set_vbe_mode: sys_int86() failed\n");
 			return NULL;
 		}
-		else {
+		else {*/
 			vbe_get_mode_info(mode, &vmi);
 
-			h_res = vmi.XResolution;
+			printf("\n\n\n0x%x\n\n\n", vmi.DirectColorModeInfo);
+
+			/*h_res = vmi.XResolution;
 			v_res = vmi.YResolution;
 			bits_per_pixel = vmi.BitsPerPixel;
 
@@ -66,7 +68,7 @@ void * vg_init(unsigned long mode) {
 			}
 		}
 	}else
-		return NULL;
+		return NULL;*/
 
 	// -------------------
 	// -Hardcoded Version-

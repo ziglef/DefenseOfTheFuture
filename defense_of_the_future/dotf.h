@@ -53,11 +53,13 @@
 #define ENEMIES_X_INCREMENT		100
 #define ENEMIES_Y_INCREMENT		94
 #define NO_ENEMIES				15
+#define NO_PSHOTS				4
 
 // Makecodes
 #define WMAKE					0x11
 #define SMAKE					0x1F
 #define AMAKE					0x1E
 #define DMAKE					0x20
+#define SPACEMAKE				0x39
 
 #endif

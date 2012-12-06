@@ -157,6 +157,7 @@ long vg_get_pixel(unsigned long x, unsigned long y) {
 	char *write_address = video_mem;
 
 	if((x < 0) || (x > h_res) || (y < 0) || (y > v_res)){
+		vg_draw_line(1,1,200,200,0xF4C3);
 		return 1;
 	}
 

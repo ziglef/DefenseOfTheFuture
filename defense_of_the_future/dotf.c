@@ -18,10 +18,11 @@ void remove_sprite(int x, int y);
 Sprite *player;
 Sprite **player_shots;
 Sprite **enemies;
+Sprite ***explosions;
 unsigned long time = 0;
 unsigned char kscancode = 0;
 char BAD_MOVE = 'L';
-int EXPLOSION = 0;
+int *EXPLOSIONS;
 char *video_mem;
 
 int main(){
@@ -51,7 +52,6 @@ int start_game(){
 		player_shots[i] = create_sprite(missgood, -50, -50);
 	}
 
-
 	enemies = (Sprite **)malloc(NO_ENEMIES * sizeof(Sprite));
 	for(i=0; i<NO_ENEMIES; i++){
 		if(i<8)
@@ -62,6 +62,18 @@ int start_game(){
 
 	for(i=0; i<NO_ENEMIES; i++)
 		vg_draw_sprite(enemies[i]);
+
+	explosions = (Sprite ***)malloc(NO_EXPLOSIONS*NO_PSHOTS * sizeof(Sprite));
+	for(i=0; i<NO_PSHOTS; i++){
+		explosions[i] = (Sprite **)malloc(NO_EXPLOSIONS * sizeof(Sprite));
+		explosions[i][0] = create_sprite(b1, -75, -75);
+		explosions[i][1] = create_sprite(b2, -75, -75);
+		explosions[i][2] = create_sprite(b3, -75, -75);
+		explosions[i][3] = create_sprite(b4, -75, -75);
+		explosions[i][4] = create_sprite(b5, -75, -75);
+	}
+
+	EXPLOSIONS = (int *)calloc(NO_EXPLOSIONS,sizeof(int));
 
 	timer_set_square(0,60);
 
@@ -93,7 +105,7 @@ void mainloop(){
 								make_bad_movement();
 							if(time % 5 == 0)
 								make_shooting_movement();
-							if((time % 12 == 0) && (EXPLOSION != 0))
+							if((time % 6 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 								make_explosion();
 						}break;
 					default: break;
@@ -141,7 +153,7 @@ void make_shooting_movement(){
 				if(!check_collision(player_shots[i])){
 					vg_draw_sprite(player_shots[i]);
 				} else {
-					EXPLOSION = 1;
+					EXPLOSIONS[i] = 1;
 				}
 			} else {
 				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0x0000);
@@ -168,7 +180,7 @@ int check_collision(Sprite *spr){
 }
 
 void remove_sprite(int x, int y){
-	int i;
+	int i,j;
 
 	for(i=0; i<NO_ENEMIES; i++){
 		if((x >= enemies[i]->x) && (x < enemies[i]->x+enemies[i]->width) && (y >= enemies[i]->y) && (y < enemies[i]->y+enemies[i]->height)){
@@ -177,10 +189,57 @@ void remove_sprite(int x, int y){
 			enemies[i]->y = -100;
 		}
 	}
+
+	for(i=0; i<NO_PSHOTS; i++){
+		if((x >= player_shots[i]->x) && (x < player_shots[i]->x+player_shots[i]->width) && (y >= player_shots[i]->y) && (y < player_shots[i]->y+player_shots[i]->height)){
+			vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0x0000);
+			for(j=0; j<NO_EXPLOSIONS; j++){
+				explosions[i][j]->x = player_shots[i]->x - explosions[i][j]->width/2;
+				explosions[i][j]->y = player_shots[i]->y - explosions[i][j]->height/2;
+			}
+			player_shots[i]->x = -100;
+			player_shots[i]->y = -100;
+		}
+	}
+
 }
 
 void make_explosion(){
+	int i;
 
+	for(i=0; i<NO_EXPLOSIONS; i++){
+		switch(EXPLOSIONS[i]){
+			case 1:
+				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
+				EXPLOSIONS[i]++;
+				break;
+			case 2:
+				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
+				EXPLOSIONS[i]++;
+				break;
+			case 3:
+				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
+				EXPLOSIONS[i]++;
+				break;
+			case 4:
+				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
+				EXPLOSIONS[i]++;
+				break;
+			case 5:
+				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
+				EXPLOSIONS[i]++;
+				break;
+			case 6:
+				vg_draw_rec(explosions[i][EXPLOSIONS[i]-2]->x, explosions[i][EXPLOSIONS[i]-2]->y,
+							explosions[i][EXPLOSIONS[i]-2]->x+explosions[i][EXPLOSIONS[i]-2]->width,
+							explosions[i][EXPLOSIONS[i]-2]->y+explosions[i][EXPLOSIONS[i]-2]->height,
+							0x0000);
+				EXPLOSIONS[i] = 0;
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 void make_player_movement(){

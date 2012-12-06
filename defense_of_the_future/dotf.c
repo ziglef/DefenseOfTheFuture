@@ -73,7 +73,7 @@ void mainloop(){
 							make_player_movement();
 						}else if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
-							if(time % 60 == 0)
+							if(time % 30 == 0)
 								make_bad_movement();
 						}break;
 					default: break;
@@ -88,9 +88,11 @@ void make_player_movement(){
 	// MAKE MOVEMENT FUNCTION
 	switch(kscancode){
 		case WMAKE:
-			vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
-			player->y -= 20;
-			vg_draw_sprite(player);
+			if(player->y-20 >= 0){
+				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+				player->y -= 20;
+				vg_draw_sprite(player);
+			}
 			break;
 		case SMAKE:
 			vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);

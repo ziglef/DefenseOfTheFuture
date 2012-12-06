@@ -66,11 +66,11 @@ int start_game(){
 	explosions = (Sprite ***)malloc(NO_EXPLOSIONS*NO_PSHOTS * sizeof(Sprite));
 	for(i=0; i<NO_PSHOTS; i++){
 		explosions[i] = (Sprite **)malloc(NO_EXPLOSIONS * sizeof(Sprite));
-		explosions[i][0] = create_sprite(b1, -75, -75);
-		explosions[i][1] = create_sprite(b2, -75, -75);
-		explosions[i][2] = create_sprite(b3, -75, -75);
-		explosions[i][3] = create_sprite(b4, -75, -75);
-		explosions[i][4] = create_sprite(b5, -75, -75);
+		explosions[i][0] = create_sprite(boom1, -75, -75);
+		explosions[i][1] = create_sprite(boom2, -75, -75);
+		explosions[i][2] = create_sprite(boom3, -75, -75);
+		explosions[i][3] = create_sprite(boom4, -75, -75);
+		explosions[i][4] = create_sprite(boom5, -75, -75);
 	}
 
 	EXPLOSIONS = (int *)calloc(NO_EXPLOSIONS,sizeof(int));

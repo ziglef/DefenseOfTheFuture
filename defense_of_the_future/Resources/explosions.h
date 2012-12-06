@@ -1,5 +1,5 @@
 /* XPM */
-static char *b1[] = {
+static char *boom1[] = {
 /* columns rows colors chars-per-pixel */
 "10 10 16",
 "? 0x000000",
@@ -34,7 +34,7 @@ static char *b1[] = {
 
 
 /* XPM */
-static char *b2[] = {
+static char *boom2[] = {
 /* columns rows colors chars-per-pixel */
 "14 14 16",
 "? 0x000000",
@@ -72,7 +72,7 @@ static char *b2[] = {
 
 
 /* XPM */
-static char *b3[] = {
+static char *boom3[] = {
 /* columns rows colors chars-per-pixel */
 "20 20 16",
 "? 0x000000",
@@ -116,7 +116,7 @@ static char *b3[] = {
 
 
 /* XPM */
-static char *b4[] = {
+static char *boom4[] = {
 /* columns rows colors chars-per-pixel */
 "24 24 16",
 "? 0x000000",
@@ -164,7 +164,7 @@ static char *b4[] = {
 
 
 /* XPM */
-static char *b5[] = {
+static char *boom5[] = {
 /* columns rows colors chars-per-pixel */
 "34 34 16",
 "? 0x000000",

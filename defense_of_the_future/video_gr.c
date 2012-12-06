@@ -154,9 +154,7 @@ int vg_set_pixel(unsigned long x, unsigned long y, unsigned long color) {
 
 long vg_get_pixel(unsigned long x, unsigned long y) {
 
-	int i, j, k;
 	char *write_address = video_mem;
-	long colour;
 
 	if((x < 0) || (x > h_res) || (y < 0) || (y > v_res)){
 		return 1;

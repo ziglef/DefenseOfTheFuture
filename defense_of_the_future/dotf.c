@@ -136,7 +136,7 @@ void make_shooting_movement(){
 	for(i=0; i<NO_PSHOTS; i++){
 		if(is_in_screen(player_shots[i])){
 			if(player_shots[i]->y-20 > player_shots[i]->height){
-				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0xFF00);
+				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0x0000);
 				player_shots[i]->y -= player_shots[i]->yspeed;
 				if(!check_collision(player_shots[i])){
 					vg_draw_sprite(player_shots[i]);
@@ -144,7 +144,7 @@ void make_shooting_movement(){
 					EXPLOSION = 1;
 				}
 			} else {
-				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0xFF00);
+				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0x0000);
 				player_shots[i]->y = -50;
 			}
 		}
@@ -188,28 +188,28 @@ void make_player_movement(){
 	switch(kscancode){
 		case WMAKE:
 			if(player->y-20 >= 500){
-				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0x0000);
 				player->y -= 20;
 				vg_draw_sprite(player);
 			}
 			break;
 		case SMAKE:
 			if(player->y+20+player->height < 700){
-				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0x0000);
 				player->y += 20;
 				vg_draw_sprite(player);
 			}
 			break;
 		case AMAKE:
 			if(player->x-20 >= 100){
-				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0x0000);
 				player->x -= 20;
 				vg_draw_sprite(player);
 			}
 			break;
 		case DMAKE:
 			if(player->x+20+player->width < 924){
-				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0xFF00);
+				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0x0000);
 				player->x += 20;
 				vg_draw_sprite(player);
 			}

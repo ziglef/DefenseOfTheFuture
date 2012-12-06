@@ -157,8 +157,8 @@ int check_collision(Sprite *spr){
 
 	for(i=0; i<spr->height; i++){
 		for(j=0; j<spr->width; j++){
-			if(vg_get_pixel(spr->y+j, spr->y+i) != 0){
-				remove_sprite(spr->y+i, spr->x+j);
+			if(vg_get_pixel(spr->x+j, spr->y+i) != 0){
+				remove_sprite(spr->x+j, spr->y+i);
 				return 1;
 			}
 		}

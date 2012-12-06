@@ -40,6 +40,11 @@
 #include "Resources/missbad.h"
 #include "Resources/missgood.h"
 #include "Resources/ship.h"
+#include "REsources/explosions.h"
+
+// Sounds for the Project
+#include "Resources/piano.h"
+#include "Resources/sounds.h"
 
 // Defines
 #define VIDEO_MODE				0x117

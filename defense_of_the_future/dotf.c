@@ -6,7 +6,7 @@ int unsubscribe();
 void mainloop();
 void make_player_movement();
 void make_bad_movement();
-void exit_game();
+int exit_game();
 void keystroke_handler();
 void make_shooting();
 void make_shooting_movement();
@@ -14,6 +14,7 @@ int is_in_screen(Sprite *spr);
 int check_collision(Sprite *spr);
 void make_explosion();
 void remove_sprite(int x, int y);
+int make_music();
 
 Sprite *player;
 Sprite **player_shots;
@@ -114,7 +115,8 @@ void mainloop(){
 								make_shooting_movement();
 							if((time % 6 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 								make_explosion();
-							if(time % 17 == 0)
+							if(time % 5 == 
+0)
 								make_music();
 						}break;
 					default: break;
@@ -125,7 +127,7 @@ void mainloop(){
 	exit_game();
 }
 
-void make_music(){
+int make_music(){
 
 	if(timer_set_square(2,theme_song[note]))
 	 {
@@ -134,6 +136,7 @@ void make_music(){
 	 }
 	note++;
 	if(note == NOTAS_TOTAL) note = 0;
+	return 0;
 }
 
 void keystroke_handler(){
@@ -322,10 +325,16 @@ void make_bad_movement(){
 	}
 }
 
-void exit_game(){
+int exit_game(){
 
 	unsubscribe();
+	if(speaker_ctrl(0))
+	{
+		printf("Speaker_ctrl Failed!\n");
+		return 1;
+	}	
 	vg_exit();
+	return 0;
 }
 
 int subscribe(){

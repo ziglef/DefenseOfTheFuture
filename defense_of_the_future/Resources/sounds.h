@@ -1,6 +1,6 @@
 #include "piano.h"
-#define NOTAS_TOTAL 430
-#define NOTAS_LOOP	382
+#define NOTAS_TOTAL	430
+#define NOTAS_LOOP	384
 
 //http://tabnabber.com/view_Tab.asp?tabID=17601&sArtist=NYAN+CAT&sName=NYAN+VAT
 
@@ -42,7 +42,8 @@ unsigned long theme_loop[]=
 
 		b4,no,b4,C5,no,D5,b4,no,F4,G4,no,F4,b4,no,no,b4,no,A4,b4,no,F4,G4,no,b4,e5,no,D5,e5,no,F5,b4,no,no,A4,no,no,b4,no,no,F4,no,G4,b4,no,no,F4,no,G4,b4,no,C5,D5,no,b4,e5,no,D5,e5,no,F5,b4,no,no,b4,no,no,F4,no,G4,b4,no,F4,e5,no,D5,
 
-		C5,no,b4,F4,no,D4,e4,no,F4,b4,no,no,F4,no,G4,b4,no,no,F4,no,G4,b4,no,b4,C5,no,D5,b4,no,F4,G4,no,F4,b4,no,no,b4,no,A4,b4,no,F4,G4,no,b4,e5,no,D5,e5,no,F5,b4,no,no,C5
+		
+C5,no,b4,F4,no,D4,e4,no,F4,b4,no,no,F4,no,G4,b4,no,no,F4,no,G4,b4,no,b4,C5,no,D5,b4,no,F4,G4,no,F4,b4,no,no,b4,no,A4,b4,no,F4,G4,no,b4,e5,no,D5,e5,no,F5,b4,no,no,C5,no,no
 
 };
 /*

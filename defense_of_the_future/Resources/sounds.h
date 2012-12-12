@@ -44,7 +44,7 @@ unsigned long theme_loop[]=
 
 		C5,no,b4,F4,no,D4,e4,no,F4,b4,no,no,F4,no,G4,b4,no,no,F4,no,G4,b4,no,b4,C5,no,D5,b4,no,F4,G4,no,F4,b4,no,no,b4,no,A4,b4,no,F4,G4,no,b4,e5,no,D5,e5,no,F5,b4,no,no,C5
 
-}
+};
 /*
  27
 75

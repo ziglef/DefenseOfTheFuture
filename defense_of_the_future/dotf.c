@@ -23,6 +23,7 @@ unsigned long time = 0;
 unsigned char kscancode = 0;
 char BAD_MOVE = 'L';
 int *EXPLOSIONS;
+int note = 0;
 char *video_mem;
 
 int main(){
@@ -77,6 +78,12 @@ int start_game(){
 
 	timer_set_square(0,60);
 
+	 if(speaker_ctrl(1))
+	 {
+	  printf("Speaker_ctrl Failed!\n");
+	  return 1;
+	 }
+
 	mainloop();
 }
 
@@ -107,6 +114,8 @@ void mainloop(){
 								make_shooting_movement();
 							if((time % 6 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 								make_explosion();
+							if(time % 17 == 0)
+								make_music();
 						}break;
 					default: break;
 				}
@@ -114,6 +123,17 @@ void mainloop(){
 	}
 
 	exit_game();
+}
+
+void make_music(){
+
+	if(timer_set_square(2,theme_song[note]))
+	 {
+	  printf("Timer_set_square Failed!\n");
+	  return 1;
+	 }
+	note++;
+	if(note == NOTAS_TOTAL) note = 0;
 }
 
 void keystroke_handler(){

@@ -6,7 +6,7 @@ int unsubscribe();
 void mainloop();
 void make_player_movement();
 void make_bad_movement();
-int exit_game();
+void exit_game();
 void keystroke_handler();
 void make_shooting();
 void make_shooting_movement();
@@ -14,7 +14,6 @@ int is_in_screen(Sprite *spr);
 int check_collision(Sprite *spr);
 void make_explosion();
 void remove_sprite(int x, int y);
-int make_music();
 
 Sprite *player;
 Sprite **player_shots;
@@ -25,6 +24,7 @@ unsigned char kscancode = 0;
 char BAD_MOVE = 'L';
 int *EXPLOSIONS;
 int note = 0;
+int song_loop = 0;
 char *video_mem;
 
 int main(){
@@ -115,8 +115,7 @@ void mainloop(){
 								make_shooting_movement();
 							if((time % 6 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 								make_explosion();
-							if(time % 5 == 
-0)
+							if(time % 17 == 0)
 								make_music();
 						}break;
 					default: break;
@@ -127,16 +126,25 @@ void mainloop(){
 	exit_game();
 }
 
-int make_music(){
+void make_music(){
 
-	if(timer_set_square(2,theme_song[note]))
-	 {
-	  printf("Timer_set_square Failed!\n");
-	  return 1;
-	 }
-	note++;
-	if(note == NOTAS_TOTAL) note = 0;
-	return 0;
+	if(song_loop == 0){
+		if(timer_set_square(2,theme_song[note]))
+		 {
+		  printf("Timer_set_square Failed!\n");
+		  return 1;
+		 }
+		note++;
+		if(note == NOTAS_TOTAL){note = 0; sound_loop = 1;}
+	} else {
+		if(timer_set_square(2,theme_loop[note]))
+				 {
+				  printf("Timer_set_square Failed!\n");
+				  return 1;
+				 }
+				note++;
+				if(note == NOTAS_LOOP) note = 0;
+	}
 }
 
 void keystroke_handler(){
@@ -325,16 +333,10 @@ void make_bad_movement(){
 	}
 }
 
-int exit_game(){
+void exit_game(){
 
 	unsubscribe();
-	if(speaker_ctrl(0))
-	{
-		printf("Speaker_ctrl Failed!\n");
-		return 1;
-	}	
 	vg_exit();
-	return 0;
 }
 
 int subscribe(){

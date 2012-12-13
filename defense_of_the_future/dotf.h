@@ -46,8 +46,11 @@
 #include "Resources/piano.h"
 #include "Resources/sounds.h"
 
+// Hash Table
+#include "tabeladispersao.h"
+
 // Defines
-#define VIDEO_MODE			0x117
+#define VIDEO_MODE				0x117
 
 #define SHIP_START_X			484
 #define SHIP_START_Y			568

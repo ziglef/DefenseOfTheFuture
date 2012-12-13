@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "tabdispersao.h"
+
 #define HRES 768
 #define VRES 1024
 
@@ -48,10 +50,12 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
   int width, height, colors;
   unsigned long col;
   int i, j;
-  char *tmp, *line;
+  int *tmp;
+  char *line;
   char symbol;
   unsigned long *pixtmp, *pix;
   unsigned long col_aux;
+  tabela_dispersao *symtd = tabela_cria(256, hash_lcom);
 
   /* read width, height, colors */
   if (sscanf(map[0],"%d %d %d", &width, &height, &colors) != 3) {
@@ -62,7 +66,7 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
   printf("%d %d %d\n", width, height, colors);
   sleep(1);
 #endif
-  if (width > HRES || height > VRES || colors > 65535) {
+  if (width > HRES || height > VRES || colors > 255) {
     printf("read_xpm: incorrect width, height, colors\n");
     return NULL;
   }
@@ -70,7 +74,7 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
   *wd = width;
   *ht = height;
 
-  char sym[65535];
+  int sym[255];
 
   for (i=0; i<colors; i++)
     sym[i] = 0;
@@ -90,17 +94,16 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
       return NULL;
     }
     col = drawRGB24toRGB565((col>>16)&0xFF,(col>>8)&0xFF,col&0xFF);
-    if(col == 65535)
-    	sym[0] = symbol;
-    else
-    	sym[col] = symbol;
+
+    sym[(int)symbol] = col;
+
 #ifdef DEBUG
     printf("%c %d\n", symbol, col);
 #endif
   }
   
   /* allocate pixmap memory */
-  pix = pixtmp = malloc((width*height)*sizeof(unsigned long));
+  pix = pixtmp = malloc((width*height)*sizeof(int));
 
   /* parse each pixmap symbol line */
   for (i=0; i<height; i++) {
@@ -110,7 +113,8 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
     sleep(1);
 #endif
     for (j=0; j<width; j++) {
-      tmp = memchr(sym, line[j], 65535);  /* find color of each symbol */
+
+      tmp = sym + ((int)line[j]);  /* find color of each symbol */
       if (tmp == NULL) {
     	  printf("read_xpm: incorrect symbol at line %d, col %d\n", colors+i+1, j);
     	  return NULL;

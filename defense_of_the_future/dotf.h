@@ -9,6 +9,15 @@
 #include <sys/mman.h>
 #include <sys/types.h>
 
+// Language Libraries
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <stdint.h>
+
+// Hash Table
+#include "tabdispersao.h"
+
 // LCOM Libraries
 #include "i8042.h"
 #include "i8254.h"
@@ -20,12 +29,6 @@
 #include "timer.h"
 #include "vbe.h"
 #include "video_gr.h"
-
-// Language Libraries
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include <stdint.h>
 
 // Pixmap Libraries
 #include "pixmap.h"
@@ -45,9 +48,6 @@
 // Sounds for the Project
 #include "Resources/piano.h"
 #include "Resources/sounds.h"
-
-// Hash Table
-#include "tabdispersao.h"
 
 // Defines
 #define VIDEO_MODE				0x117

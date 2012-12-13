@@ -39,7 +39,6 @@ void tabela_apaga(tabela_dispersao *td)
 			while (elem)
 			{
 				aux = elem->proximo;
-				free(elem->string);
 				free(elem);
 				elem = aux;
 			}

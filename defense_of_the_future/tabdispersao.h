@@ -10,7 +10,7 @@
 #define TABDISPERSAO_ERRO       (-2)
 #define TABDISPERSAO_NAOEXISTE  (-3)
 
-typedef unsigned long hash_func(const char *, int);
+typedef unsigned long hash_func(const char, int);
 
 /* tabela de dispersão baseada em encadeamento */
 typedef struct elem

@@ -47,7 +47,7 @@
 #include "Resources/sounds.h"
 
 // Hash Table
-#include "tabeladispersao.h"
+#include "tabdispersao.h"
 
 // Defines
 #define VIDEO_MODE				0x117

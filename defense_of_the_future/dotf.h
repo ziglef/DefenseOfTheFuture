@@ -47,14 +47,14 @@
 #include "Resources/sounds.h"
 
 // Defines
-#define VIDEO_MODE				0x117
+#define VIDEO_MODE			0x117
 
 #define SHIP_START_X			484
-#define SHIP_START_Y			618
+#define SHIP_START_Y			568
 
 #define ENEMIES_START_X			140
 #define ENEMIES_START_X2		190
-#define ENEMIES_START_Y			130
+#define ENEMIES_START_Y			80
 #define ENEMIES_X_INCREMENT		100
 #define ENEMIES_Y_INCREMENT		94
 #define NO_ENEMIES				15

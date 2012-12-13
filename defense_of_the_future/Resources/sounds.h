@@ -58,12 +58,12 @@ unsigned long theme_loop[]=
 
 unsigned long shots[]=
 {
-		G5
+		G7
 };
 
 unsigned long explosion1[]=
 {
-		c3,no,g2,no,c2
+		c3,a2,g2,e2,c2
 };
 //duraçao: 0.5s
 

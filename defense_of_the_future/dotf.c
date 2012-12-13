@@ -143,14 +143,16 @@ int make_music(){
 	if(music_note == NOTAS_LOOP) music_note = 0;
 
 	if(sfx_explosion_enabled){
-		if(timer_set_square(2,explosions1[sfx_explosion_note])){
+		if(timer_set_square(2,explosion1[sfx_explosion_note])){
 			printf("Timer_set_square Failed!\n");
 			return 1;
 		}
 		sfx_explosion_note++;
-		if(sfx_explosion_note == NOTAS_EXPL) sfx_explosion_note = 0;
-		sfx_explosion_enabled = 0;
-		music_enabled = 1;
+		if(sfx_explosion_note == NOTAS_EXPL){
+			sfx_explosion_note = 0;
+			sfx_explosion_enabled = 0;
+			music_enabled = 1;
+		}
 	}
 
 	if(sfx_shot){

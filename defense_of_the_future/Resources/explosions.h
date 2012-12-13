@@ -2,7 +2,7 @@
 static char *boom1[] = {
 /* columns rows colors chars-per-pixel */
 "10 10 16",
-"? 0x000000",
+"? 0xFFFFFF",
 ". 0x800000",
 "X 0x008000",
 "o 0x808000",
@@ -17,7 +17,7 @@ static char *boom1[] = {
 "= 0x0000FF",
 "- 0xFF00FF",
 "; 0x00FFFF",
-": 0xFFFFFF",
+": 0x000000",
 /* pixels */
 ":::#$$$:::",
 ":$#*:$*$::",
@@ -37,7 +37,7 @@ static char *boom1[] = {
 static char *boom2[] = {
 /* columns rows colors chars-per-pixel */
 "14 14 16",
-"? 0x000000",
+"? 0xFFFFFF",
 ". 0x800000",
 "X 0x008000",
 "o 0x808000",
@@ -52,7 +52,7 @@ static char *boom2[] = {
 "= 0x0000FF",
 "- 0xFF00FF",
 "; 0x00FFFF",
-": 0xFFFFFF",
+": 0x000000",
 /* pixels */
 ":::$%#:#%$::::",
 ":$$#*$$$*$$#::",
@@ -75,7 +75,7 @@ static char *boom2[] = {
 static char *boom3[] = {
 /* columns rows colors chars-per-pixel */
 "20 20 16",
-"? 0x000000",
+"? 0xFFFFFF",
 ". 0x800000",
 "X 0x008000",
 "o 0x808000",
@@ -90,7 +90,7 @@ static char *boom3[] = {
 "= 0x0000FF",
 "- 0xFF00FF",
 "; 0x00FFFF",
-": 0xFFFFFF",
+": 0x000000",
 /* pixels */
 "::::::::$##$::::::::",
 ":::::::$oo%%#$#$::::",
@@ -119,7 +119,7 @@ static char *boom3[] = {
 static char *boom4[] = {
 /* columns rows colors chars-per-pixel */
 "24 24 16",
-"? 0x000000",
+"? 0xFFFFFF",
 ". 0x800000",
 "X 0x008000",
 "o 0x808000",
@@ -134,7 +134,7 @@ static char *boom4[] = {
 "= 0x0000FF",
 "- 0xFF00FF",
 "; 0x00FFFF",
-": 0xFFFFFF",
+": 0x000000",
 /* pixels */
 "::::::::::::$$#$::::::::",
 "::::::$$$$::$$$o#:::::::",
@@ -167,7 +167,7 @@ static char *boom4[] = {
 static char *boom5[] = {
 /* columns rows colors chars-per-pixel */
 "34 34 16",
-"? 0x000000",
+"? 0xFFFFFF",
 ". 0x800000",
 "X 0x008000",
 "o 0x808000",
@@ -182,7 +182,7 @@ static char *boom5[] = {
 "= 0x0000FF",
 "- 0xFF00FF",
 "; 0x00FFFF",
-": 0xFFFFFF",
+": 0x000000",
 /* pixels */
 ":::::::::$#+#$::::$##$::::::::::::",
 ":::::::::+%%%+$::$+%%#::::::::::::",

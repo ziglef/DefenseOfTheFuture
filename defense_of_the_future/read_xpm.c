@@ -114,12 +114,12 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
 #endif
     for (j=0; j<width; j++) {
 
-      tmp = sym + ((int)line[j]);  /* find color of each symbol */
+      tmp = &(sym[(int)line[j]]);  /* find color of each symbol */
       if (tmp == NULL) {
     	  printf("read_xpm: incorrect symbol at line %d, col %d\n", colors+i+1, j);
     	  return NULL;
       }
-      *pixtmp++ = tmp - sym; /* pointer arithmetic! back to books :-) */
+      *pixtmp++ = *tmp; /* pointer arithmetic! back to books :-) */
 #ifdef DEBUG
       printf("%c:%d ", line[j], tmp-sym);
 #endif

@@ -8,7 +8,7 @@ static char *bad[] = {
 "o 0xB0A0CA",
 "O 0xF5C8E5",
 "+ 0xDDF5E8",
-"@ 0xFFFFFF",
+"@ 0x000000",
 /* pixels */
 "@@@@@@@@@@@@@XXXXX.@@@@@.XXXXX@@@@@@@@@@@@@",
 "@@@@@@@@@@@@XXO+++O.@@@.O+++OXX@@@@@@@@@@@@",

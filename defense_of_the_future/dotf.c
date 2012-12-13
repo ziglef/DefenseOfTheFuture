@@ -24,7 +24,11 @@ unsigned long time = 0;
 unsigned char kscancode = 0;
 char BAD_MOVE = 'L';
 int *EXPLOSIONS;
-int note = 0;
+int music_enabled = 1;
+int music_note = 0;
+int sfx_explosion_enabled = 0;
+int sfx_explosion_note = 0;
+int sfx_shot = 0;
 char *video_mem;
 
 int main(){
@@ -129,13 +133,35 @@ void mainloop(){
 
 int make_music(){
 
-	if(timer_set_square(2,theme_loop[note]))
-	{
-		printf("Timer_set_square Failed!\n");
-		return 1;
+	if(music_enabled){
+		if(timer_set_square(2,theme_loop[music_note])){
+			printf("Timer_set_square Failed!\n");
+			return 1;
+		}
 	}
-		note++;
-		if(note == NOTAS_LOOP) note = 0;
+	music_note++;
+	if(music_note == NOTAS_LOOP) music_note = 0;
+
+	if(sfx_explosion_enabled){
+		if(timer_set_square(2,explosions1[sfx_explosion_note])){
+			printf("Timer_set_square Failed!\n");
+			return 1;
+		}
+		sfx_explosion_note++;
+		if(sfx_explosion_note == NOTAS_EXPL) sfx_explosion_note = 0;
+		sfx_explosion_enabled = 0;
+		music_enabled = 1;
+	}
+
+	if(sfx_shot){
+		if(timer_set_square(2,shots[0])){
+			printf("Timer_set_square Failed!\n");
+			return 1;
+		}
+		sfx_shot = 0;
+		music_enabled = 1;
+	}
+
 }
 
 void keystroke_handler(){
@@ -159,6 +185,7 @@ void make_shooting(){
 			player_shots[i]->y = player->y-player_shots[i]->height;
 			player_shots[i]->yspeed = 30;
 			vg_draw_sprite(player_shots[i]);
+			sfx_shot = 1;
 			break;
 		}
 	}
@@ -176,6 +203,7 @@ void make_shooting_movement(){
 					vg_draw_sprite(player_shots[i]);
 				} else {
 					EXPLOSIONS[i] = 1;
+					sfx_explosion_enabled = 1;
 				}
 			} else {
 				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0x0000);

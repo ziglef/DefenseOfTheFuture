@@ -1,7 +1,7 @@
 #include "piano.h"
 #define NOTAS_TOTAL 430
 #define NOTAS_LOOP	384
-#define NOTAS_EXPL	9
+#define NOTAS_EXPL	5
 
 //http://tabnabber.com/view_Tab.asp?tabID=17601&sArtist=NYAN+CAT&sName=NYAN+VAT
 
@@ -63,17 +63,17 @@ unsigned long shots[]=
 
 unsigned long explosion1[]=
 {
-		c3,no,a2,no,g2,no,e2,no,c2
+		c3,no,g2,no,c2
 };
 //duraçao: 0.5s
 
 unsigned long explosion2[]=
 {
-		c3,no,b2,no,a2,no,g2,no,f2
+		c3,no,a2,no,f2
 };
 
 
 unsigned long explosion3[]=
 {
-		c3,no,g2,no,f2,no,d2,no,c2
+		c3,no,f2,no,c2
 };

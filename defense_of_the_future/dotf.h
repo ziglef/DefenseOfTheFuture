@@ -56,7 +56,7 @@
 #define VIDEO_MODE				0x117
 
 #define SHIP_START_X			484
-#define SHIP_START_Y			568
+#define SHIP_START_Y			560
 
 #define ENEMIES_START_X			140
 #define ENEMIES_START_X2		190

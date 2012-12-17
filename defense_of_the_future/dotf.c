@@ -31,6 +31,7 @@ int sfx_explosion_enabled = 0;
 int sfx_explosion_note = 0;
 int sfx_shot = 0;
 char *video_mem;
+void check_game_over();
 
 int main(){
 
@@ -214,6 +215,17 @@ void mainloop(){
 	exit_game();
 }
 
+void check_game_over(){
+	int i;
+
+	for(i=0; i<NO_ENEMIES; i++){
+		if(is_in_screen(enemies[i]))
+			break;
+	}
+
+	exit_game();
+}
+
 int make_music(){
 
 	if(music_enabled){
@@ -370,6 +382,7 @@ void make_explosion(){
 							explosions[i][EXPLOSIONS[i]-2]->y+explosions[i][EXPLOSIONS[i]-2]->height,
 							0x0000);
 				EXPLOSIONS[i] = 0;
+				check_game_over();
 				break;
 			default:
 				break;

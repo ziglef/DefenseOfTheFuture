@@ -15,6 +15,7 @@ int check_collision(Sprite *spr);
 void make_explosion();
 void remove_sprite(int x, int y);
 int make_music();
+void check_game_over();
 
 Sprite *player;
 Sprite **player_shots;
@@ -31,7 +32,6 @@ int sfx_explosion_enabled = 0;
 int sfx_explosion_note = 0;
 int sfx_shot = 0;
 char *video_mem;
-void check_game_over();
 
 int main(){
 

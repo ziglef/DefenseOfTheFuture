@@ -48,7 +48,7 @@ int start_game(){
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
 	video_mem = vg_init(0x118);
-	vg_fill(0x000000);
+	vg_fill(0x0000);
 
 	player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);
 	vg_draw_sprite(player);
@@ -80,6 +80,12 @@ int start_game(){
 	}
 
 	EXPLOSIONS = (int *)calloc(NO_EXPLOSIONS,sizeof(int));
+
+	//Painel
+
+
+
+
 
 	timer_set_square(0,60);
 

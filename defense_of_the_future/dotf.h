@@ -44,6 +44,8 @@
 #include "Resources/missgood.h"
 #include "Resources/ship.h"
 #include "Resources/explosions.h"
+#include "Resources/lifebars.h"
+#include "Resources/algarism.h"
 
 // Sounds for the Project
 #include "Resources/piano.h"
@@ -70,5 +72,18 @@
 #define AMAKE					0x1E
 #define DMAKE					0x20
 #define SPACEMAKE				0x39
+
+// Panel
+typedef struct panel{
+	Sprite *lives;
+	Sprite *level;
+	Sprite *score;
+	Sprite *dolar;
+	Sprite **frames;
+	Sprite **algarisms;
+	Sprite **lifebar;
+	Sprite *guns;
+}panel;
+
 
 #endif

@@ -83,7 +83,7 @@ typedef struct panel{
 	Sprite **frames;
 	Sprite **algarisms;
 	Sprite **lifebar;
-	Sprite *guns;
+	Sprite **guns;
 }panel;
 
 

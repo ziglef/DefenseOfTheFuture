@@ -82,12 +82,21 @@ int start_game(){
 
 	EXPLOSIONS = (int *)calloc(NO_EXPLOSIONS,sizeof(int));
 
-	//Panel
+	// Control Panel Creation
+	// Frame
+	cPanel.frames = (Sprite **)malloc(4 * sizeof(Sprite));
+	cPanel.frames[0] = create_sprite(left_right_frame, 0, 643);
+	cPanel.frames[1] = create_sprite(left_right_frame, 1018, 643);
+	cPanel.frames[2] = create_sprite(upper_lower_frame, 0, 639);
+	cPanel.frames[3] = create_sprite(upper_lower_frame, 0, 763);
 	cPanel.lives = create_sprite(livesS, 5, 643);
+
+	// Control Panel Draw
 	vg_draw_sprite(cPanel.lives);
-
-
-
+	vg_draw_sprite(cPanel.frames[0]);
+	vg_draw_sprite(cPanel.frames[1]);
+	vg_draw_sprite(cPanel.frames[2]);
+	vg_draw_sprite(cPanel.frames[3]);
 
 	timer_set_square(0,60);
 

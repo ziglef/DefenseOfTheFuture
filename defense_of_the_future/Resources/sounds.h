@@ -58,7 +58,7 @@ unsigned long theme_loop[]=
 
 unsigned long shots[]=
 {
-		G2
+		G5
 };
 
 unsigned long explosion1[]=

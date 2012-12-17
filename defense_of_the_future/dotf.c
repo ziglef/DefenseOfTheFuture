@@ -32,6 +32,8 @@ int sfx_explosion_enabled = 0;
 int sfx_explosion_note = 0;
 int sfx_shot = 0;
 char *video_mem;
+int bad_count = NO_ENEMIES;
+int END = 0;
 
 int main(){
 
@@ -182,7 +184,7 @@ void mainloop(){
 	message msg;
 	int r;
 
-	while(kscancode != ESC_BREAKCODE){
+	while((kscancode != ESC_BREAKCODE) && (END == 0)){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -216,14 +218,9 @@ void mainloop(){
 }
 
 void check_game_over(){
-	int i;
 
-	for(i=0; i<NO_ENEMIES; i++){
-		if(is_in_screen(enemies[i]))
-			break;
-	}
-
-	exit_game();
+	if(bad_count == 0)
+		END = 1;
 }
 
 int make_music(){
@@ -334,6 +331,7 @@ void remove_sprite(int x, int y){
 			vg_draw_rec(enemies[i]->x, enemies[i]->y, enemies[i]->x+enemies[i]->width, enemies[i]->y+enemies[i]->height, 0x0000);
 			enemies[i]->x = -100;
 			enemies[i]->y = -100;
+			bad_count--;
 		}
 	}
 
@@ -452,11 +450,11 @@ void make_bad_movement(){
 
 int exit_game(){
 
-	unsubscribe();
 	if(speaker_ctrl(0)) {
 		printf("Timer_Test_Int Failed!\n");
 		return 1;
 	}
+	unsubscribe();
 	vg_exit();
 	return 0;
 }
@@ -475,10 +473,10 @@ int subscribe(){
 }
 
 int unsubscribe(){
-	if(kbc_unsubscribe())
+	if(timer_unsubscribe_int())
 		return 1;
 
-	if(timer_unsubscribe_int())
+	if(kbc_unsubscribe())
 		return 1;
 
 	return 0;

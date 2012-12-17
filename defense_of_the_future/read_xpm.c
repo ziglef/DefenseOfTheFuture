@@ -121,7 +121,7 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
       }
       *pixtmp++ = *tmp; /* pointer arithmetic! back to books :-) */
 #ifdef DEBUG
-      printf("%c:%d ", line[j], tmp-sym);
+      printf("%c:%d ", line[j], *tmp);
 #endif
     }
   }

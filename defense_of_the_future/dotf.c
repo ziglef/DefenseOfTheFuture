@@ -47,7 +47,7 @@ int start_game(){
 	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	video_mem = vg_init(VIDEO_MODE);
+	video_mem = vg_init(0x118);
 	vg_fill(0x000000);
 
 	player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);

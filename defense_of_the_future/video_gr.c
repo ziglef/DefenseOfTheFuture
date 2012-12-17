@@ -11,7 +11,7 @@
 
 #define VRAM_PHYS_ADDR    0xD0000000
 #define H_RES             1024
-#define V_RES		  	  768
+#define V_RES		  768
 #define BITS_PER_PIXEL	  8
 
 /* Private global variables */
@@ -112,7 +112,12 @@ void * vg_init(unsigned long mode) {
 }
 
 int vg_fill(unsigned long color) {
-	
+
+#ifdef DEBUG	
+	printf("Color = %ul\n", color);
+	printf("Color = 0x%X\n", color);
+#endif
+
 	int i, j, k;
 	char *write_address = video_mem;
 	long colour;
@@ -120,10 +125,10 @@ int vg_fill(unsigned long color) {
 	for (i=0; i<v_res; i++) {
 		for (j=0; j<h_res; j++) {
 			colour = color;
-			for (k=0; k<bits_per_pixel/8; k++) {
-				*write_address = (char) colour;
+			for (k=0; k<(bits_per_pixel/8); k++) {
+				*write_address = (colour & 0xFF);
 				write_address++;
-				colour >> 8;
+				colour = colour >> 8;
 			}
 		}
 	}
@@ -143,10 +148,10 @@ int vg_set_pixel(unsigned long x, unsigned long y, unsigned long color) {
 	write_address += (bits_per_pixel/8)*((y-1)*h_res+x);
 
 	colour = color;
-	for (k=0; k<bits_per_pixel/8; k++) {
-		*write_address = colour & 0xFF;
+	for (k=0; k<(bits_per_pixel/8); k++) {
+		*write_address = (colour & 0xFF);
 		write_address++;
-		colour >> 8;
+		colour = colour >> 8;
 	}
 
 	return 0;

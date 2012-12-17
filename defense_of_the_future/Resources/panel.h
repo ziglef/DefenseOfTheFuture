@@ -141,7 +141,7 @@ static char *upper_lower_frame[] = {
 
 
 /* XPM */
-static char *level[] = {
+static char *levelS[] = {
 /* columns rows colors chars-per-pixel */
 "278 60 18",
 "c 0x000000",
@@ -312,7 +312,7 @@ static char *livesS[] = {
 };
 
 /* XPM */
-static char *score[] = {
+static char *scoreS[] = {
 /* columns rows colors chars-per-pixel */
 "98 60 11",
 "c 0x000000",
@@ -391,7 +391,7 @@ static char *score[] = {
 
 
 /* XPM */
-static char *dolar[] = {
+static char *dolarS[] = {
 /* columns rows colors chars-per-pixel */
 "38 60 20",
 "c black",

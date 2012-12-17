@@ -46,6 +46,7 @@
 #include "Resources/explosions.h"
 #include "Resources/lifebars.h"
 #include "Resources/algarism.h"
+#include "Resources/panel.h"
 
 // Sounds for the Project
 #include "Resources/piano.h"

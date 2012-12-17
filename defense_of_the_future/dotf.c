@@ -20,6 +20,7 @@ Sprite *player;
 Sprite **player_shots;
 Sprite **enemies;
 Sprite ***explosions;
+panel cPanel;
 unsigned long time = 0;
 unsigned char kscancode = 0;
 char BAD_MOVE = 'L';
@@ -81,8 +82,9 @@ int start_game(){
 
 	EXPLOSIONS = (int *)calloc(NO_EXPLOSIONS,sizeof(int));
 
-	//Painel
-
+	//Panel
+	cPanel.lives = create_sprite(livesS, 5, 643);
+	vg_draw_sprite(cPanel.lives);
 
 
 
@@ -311,7 +313,7 @@ void make_player_movement(){
 			}
 			break;
 		case SMAKE:
-			if(player->y+20+player->height < 700){
+			if(player->y+20+player->height <= 630){
 				vg_draw_rec(player->x, player->y, player->x+player->width, player->y+player->height, 0x0000);
 				player->y += 20;
 				vg_draw_sprite(player);

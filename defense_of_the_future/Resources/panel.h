@@ -227,7 +227,7 @@ static char *level[] = {
 
 
 /* XPM */
-static char *lives[] = {
+static char *livesS[] = {
 /* columns rows colors chars-per-pixel */
 "268 60 18",
 "c 0x000000",

@@ -16,6 +16,8 @@ void make_explosion();
 void remove_sprite(int x, int y);
 int make_music();
 void check_game_over();
+void draw_game_info(game_info gi, int noelements);
+int exp_do(int base, int exp);
 
 Sprite *player;
 Sprite **player_shots;
@@ -34,6 +36,11 @@ int sfx_shot = 0;
 char *video_mem;
 int bad_count = NO_ENEMIES;
 int END = 0;
+int life = 8;
+game_info lives = {213, 644, 3};
+game_info level = {958, 644, 1};
+game_info score = {779, 704, 4252};
+game_info cash = {343, 644, 64825};
 
 int main(){
 
@@ -141,6 +148,11 @@ int start_game(){
 
 	vg_draw_sprite(cPanel.dolar);
 
+	draw_game_info(lives, 1);
+	draw_game_info(level, 1);
+	draw_game_info(score, 4);
+	draw_game_info(cash, 5);
+/*
 	cPanel.algarisms[3]->x = 213;
 	cPanel.algarisms[3]->y = 644;
 	vg_draw_sprite(cPanel.algarisms[3]);
@@ -162,7 +174,7 @@ int start_game(){
 	cPanel.algarisms[1]->x = 958;
 	cPanel.algarisms[1]->y = 644;
 	vg_draw_sprite(cPanel.algarisms[1]);
-
+*/
 	timer_set_square(0,60);
 
 	timer_set_square(2,no);
@@ -211,6 +223,24 @@ void mainloop(){
 	}
 
 	exit_game();
+}
+
+int exp_do(int base, int exp){
+	if(exp == 0)
+		return 1;
+	return base*(exp_do, exp-1);
+}
+
+void draw_game_info(game_info gi, int noelements){
+	int i;
+
+	if(noelements == 1){
+		cPanel.algarisms[gi.value]->x = gi.x;
+		cPanel.algarisms[gi.value]->y = gi.y;
+		vg_draw_sprite(cPanel.algarisms[gi.value]);
+	}else{
+
+	}
 }
 
 void check_game_over(){

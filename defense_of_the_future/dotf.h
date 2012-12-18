@@ -86,5 +86,11 @@ typedef struct panel{
 	Sprite **guns;
 }panel;
 
+typedef struct game_info{
+	int x;
+	int y;
+	int value;
+}game_info;
+
 
 #endif

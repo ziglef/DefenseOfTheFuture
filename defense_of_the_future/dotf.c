@@ -87,6 +87,11 @@ int start_game(){
 		explosions[i][2] = create_sprite(boom3, -75, -75);
 		explosions[i][3] = create_sprite(boom4, -75, -75);
 		explosions[i][4] = create_sprite(boom5, -75, -75);
+		explosions[i][5] = create_sprite(boom6, -75, -75);
+		explosions[i][6] = create_sprite(boom7, -75, -75);
+		explosions[i][7] = create_sprite(boom8, -75, -75);
+		explosions[i][8] = create_sprite(boom9, -75, -75);
+		explosions[i][9] = create_sprite(boom10, -75, -75);
 	}
 
 	EXPLOSIONS = (int *)calloc(NO_EXPLOSIONS,sizeof(int));
@@ -126,6 +131,16 @@ int start_game(){
 	cPanel.algarisms[7] = create_sprite(alg7, -100, -100);
 	cPanel.algarisms[8] = create_sprite(alg8, -100, -100);
 	cPanel.algarisms[9] = create_sprite(alg9, -100, -100);
+
+	cPanel.guns = (Sprite **)malloc(8 * sizeof(Sprite));
+	cPanel.guns[0] = create_sprite(g1on, 343 ,704);
+	cPanel.guns[1] = create_sprite(g1off, -100, -100);
+	cPanel.guns[2] = create_sprite(g2on, -100, -100);
+	cPanel.guns[3] = create_sprite(g2off, 427, 704);
+	cPanel.guns[4] = create_sprite(g3on, -100, -100);
+	cPanel.guns[5] = create_sprite(g3off, 511, 704);
+	cPanel.guns[6] = create_sprite(g4on, -100, -100);
+	cPanel.guns[7] = create_sprite(g4off, 595, 704);
 
 	// Control Panel Draw
 	vg_draw_sprite(cPanel.lives);
@@ -211,7 +226,7 @@ void mainloop(){
 								make_bad_movement();
 							if(time % 5 == 0)
 								make_shooting_movement();
-							if((time % 6 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
+							if((time % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 								make_explosion();
 							if(time % 6 == 0)
 								make_music();
@@ -238,6 +253,7 @@ void draw_game_info(game_info gi, int noelements){
 		while (num > 0){
 		    elements[i] = num % 10;
 		    num = num / 10;
+		    i++; //WHY U SO NOOOOOOOOOOOB, FALTAVA INCREMENTAR -_-'
 		}
 
 		for(i=noelements-1; i>=0; i--){
@@ -384,37 +400,16 @@ void make_explosion(){
 	int i;
 
 	for(i=0; i<NO_EXPLOSIONS; i++){
-		switch(EXPLOSIONS[i]){
-			case 1:
-				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
-				EXPLOSIONS[i]++;
-				break;
-			case 2:
-				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
-				EXPLOSIONS[i]++;
-				break;
-			case 3:
-				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
-				EXPLOSIONS[i]++;
-				break;
-			case 4:
-				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
-				EXPLOSIONS[i]++;
-				break;
-			case 5:
-				vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
-				EXPLOSIONS[i]++;
-				break;
-			case 6:
-				vg_draw_rec(explosions[i][EXPLOSIONS[i]-2]->x, explosions[i][EXPLOSIONS[i]-2]->y,
-							explosions[i][EXPLOSIONS[i]-2]->x+explosions[i][EXPLOSIONS[i]-2]->width,
-							explosions[i][EXPLOSIONS[i]-2]->y+explosions[i][EXPLOSIONS[i]-2]->height,
-							0x0000);
-				EXPLOSIONS[i] = 0;
-				check_game_over();
-				break;
-			default:
-				break;
+		if((EXPLOSIONS[i] != 11) && (EXPLOSIONS[i] != 0)){
+			vg_draw_sprite(explosions[i][EXPLOSIONS[i]-1]);
+			EXPLOSIONS[i]++;
+		} else if(EXPLOSIONS[i] != 0){
+			vg_draw_rec(explosions[i][EXPLOSIONS[i]-2]->x, explosions[i][EXPLOSIONS[i]-2]->y,
+						explosions[i][EXPLOSIONS[i]-2]->x+explosions[i][EXPLOSIONS[i]-2]->width,
+						explosions[i][EXPLOSIONS[i]-2]->y+explosions[i][EXPLOSIONS[i]-2]->height,
+						0x0000);
+			EXPLOSIONS[i] = 0;
+			check_game_over();
 		}
 	}
 }

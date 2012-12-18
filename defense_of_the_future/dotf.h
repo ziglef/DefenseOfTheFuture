@@ -65,7 +65,7 @@
 #define ENEMIES_Y_INCREMENT		94
 #define NO_ENEMIES				15
 #define NO_PSHOTS				4
-#define NO_EXPLOSIONS			5
+#define NO_EXPLOSIONS			10
 
 // Makecodes
 #define WMAKE					0x11

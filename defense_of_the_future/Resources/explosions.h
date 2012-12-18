@@ -793,7 +793,7 @@ static char * boom8[] = {
 /* XPM */
 static char * boom9[] = {
 "89 89 5",
-"!	0x6F6D51",
+"!	0x000000",
 "#	0xFFC20E",
 "$	0xFFF200",
 "%	0xFFF9BD",

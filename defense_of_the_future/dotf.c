@@ -77,7 +77,7 @@ int start_menu(){
 	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	video_mem = vg_init(0x117);
+	video_mem = vg_init(0x118);
 	vg_fill(0x0000);
 
 	menu = create_sprite(wallpaper, 0, 0);

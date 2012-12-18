@@ -57,7 +57,8 @@ unsigned long explosion3[]=
 
 unsigned long theme_menu[]=
 {
-		d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,a3,no,c4,no
+		
+d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,a3,no,c4,no,
 
 		d4,no,no,no,d4,no,no,no,d4,no,e4,no,f4,no,no,no,f4,no,no,no,f4,no,g4,no,e4,no,no,no,e4,no,no,no,d4,no,c4,no,c4,no,d4,no,no,no,no,no,a4,no,c4,no,d4,no,no,no,d4,no,no,no,d4,no,e4,no,f4,no,no,no,f4,no,no,no,f4,no,g4,no
 };

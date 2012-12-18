@@ -20,7 +20,7 @@ void check_game_over();
 void draw_game_info(game_info gi, int noelements);
 int start_menu();
 void draw_menu();
-void make_menu_music();
+int make_menu_music();
 
 Sprite *player;
 Sprite **player_shots;
@@ -144,15 +144,15 @@ void menuloop(){
 	start_game();
 }
 
-void make_menu_music(){
-	if(music_enabled){
-		if(timer_set_square(2,theme_loop[music_note])){
+int make_menu_music(){
+	if(menu_music_enabled){
+		if(timer_set_square(2,theme_menu[menu_music_note])){
 			printf("Timer_set_square Failed!\n");
 			return 1;
 		}
 	}
-	music_note++;
-	if(music_note == NOTAS_LOOP) music_note = 0;
+	menu_music_note++;
+	if(menu_music_note == NOTAS_MENU) menu_music_note = 0;
 }
 
 int start_game(){

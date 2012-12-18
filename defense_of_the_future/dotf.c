@@ -143,6 +143,11 @@ int start_game(){
 	cPanel.guns[7] = create_sprite(g4off, 595, 704);
 
 	// Control Panel Draw
+	vg_draw_sprite(cPanel.guns[0]);
+	vg_draw_sprite(cPanel.guns[3]);
+	vg_draw_sprite(cPanel.guns[5]);
+	vg_draw_sprite(cPanel.guns[7]);
+
 	vg_draw_sprite(cPanel.lives);
 	vg_draw_sprite(cPanel.frames[0]);
 	vg_draw_sprite(cPanel.frames[1]);
@@ -166,29 +171,7 @@ int start_game(){
 	draw_game_info(level, 1);
 	draw_game_info(score, 4);
 	draw_game_info(cash, 5);
-/*
-	cPanel.algarisms[3]->x = 213;
-	cPanel.algarisms[3]->y = 644;
-	vg_draw_sprite(cPanel.algarisms[3]);
 
-	cPanel.algarisms[0]->x = 343;
-	cPanel.algarisms[0]->y = 644;
-	for(i=0; i<5; i++){
-		vg_draw_sprite(cPanel.algarisms[0]);
-		cPanel.algarisms[0]->x += 60;
-	}
-
-	cPanel.algarisms[0]->x = 779;
-	cPanel.algarisms[0]->y = 704;
-	for(i=0; i<4; i++){
-		vg_draw_sprite(cPanel.algarisms[0]);
-		cPanel.algarisms[0]->x += 60;
-	}
-
-	cPanel.algarisms[1]->x = 958;
-	cPanel.algarisms[1]->y = 644;
-	vg_draw_sprite(cPanel.algarisms[1]);
-*/
 	timer_set_square(0,60);
 
 	timer_set_square(2,no);

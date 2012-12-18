@@ -265,9 +265,9 @@ void keystroke_handler(){
 
 int is_in_screen(Sprite *spr){
 	if((spr->y >= 0) && (spr->y < 768) && (spr->x >= 0) && (spr->x < 1024))
-		return 0;
-	else
 		return 1;
+	else
+		return 0;
 }
 
 void make_shooting(){

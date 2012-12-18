@@ -23,7 +23,7 @@ int kbc_subscribe_exclusive(void) {
 		return -1;
 	}
 
-	return 0;
+	return KBC.hook_id;
 }
 
 int kbc_unsubscribe() {

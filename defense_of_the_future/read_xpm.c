@@ -8,8 +8,8 @@
 
 #include "tabdispersao.h"
 
-#define HRES 768
-#define VRES 1024
+#define HRES 1024
+#define VRES 768
 
 typedef unsigned short uint16_t;
 typedef unsigned char uint8_t;

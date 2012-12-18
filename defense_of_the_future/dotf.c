@@ -87,13 +87,11 @@ int start_game(){
 
 	// Control Panel Creation
 	// Frame
-	cPanel.frames = (Sprite **)malloc(6 * sizeof(Sprite));
+	cPanel.frames = (Sprite **)malloc(4 * sizeof(Sprite));
 	cPanel.frames[0] = create_sprite(left_right_frame, 0, 644);
 	cPanel.frames[1] = create_sprite(left_right_frame, 1019, 644);
 	cPanel.frames[2] = create_sprite(upper_lower_frame, 0, 640);
-	cPanel.frames[3] = create_sprite(upper_lower_frame, 512, 640);
-	cPanel.frames[4] = create_sprite(upper_lower_frame, 0, 764);
-	cPanel.frames[5] = create_sprite(upper_lower_frame, 512, 764);
+	cPanel.frames[3] = create_sprite(upper_lower_frame, 0, 764);
 
 	cPanel.lives = create_sprite(livesS, 5, 644);
 	cPanel.level = create_sprite(levelS, 681, 644);
@@ -129,8 +127,6 @@ int start_game(){
 	vg_draw_sprite(cPanel.frames[1]);
 	vg_draw_sprite(cPanel.frames[2]);
 	vg_draw_sprite(cPanel.frames[3]);
-	vg_draw_sprite(cPanel.frames[4]);
-	vg_draw_sprite(cPanel.frames[5]);
 	vg_draw_sprite(cPanel.level);
 	vg_draw_sprite(cPanel.score);
 

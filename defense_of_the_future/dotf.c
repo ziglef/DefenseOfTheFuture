@@ -17,7 +17,6 @@ void remove_sprite(int x, int y);
 int make_music();
 void check_game_over();
 void draw_game_info(game_info gi, int noelements);
-int exp_do(int base, int exp);
 
 Sprite *player;
 Sprite **player_shots;
@@ -58,7 +57,7 @@ int start_game(){
 	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	video_mem = vg_init(0x118);
+	video_mem = vg_init(0x117);
 	vg_fill(0x0000);
 
 	player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);
@@ -225,21 +224,27 @@ void mainloop(){
 	exit_game();
 }
 
-int exp_do(int base, int exp){
-	if(exp == 0)
-		return 1;
-	return base*(exp_do, exp-1);
-}
-
 void draw_game_info(game_info gi, int noelements){
-	int i;
+	int i = 0;
+	int num;
+	int elements[noelements];
 
 	if(noelements == 1){
 		cPanel.algarisms[gi.value]->x = gi.x;
 		cPanel.algarisms[gi.value]->y = gi.y;
 		vg_draw_sprite(cPanel.algarisms[gi.value]);
 	}else{
+		num = gi.value;
+		while (num > 0){
+		    elements[i] = num % 10;
+		    num = num / 10;
+		}
 
+		for(i=noelements-1; i>=0; i--){
+			cPanel.algarisms[elements[i]]->x = gi.x+60*(noelements-i+1);
+			cPanel.algarisms[elements[i]]->y = gi.y;
+			vg_draw_sprite(cPanel.algarisms[elements[i]]);
+		}
 	}
 }
 

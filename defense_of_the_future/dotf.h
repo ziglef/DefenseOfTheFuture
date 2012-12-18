@@ -75,6 +75,9 @@
 #define AMAKE					0x1E
 #define DMAKE					0x20
 #define SPACEMAKE				0x39
+#define UPMAKE					0x48
+#define DOWNMAKE				0x50
+#define ENTERMAKE				0x1C
 
 // Panel
 typedef struct panel{

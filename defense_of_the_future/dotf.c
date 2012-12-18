@@ -4,6 +4,7 @@ int start_game();
 int subscribe();
 int unsubscribe();
 void mainloop();
+void menuloop();
 void make_player_movement();
 void make_bad_movement();
 int exit_game();
@@ -17,6 +18,9 @@ void remove_sprite(int x, int y);
 int make_music();
 void check_game_over();
 void draw_game_info(game_info gi, int noelements);
+int start_menu();
+void draw_menu();
+void make_menu_music();
 
 Sprite *player;
 Sprite **player_shots;
@@ -27,8 +31,10 @@ unsigned long time = 0;
 unsigned char kscancode = 0;
 char BAD_MOVE = 'L';
 int *EXPLOSIONS;
-int music_enabled = 1;
+int music_enabled = 0;
 int music_note = 0;
+int menu_music_enabled = 1;
+int menu_music_note = 0;
 int sfx_explosion_enabled = 0;
 int sfx_explosion_note = 0;
 int sfx_shot = 0;
@@ -40,25 +46,125 @@ game_info lives = {213, 644, 3};
 game_info level = {958, 644, 1};
 game_info score = {779, 704, 4252};
 game_info cash = {343, 644, 64825};
+Sprite *menu;
+Sprite **menu_buttons;
+int atMenu = 1;
+int menuOption = 0;
 
 int main(){
 
 	sef_startup();
 
+	start_menu();
 	start_game();
 
 	//vg_exit();
 	return 0;
 }
 
-int start_game(){
+void draw_menu(){
 	int i;
 
+	for(i=0; i<6; i++){
+		if(menuOption == i)
+			vg_draw_sprite(menu_buttons[i*2]);
+		else
+			vg_draw_sprite(menu_buttons[(i*2)+1]);
+	}
+}
+
+int start_menu(){
 	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
 	video_mem = vg_init(0x117);
 	vg_fill(0x0000);
+
+	menu = create_sprite(wallpaper, 0, 0);
+	vg_draw_sprite(menu);
+
+	menu_buttons = (Sprite **)malloc(12 * sizeof(Sprite));
+	menu_buttons[0] = create_sprite(starton, 0 ,5);
+	menu_buttons[1] = create_sprite(startoff, 0, 5);
+	menu_buttons[2] = create_sprite(optionson, 0, 132);
+	menu_buttons[3] = create_sprite(optionsoff, 0, 132);
+	menu_buttons[4] = create_sprite(highscoreson, 0, 259);
+	menu_buttons[5] = create_sprite(highscoresoff, 0, 259);
+	menu_buttons[6] = create_sprite(helpon, 0, 386);
+	menu_buttons[7] = create_sprite(helpoff, 0, 386);
+	menu_buttons[8] = create_sprite(creditson, 0, 513);
+	menu_buttons[9] = create_sprite(creditsoff, 0, 513);
+	menu_buttons[10] = create_sprite(exiton, 0, 640);
+	menu_buttons[11] = create_sprite(exitoff, 0, 640);
+
+	draw_menu();
+
+	timer_set_square(0,60);
+
+	timer_set_square(2,no);
+	if(speaker_ctrl(1))
+	{
+	 printf("Speaker_ctrl Failed!\n");
+	 return 1;
+	}
+
+	menuloop();
+}
+
+void menuloop(){
+	int ipc_status;
+	message msg;
+	int r;
+
+	while(kscancode != ENTERMAKE){
+			r = driver_receive(ANY, &msg, &ipc_status);
+			if( r != 0 ){
+				printf("driver_receive failed with %d\n", r);
+				continue;
+			}
+
+			if(is_ipc_notify(ipc_status)){
+
+				switch(_ENDPOINT_P(msg.m_source)){
+					case HARDWARE:
+						if((msg.NOTIFY_ARG & KBC_IRQ)){
+							kscancode = kbc_handler();
+							keystroke_handler();
+						}else if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+							time = timer_int_handler(time);
+							if(time % 6 == 0)
+								make_menu_music();
+						}break;
+					default: break;
+				}
+			}
+	}
+	music_enabled = 1;
+	atMenu = 0;
+	start_game();
+}
+
+void make_menu_music(){
+	if(music_enabled){
+		if(timer_set_square(2,theme_loop[music_note])){
+			printf("Timer_set_square Failed!\n");
+			return 1;
+		}
+	}
+	music_note++;
+	if(music_note == NOTAS_LOOP) music_note = 0;
+}
+
+int start_game(){
+	int i;
+
+	//subscribe();
+
+	// Initializes the video memory in VIDEO_MODE (0x117)
+	//video_mem = vg_init(0x117);
+	//vg_fill(0x0000);
+
+	vg_fill(0x000000);
 
 	player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);
 	vg_draw_sprite(player);
@@ -171,17 +277,6 @@ int start_game(){
 	draw_game_info(level, 1);
 	draw_game_info(score, 4);
 	draw_game_info(cash, 5);
-
-	timer_set_square(0,60);
-
-	timer_set_square(2,no);
-	if(speaker_ctrl(1))
-	{
-	 printf("Speaker_ctrl Failed!\n");
-	 return 1;
-	}
-
-	mainloop();
 }
 
 void mainloop(){
@@ -291,6 +386,18 @@ int make_music(){
 void keystroke_handler(){
 	if((kscancode == WMAKE) || (kscancode == SMAKE) || (kscancode == DMAKE) || (kscancode == AMAKE)) make_player_movement();
 	if(kscancode == SPACEMAKE) make_shooting();
+	if(atMenu){
+		if(kscancode == DOWNMAKE)
+			if(menuOption != 5){
+				menuOption++;
+				draw_menu();
+			}
+		if(kscancode == UPMAKE)
+			if(menuOption != 0){
+				menuOption--;
+				draw_menu();
+			}
+	}
 }
 
 int is_in_screen(Sprite *spr){

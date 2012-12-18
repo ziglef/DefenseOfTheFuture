@@ -241,7 +241,7 @@ void draw_game_info(game_info gi, int noelements){
 		}
 
 		for(i=noelements-1; i>=0; i--){
-			cPanel.algarisms[elements[i]]->x = gi.x+60*(noelements-i+1);
+			cPanel.algarisms[elements[i]]->x = gi.x+60*(noelements-(i+1));
 			cPanel.algarisms[elements[i]]->y = gi.y;
 			vg_draw_sprite(cPanel.algarisms[elements[i]]);
 		}

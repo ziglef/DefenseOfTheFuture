@@ -4,7 +4,7 @@ int start_game();
 int subscribe();
 int unsubscribe();
 void mainloop();
-void menuloop();
+int menuloop();
 void make_player_movement();
 void make_bad_movement();
 int exit_game();
@@ -77,7 +77,7 @@ int start_menu(){
 	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	video_mem = vg_init(0x118);
+	video_mem = vg_init(0x117);
 	vg_fill(0x0000);
 
 	menu = create_sprite(wallpaper, 0, 0);
@@ -111,7 +111,7 @@ int start_menu(){
 	menuloop();
 }
 
-void menuloop(){
+int menuloop(){
 	int ipc_status;
 	message msg;
 	int r;
@@ -141,6 +141,11 @@ void menuloop(){
 	}
 	music_enabled = 1;
 	atMenu = 0;
+	unsubscribe();
+	if(speaker_ctrl(0)) {
+		printf("Timer_Test_Int Failed!\n");
+		return 1;
+	}
 	start_game();
 }
 
@@ -158,13 +163,11 @@ int make_menu_music(){
 int start_game(){
 	int i;
 
-	//subscribe();
+	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	//video_mem = vg_init(0x117);
-	//vg_fill(0x0000);
-
-	vg_fill(0x000000);
+	video_mem = vg_init(0x117);
+	vg_fill(0x0000);
 
 	player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);
 	vg_draw_sprite(player);
@@ -331,7 +334,7 @@ void draw_game_info(game_info gi, int noelements){
 		while (num > 0){
 		    elements[i] = num % 10;
 		    num = num / 10;
-		    i++; //WHY U SO NOOOOOOOOOOOB, FALTAVA INCREMENTAR -_-'
+		    i++;
 		}
 
 		for(i=noelements-1; i>=0; i--){

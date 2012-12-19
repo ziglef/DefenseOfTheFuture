@@ -170,10 +170,7 @@ int menuloop(){
 				}
 			}
 	}
-	if(kscancode == ENTERBREAK){
-		unsubscribe();
-		exit_game();
-	}
+	exit_game();
 	menu_music_enabled = 0;
 	music_enabled = 1;
 	atMenu = 0;
@@ -352,8 +349,7 @@ void mainloop(){
 								make_shooting_movement();
 							if((time % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 								make_explosion();
-							if(time % 6 == 
-0)
+							if(time % 6 == 0)
 								make_music();
 						}else if((msg.NOTIFY_ARG & BIT(M_IRQ))){
 							lemouse = mouse_handler();

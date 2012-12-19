@@ -49,13 +49,14 @@
 #include "Resources/panel.h"
 #include "Resources/guns.h"
 #include "Resources/menu.h"
+#include "Resources/geral.h"
 
 // Sounds for the Project
 #include "Resources/piano.h"
 #include "Resources/sounds.h"
 
 // Defines
-#define VIDEO_MODE				0x117
+#define VIDEO_MODE				0x118
 
 #define SHIP_START_X			484
 #define SHIP_START_Y			560

@@ -149,7 +149,8 @@ int menuloop(){
 						}
 						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
-							if(time % 6 == 0)
+							if(time % 5 == 
+0)
 								make_menu_music();
 						}
 						break;

@@ -148,20 +148,7 @@ int menuloop(){
 	message msg;
 	int r;
 
-	if(mouse_subscribe_exclusive() < 0){
-			printf("ERROR SUBSCRIBING TO KBC!\n");
-			return 1;
-	}
-
-	turn_mouse_on();
-
-	do{
-		sys_inb(KBC_STAT, &(lemouse.status));
-		if(lemouse.status & KBC_STAT_OBF)
-			sys_inb(KBC_O_BUF, &byte);
-	}while(lemouse.status & KBC_STAT_OBF);
-
-	while(LMB_PRESSED != true){
+	while(ENTERBREAK != true){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -172,31 +159,15 @@ int menuloop(){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
+						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+							kscancode = kbc_handler();
+							keystroke_handler();
+						}
 						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
 							if(time % 6 == 0)
 								make_menu_music();
 						}
-						if(packetcounter >= 3){
-							if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
-								lemouse = mouse_handler();
-								packet[0] = lemouse.bytes[0];
-								packet[1] = lemouse.bytes[1];
-								packet[2] = lemouse.bytes[2];
-								counter = lemouse.counter;
-
-								if(packet[0] & BIT(0))
-									LMB_PRESSED = true;
-								else
-									LMB_PRESSED = false;
-
-								if(packet[0] & BIT(1))
-									RMB_PRESSED = true;
-								else
-									RMB_PRESSED = false;
-							}
-						}else
-							packetcounter++;
 						break;
 					default: break;
 				}
@@ -205,9 +176,6 @@ int menuloop(){
 	menu_music_enabled = 0;
 	music_enabled = 1;
 	atMenu = 0;
-
-	if(mouse_unsubscribe())
-		return 1;
 
 	if(speaker_ctrl(0)) {
 		printf("Timer_Test_Int Failed!\n");

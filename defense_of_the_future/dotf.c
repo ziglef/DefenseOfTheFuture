@@ -192,11 +192,6 @@ int menuloop(){
 								RMB_PRESSED = true;
 							else
 								RMB_PRESSED = false;
-							do{
-								sys_inb(KBC_STAT, &(lemouse.status));
-								if(lemouse.status & KBC_STAT_OBF)
-									sys_inb(KBC_O_BUF, &byte);
-							}while(lemouse.status & KBC_STAT_OBF);
 						}
 						break;
 					default: break;
@@ -209,12 +204,6 @@ int menuloop(){
 
 	if(mouse_unsubscribe())
 		return 1;
-
-	do{
-		sys_inb(KBC_STAT, &(lemouse.status));
-		if(lemouse.status & KBC_STAT_OBF)
-			sys_inb(KBC_O_BUF, &byte);
-	}while(lemouse.status & KBC_STAT_OBF);
 
 	if(speaker_ctrl(0)) {
 		printf("Timer_Test_Int Failed!\n");

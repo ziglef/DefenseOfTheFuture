@@ -58,7 +58,6 @@ unsigned char packet[3];
 bool LMB_PRESSED = false;
 bool RMB_PRESSED = false;
 unsigned long byte;
-int ninjacounter = 0;
 
 int main(){
 
@@ -147,7 +146,13 @@ int menuloop(){
 	int ipc_status;
 	message msg;
 	int r;
-
+/*
+	do{
+		sys_inb(KBC_STAT, &(lemouse.status));
+		if(lemouse.status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &byte);
+	}while(lemouse.status & KBC_STAT_OBF);
+*/
 	while(kscancode != ENTERBREAK){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
@@ -158,10 +163,10 @@ int menuloop(){
 			if(is_ipc_notify(ipc_status)){
 
 				switch(_ENDPOINT_P(msg.m_source)){
-					case HARDWARE:
+					case HARDWARE:/*
 						if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
 
-						}
+						}*/
 						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
 							kscancode = kbc_handler();
 							keystroke_handler();
@@ -173,6 +178,12 @@ int menuloop(){
 						}break;
 					default: break;
 				}
+/*
+				do{
+					sys_inb(KBC_STAT, &(lemouse.status));
+					if(lemouse.status & KBC_STAT_OBF)
+						sys_inb(KBC_O_BUF, &byte);
+				}while(lemouse.status & KBC_STAT_OBF);*/
 			}
 	}
 	//exit_game();
@@ -330,7 +341,13 @@ void mainloop(){
 	int ipc_status;
 	message msg;
 	int r;
-
+/*
+	do{
+		sys_inb(KBC_STAT, &(lemouse.status));
+		if(lemouse.status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &byte);
+	}while(lemouse.status & KBC_STAT_OBF);
+*/
 	while((kscancode != ESC_BREAKCODE) && (END == 0)){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
@@ -342,6 +359,10 @@ void mainloop(){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
+						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+							kscancode = kbc_handler();
+							keystroke_handler();
+						}
 						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
 							if(time % 60 == 0)
@@ -353,6 +374,7 @@ void mainloop(){
 							if(time % 6 == 0)
 								make_music();
 						}
+						/*
 						if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
 							lemouse = mouse_handler();
 							packet[0] = lemouse.bytes[0];
@@ -370,10 +392,11 @@ void mainloop(){
 							else
 								RMB_PRESSED = false;
 							make_gun_selection();
-						}
-						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
-							kscancode = kbc_handler();
-							keystroke_handler();
+							do{
+								sys_inb(KBC_STAT, &(lemouse.status));
+								if(lemouse.status & KBC_STAT_OBF)
+									sys_inb(KBC_O_BUF, &byte);
+							}while(lemouse.status & KBC_STAT_OBF);*/
 						}
 						break;
 					default: break;

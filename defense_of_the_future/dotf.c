@@ -354,7 +354,7 @@ void mainloop(){
 }
 
 int make_victory_music(){
-	if(END){
+	if(END == 1){
 		if(timer_set_square(2,theme_victory[end_music_note])){
 			printf("Timer_set_square Failed!\n");
 			return 1;

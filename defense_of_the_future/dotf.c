@@ -58,7 +58,7 @@ unsigned char packet[3];
 bool LMB_PRESSED = false;
 bool RMB_PRESSED = false;
 unsigned long byte;
-int packet = 0;
+int packetcounter = 0;
 
 int main(){
 
@@ -177,7 +177,7 @@ int menuloop(){
 							if(time % 6 == 0)
 								make_menu_music();
 						}
-						if(packet >= 3){
+						if(packetcounter >= 3){
 							if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
 								lemouse = mouse_handler();
 								packet[0] = lemouse.bytes[0];
@@ -195,7 +195,7 @@ int menuloop(){
 								else
 									RMB_PRESSED = false;
 							} else
-								packet++;
+								packetcounter++;
 						break;
 					default: break;
 				}

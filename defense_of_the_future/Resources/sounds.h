@@ -56,7 +56,7 @@ unsigned long explosion3[]=
 		c3,no,f2,no,c2
 };
 
-
+//speed 5
 unsigned long theme_menu[]=
 {
 		

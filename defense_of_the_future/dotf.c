@@ -146,7 +146,6 @@ int menuloop(){
 		printf("Timer_Test_Int Failed!\n");
 		return 1;
 	}
-	start_game();
 }
 
 int make_menu_music(){
@@ -166,7 +165,7 @@ int start_game(){
 	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	video_mem = vg_init(0x117);
+	//video_mem = vg_init(0x117);
 	vg_fill(0x0000);
 
 	player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);
@@ -280,6 +279,8 @@ int start_game(){
 	draw_game_info(level, 1);
 	draw_game_info(score, 4);
 	draw_game_info(cash, 5);
+
+	mainloop();
 }
 
 void mainloop(){

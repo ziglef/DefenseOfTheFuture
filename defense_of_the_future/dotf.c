@@ -359,10 +359,6 @@ void mainloop(){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
-						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
-							kscancode = kbc_handler();
-							keystroke_handler();
-						}
 						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
 							if(time % 60 == 0)
@@ -396,6 +392,10 @@ void mainloop(){
 								if(lemouse.status & KBC_STAT_OBF)
 									sys_inb(KBC_O_BUF, &byte);
 							}while(lemouse.status & KBC_STAT_OBF);
+						}
+						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+							kscancode = kbc_handler();
+							keystroke_handler();
 						}
 						break;
 					default: break;

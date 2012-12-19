@@ -434,17 +434,16 @@ void keystroke_handler(){
 	if(kscancode == SPACEMAKE) make_shooting();
 	if(atMenu){
 		if(kscancode == DOWNMAKE)
-			if(menuOption != 5){
+			if(menuOption != 5)
 				menuOption++;
-				draw_menu();
-			} else
+			else
 				menuOption = 0;
 		if(kscancode == UPMAKE)
-			if(menuOption != 0){
+			if(menuOption != 0)
 				menuOption--;
-				draw_menu();
-			} else
+			else
 				menuOption = 5;
+		draw_menu();
 	}
 }
 

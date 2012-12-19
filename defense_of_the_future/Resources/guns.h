@@ -1,7 +1,7 @@
 /* XPM */
 static char * g1on[] = {
 "84 60 14",
-"!	0x22B14C",
+"!	0xFF0000",
 "#	0x000000",
 "$	0x808080",
 "%	0x000080",
@@ -157,7 +157,7 @@ static char * g1off[] = {
 /* XPM */
 static char * g2on[] = {
 "84 60 9",
-"!	0x22B14C",
+"!	0xFF0000",
 "#	0x000000",
 "$	0xC0C0C0",
 "%	0xFF00FF",
@@ -302,7 +302,7 @@ static char * g2off[] = {
 /* XPM */
 static char * g3on[] = {
 "84 60 13",
-"!	0x22B14C",
+"!	0xFF0000",
 "#	0x000000",
 "$	0x808080",
 "%	0xC0C0C0",
@@ -455,7 +455,7 @@ static char * g3off[] = {
 /* XPM */
 static char * g4on[] = {
 "84 60 9",
-"!	0x22B14C",
+"!	0xFF0000",
 "#	0x000000",
 "$	0x000008",
 "%	0xFFCE9C",

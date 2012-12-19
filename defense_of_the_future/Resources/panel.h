@@ -141,7 +141,7 @@ static char *upper_lower_frame[] = {
 
 
 /* XPM */
-static char *level[] = {
+static char *levelS[] = {
 /* columns rows colors chars-per-pixel */
 "278 60 18",
 "c 0x000000",
@@ -211,7 +211,7 @@ static char *level[] = {
 
 
 /* XPM */
-static char *lives[] = {
+static char *livesS[] = {
 /* columns rows colors chars-per-pixel */
 "268 60 18",
 "c 0x000000",
@@ -233,27 +233,27 @@ static char *lives[] = {
 "> 0x3D46C6",
 ", 0x3F48CC",
 /* pixels */
-//-9 -9
+//-9 -9 -15
 "O>,,,,>%ccccccccccccccccccccccccccO>,,,,,&ccO>,,,,>%cccccccccccccccc%,,,,,:Occccccc*,,,,,,,,,,,,,,,,,,,,,,,,;Occccccc*,,,,,,,,,,,,,,,,,,,,,,,,:Occccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 "-,,,,,,,Occccccccccccccccccccccccc:,,,,,,,#c-,,,,,,,Occcccccccccccco,,,,,,,:ccccccO,,,,,,,,,,,,,,,,,,,,,,,,,,;ccccccO,,,,,,,,,,,,,,,,,,,,,,,,,,:ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cccccc*,,,,,,,,,,,,,,,,,,,,,,,,,,,cccccc*,,,,,,,,,,,,,,,,,,,,,,,,,,,ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,ccccco,,,,,,,,,,,,,,,,,,,,,,,,,,,,ccccc.,,,,,,,,,,,,,,,,,,,,,,,,,,,,ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,ccc$-,,,,,,,,,,,,,,,,,,,,,,,,,,,,:cccO&>,,,,,,,,,,,,,,,,,,,,,,,,,,,>ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#cc$,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,&ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,;%+++++++++++++++++++occc,,,,,,,,,>*&&&&&&&&&&&&&&&&&&&Occcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,;ccccccccccccccccccccccccc,,,,,,,,>.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,&ccccccccccccccccccccccccc,,,,,,,,*cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,%ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,=ccccccccccccccccccccccccc,,,,,,,,$ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,&occccccccccccccccccccccc,,,,,,,,=ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,-Occ,,,,,,,,,%.ccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,-cc-,,,,,,,,,,,,,,,,,,,,,,,,,&cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
-"ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,;cc.*>,,,,,,,,,,,,,,,,,,,,,,,,+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cccccc*,,,,,,,,,,,,,,,,,,,,,,,,,,,cccccc*,,,,,,,,,,,,,,,,,,,,,,,,,,,ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,ccccco,,,,,,,,,,,,,,,,,,,,,,,,,,,,ccccc.,,,,,,,,,,,,,,,,,,,,,,,,,,,,ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,ccc$-,,,,,,,,,,,,,,,,,,,,,,,,,,,,:cccO&>,,,,,,,,,,,,,,,,,,,,,,,,,,,>ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc*,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,#cc$,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,&ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,;%+++++++++++++++++++occc,,,,,,,,,>*&&&&&&&&&&&&&&&&&&&Occcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,;ccccccccccccccccccccccccc,,,,,,,,>.ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,&ccccccccccccccccccccccccc,,,,,,,,*cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,+cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,%ccccccccccccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,=ccccccccccccccccccccccccc,,,,,,,,$ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,&occccccccccccccccccccccc,,,,,,,,=ccccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,-Occ,,,,,,,,,%.ccccccccccccccccccccccccccccccccccccc@,,,,,,,,,,Xccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,-cc-,,,,,,,,,,,,,,,,,,,,,,,,,&cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+",,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,;cc.*>,,,,,,,,,,,,,,,,,,,,,,,,+ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 "ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,;ccccc+,,,,,,,,,,,,,,,,,,,,,,,*ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 "ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,;cccccc=,,,,,,,,,,,,,,,,,,,,,,>.cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
 "ccccccccccccccc,,,,,,,,+ccccccccccccccccccccccccc,,,,,,,,&c,,,,,,,,+cccccccccccccc+,,,,,,,,cc,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,&cccccc$,,,,,,,,,,,,,,,,,,,,,,,>&Occcccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
@@ -279,7 +279,7 @@ static char *lives[] = {
 };
 
 /* XPM */
-static char *score[] = {
+static char *scoreS[] = {
 /* columns rows colors chars-per-pixel */
 "98 60 11",
 "c 0x000000",
@@ -358,7 +358,7 @@ static char *score[] = {
 
 
 /* XPM */
-static char *dolar[] = {
+static char *dolarS[] = {
 /* columns rows colors chars-per-pixel */
 "38 60 20",
 "c black",

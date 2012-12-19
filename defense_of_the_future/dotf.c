@@ -55,6 +55,7 @@ int atMenu = 1;
 int menuOption = 0;
 int gunOption = 0;
 Sprite *victory;
+int guns[4] = {1, 0, 0, 0};
 
 int main(){
 
@@ -77,15 +78,17 @@ void draw_menu(){
 			vg_draw_sprite(menu_buttons[(i*2)+1]);
 	}
 }
-
+// TODO: finish this //
 void make_gun_selection(){
 	int i;
 
 	for(i=0; i<4; i++){
-		if(gunOption == i)
-			vg_draw_sprite(cPanel.guns[i*2]);
-		else
+		if(gunOption == i){
+			if(guns[i])
+				vg_draw_sprite(cPanel.guns[i*2]);
+		} else {
 			vg_draw_sprite(cPanel.guns[(i*2)+1]);
+		}
 	}
 }
 
@@ -149,8 +152,7 @@ int menuloop(){
 						}
 						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
-							if(time % 5 == 
-0)
+							if(time % 5 == 0)
 								make_menu_music();
 						}
 						break;
@@ -265,21 +267,24 @@ int start_game(){
 	cPanel.algarisms[8] = create_sprite(alg8, -100, -100);
 	cPanel.algarisms[9] = create_sprite(alg9, -100, -100);
 
-	cPanel.guns = (Sprite **)malloc(8 * sizeof(Sprite));
+	cPanel.guns = (Sprite **)malloc(11 * sizeof(Sprite));
 	cPanel.guns[0] = create_sprite(g1on, 343 ,704);
 	cPanel.guns[1] = create_sprite(g1off, 343, 704);
 	cPanel.guns[2] = create_sprite(g2on, 427, 704);
 	cPanel.guns[3] = create_sprite(g2off, 427, 704);
-	cPanel.guns[4] = create_sprite(g3on, 511, 704);
-	cPanel.guns[5] = create_sprite(g3off, 511, 704);
-	cPanel.guns[6] = create_sprite(g4on, 595, 704);
-	cPanel.guns[7] = create_sprite(g4off, 595, 704);
+	cPanel.guns[4] = create_sprite(g2lock, 427, 704);
+	cPanel.guns[5] = create_sprite(g3on, 511, 704);
+	cPanel.guns[6] = create_sprite(g3off, 511, 704);
+	cPanel.guns[7] = create_sprite(g3lock, 511, 704);
+	cPanel.guns[8] = create_sprite(g4on, 595, 704);
+	cPanel.guns[9] = create_sprite(g4off, 595, 704);
+	cPanel.guns[10] = create_sprite(g4lock, 595, 704);
 
 	// Control Panel Draw
 	vg_draw_sprite(cPanel.guns[0]);
-	vg_draw_sprite(cPanel.guns[3]);
-	vg_draw_sprite(cPanel.guns[5]);
-	vg_draw_sprite(cPanel.guns[7]);
+	vg_draw_sprite(cPanel.guns[4]);
+	vg_draw_sprite(cPanel.guns[6]);
+	vg_draw_sprite(cPanel.guns[10]);
 
 	vg_draw_sprite(cPanel.lives);
 	vg_draw_sprite(cPanel.frames[0]);

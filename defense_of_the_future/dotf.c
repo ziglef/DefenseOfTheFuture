@@ -390,7 +390,7 @@ void check_game_over(){
 
 	if(bad_count == 0){
 		END = 1;
-		timer_set_freq(2, no);
+		timer_set_square(2, no);
 	}
 }
 

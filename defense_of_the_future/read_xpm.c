@@ -10,6 +10,7 @@
 
 #define HRES 1024
 #define VRES 768
+#define SIXTYKCOLORS 0
 
 typedef unsigned short uint16_t;
 typedef unsigned char uint8_t;
@@ -93,7 +94,8 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
       printf("read_xpm: incorrect color at line %d\n", i+1);
       return NULL;
     }
-    col = drawRGB24toRGB565((col>>16)&0xFF,(col>>8)&0xFF,col&0xFF);
+    if(SIXTYKCOLORS)
+        col = drawRGB24toRGB565((col>>16)&0xFF,(col>>8)&0xFF,col&0xFF);
 
     sym[(int)symbol] = col;
 

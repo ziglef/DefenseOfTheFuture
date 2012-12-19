@@ -78,6 +78,10 @@
 #define UPMAKE					0x48
 #define DOWNMAKE				0x50
 #define ENTERBREAK				0x9C
+#define NO1MAKE					0x02
+#define NO2MAKE					0x03
+#define NO3MAKE					0x04
+#define NO4MAKE					0x05
 
 // Panel
 typedef struct panel{

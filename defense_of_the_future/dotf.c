@@ -54,6 +54,7 @@ Sprite **menu_buttons;
 int atMenu = 1;
 int menuOption = 0;
 int gunOption = 0;
+Sprite *victory;
 
 int main(){
 
@@ -303,6 +304,9 @@ int start_game(){
 	draw_game_info(score, 4);
 	draw_game_info(cash, 5);
 
+	// Victory Sprite
+	victory = create_sprite(victory, 22, 364);
+
 	mainloop();
 }
 
@@ -350,6 +354,8 @@ void mainloop(){
 			}
 	}
 
+	vg_fill(0);
+	vg_draw_sprite(victory);
 	exit_game();
 }
 

@@ -1,5 +1,5 @@
 /* XPM */
-static const unsigned char * victory2_xpm[] = {
+static char * victory[] = {
 "979 100 63",
 "!	0xFF1013",
 "#	0xFFA70D",

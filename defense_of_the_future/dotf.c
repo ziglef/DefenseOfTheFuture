@@ -165,6 +165,12 @@ int start_game(){
 
 	//subscribe();
 
+	if(speaker_ctrl(1))
+	{
+	 printf("Speaker_ctrl Failed!\n");
+	 return 1;
+	}
+
 	// Initializes the video memory in VIDEO_MODE (0x117)
 	//video_mem = vg_init(VIDEO_MODE);
 	vg_fill(0x0000);

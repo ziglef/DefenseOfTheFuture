@@ -147,6 +147,12 @@ int menuloop(){
 	message msg;
 	int r;
 
+	do{
+		sys_inb(KBC_STAT, &(lemouse.status));
+		if(lemouse.status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &byte);
+	}while(lemouse.status & KBC_STAT_OBF);
+
 	while(kscancode != ENTERBREAK){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
@@ -158,7 +164,10 @@ int menuloop(){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
-						if((msg.NOTIFY_ARG & KBC_IRQ)){
+						if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
+
+						}
+						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
 							kscancode = kbc_handler();
 							keystroke_handler();
 						}else if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
@@ -168,9 +177,15 @@ int menuloop(){
 						}break;
 					default: break;
 				}
+
+				do{
+					sys_inb(KBC_STAT, &(lemouse.status));
+					if(lemouse.status & KBC_STAT_OBF)
+						sys_inb(KBC_O_BUF, &byte);
+				}while(lemouse.status & KBC_STAT_OBF);
 			}
 	}
-	exit_game();
+	//exit_game();
 	menu_music_enabled = 0;
 	music_enabled = 1;
 	atMenu = 0;
@@ -251,9 +266,10 @@ int start_game(){
 	cPanel.frames[2] = create_sprite(upper_lower_frame, 0, 640);
 	cPanel.frames[3] = create_sprite(upper_lower_frame, 0, 764);
 
-	cPanel.lives = create_sprite(livesS, 5, 644);
-	cPanel.level = create_sprite(levelS, 681, 644);
-	cPanel.score = create_sprite(scoreS, 681, 704);
+	cPanel.lives = create_sprite(livesS, 20, 653);
+	cPanel.level = create_sprite(levelS, 698, 653);
+	cPanel.score = create_sprite(scoreS, 684, 720);
+	cPanel.dolar = create_sprite(dolarS, 653 ,653);
 
 	cPanel.lifebar = (Sprite **)malloc(8 * sizeof(Sprite));
 	cPanel.lifebar[0] = create_sprite(lbarg, 10, 709);
@@ -264,8 +280,6 @@ int start_game(){
 	cPanel.lifebar[5] = create_sprite(lbarg, 215, 709);
 	cPanel.lifebar[6] = create_sprite(lbarg, 256, 709);
 	cPanel.lifebar[7] = create_sprite(lbarg, 297, 709);
-
-	cPanel.dolar = create_sprite(dolarS, 643 ,644);
 
 	cPanel.algarisms = (Sprite **)malloc(10 * sizeof(Sprite));
 	cPanel.algarisms[0] = create_sprite(alg0, -100, -100);
@@ -327,6 +341,12 @@ void mainloop(){
 	message msg;
 	int r;
 
+	do{
+		sys_inb(KBC_STAT, &(lemouse.status));
+		if(lemouse.status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &byte);
+	}while(lemouse.status & KBC_STAT_OBF);
+
 	while((kscancode != ESC_BREAKCODE) && (END == 0)){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
@@ -338,7 +358,7 @@ void mainloop(){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
-						if((msg.NOTIFY_ARG & BIT(KBC_IRQ))){
+						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
 							kscancode = kbc_handler();
 							keystroke_handler();
 						}else if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
@@ -351,7 +371,7 @@ void mainloop(){
 								make_explosion();
 							if(time % 6 == 0)
 								make_music();
-						}else if((msg.NOTIFY_ARG & BIT(M_IRQ))){
+						}else if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
 							lemouse = mouse_handler();
 							packet[0] = lemouse.bytes[0];
 							packet[1] = lemouse.bytes[1];
@@ -368,6 +388,12 @@ void mainloop(){
 							else
 								RMB_PRESSED = false;
 							make_gun_selection();
+
+							do{
+								sys_inb(KBC_STAT, &(lemouse.status));
+								if(lemouse.status & KBC_STAT_OBF)
+									sys_inb(KBC_O_BUF, &byte);
+							}while(lemouse.status & KBC_STAT_OBF);
 						}break;
 					default: break;
 				}

@@ -55,7 +55,7 @@
 #include "Resources/sounds.h"
 
 // Defines
-#define VIDEO_MODE				0x118
+#define VIDEO_MODE				0x117
 
 #define SHIP_START_X			484
 #define SHIP_START_Y			560

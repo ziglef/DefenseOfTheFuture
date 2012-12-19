@@ -6,7 +6,7 @@
 #include "i8042.h"
 #include "mouse.h"
 
-MouseController mouse = {0xC,0,0,0,0,0,{0,0,0}};
+MouseController mouse = {5,0,0,0,0,0,{0,0,0}};
 
 int mouse_subscribe_exclusive() {
 
@@ -19,7 +19,7 @@ int mouse_subscribe_exclusive() {
 		return -1;
 	}
 
-	return 0;
+	return mouse.hook_id;
 }
 
 int mouse_unsubscribe() {
@@ -74,7 +74,7 @@ MouseController mouse_handler() {
 int mouse_read(){
 	int counter = 0;
 
-	while(counter < NO_OF_TRIES){
+	while(1){
 		if(sys_inb(KBC_STAT, &(mouse.status)) != OK){
 			printf("ERROR GETTING KBC_STATUS INFORMATION!\n");
 			return -1;

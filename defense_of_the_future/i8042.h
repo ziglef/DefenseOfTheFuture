@@ -9,10 +9,11 @@
 #define ESC_BREAKCODE 			0x81
 #define NO_OF_TRIES				25
 #define BREAKCODE_MASK			BIT(7)
-#define KBC_BIT_MASK			BIT(3)
+#define KBC_BIT_MASK			BIT(0)
+#define MOUSE_BIT_MASK			BIT(5)
 
 // MOUSE Constants
-#define M_IRQ					0x0C
+#define M_IRQ					0xC
 
 // KBC Constants
 #define KBC_IRQ 				0x01		// The IRQ line going to be used by the KBC

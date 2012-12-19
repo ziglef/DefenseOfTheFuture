@@ -1,7 +1,7 @@
 #include "piano.h"
 #define NOTAS_LOOP	384
 #define NOTAS_EXPL	5
-#define NOTAS_MENU	354
+#define NOTAS_MENU	1032
 
 //http://tabnabber.com/view_Tab.asp?tabID=17601&sArtist=NYAN+CAT&sName=NYAN+VAT
 
@@ -66,8 +66,27 @@ unsigned long theme_menu[]=
 
 		f4,no,no,no,f4,no,no,no,g4,no,no,no,a4,no,d4,no,no,no,no,no,d4,no,f4,no,e4,no,no,no,e4,no,no,no,f4,no,d4,no,e4,no,no,no,no,no,no,no,a4,no,c5,no,d5,no,no,no,d5,no,no,no,d5,no,e5,no,f5,no,no,no,f5,no,no,no,f5,no,g5,no,
 
-		e5,no,no,no,e5,no,no,no,d5,no,c5,no,c5,no,d5,no,no,no,no,no,a4,no,c5,no,d5,no,no,no,d5,no,no,no,d5,no,e5,no,f5,no,no,no,f5,no,no,no,f5,no,g5,no,e5,no,no,no,e5,no,no,no,d5,no,c5,no,  no,no,no,no,no,no
+		e5,no,no,no,e5,no,no,no,d5,no,c5,no,c5,no,d5,no,no,no,no,no,a4,no,c5,no,d5,no,no,no,d5,no,no,no,d5,no,e5,no,f5,no,no,no,f5,no,no,no,f5,no,g5,no,e5,no,no,no,e5,no,no,no,d5,no,c5,no,
 
+		d5,no,no,no,no,no,no,no,a4,no,c5,no,d5,no,no,no,d5,no,no,no,d5,no,f5,no,g5,no,no,no,g5,no,no,no,g5,no,a5,no,A5,no,no,no,A5,no,no,no,a5,no,g5,no,a5,no,d5,no,no,no,no,no,d5,no,e5,no,f5,no,no,no,f5,no,no,no,g5,no,no,no,
+
+		a5,no,d5,no,no,no,no,no,d5,no,f5,no,e5,no,no,no,e5,no,no,no,d5,no,C5,no,d5,no,no,no,d5,no,no,no,e5,no,no,no,f5,no,no,no,f5,no,f5,no,g5,no,no,no,a5,no,f5,no,no,no,no,no,f5,no,d5,no,a4,no,no,no,a2,no,a2,no,no,no,a2,no,
+
+		A5,no,no,no,no,no,no,no,g5,no,d5,no,A4,no,no,no,g2,no,g2,no,no,no,g2,no,e4,no,e4,no,no,no,d4,no,no,no,a2,no,f4,no,no,no,a2,no,a2,no,f4,no,g4,no,a4,no,no,no,a4,no,no,no,a4,no,no,no,A4,no,a4,no,no,no,d3,no,d3,no,d3,no,
+
+		g4,no,no,no,g4,no,no,no,g4,no,no,no,g4,no,a4,no,no,no,f3,no,f3,no,f3,no,a4,no,no,no,a4,no,no,no,a4,no,no,no,A4,no,a4,no,no,no,d3,no,d3,no,d3,no,g4,no,no,no,f4,no,no,no,e4,no,no,no,
+
+		d4,no,no,no,d3,no,d3,no,d4,no,e4,no,f4,no,no,no,d3,no,d3,no,g4,no,a4,no,g4,no,no,no,f4,no,no,no,e4,no,no,no,f4,no,no,no,g4,no,no,no,a4,no,no,no,g4,no,no,no,c3,no,c3,no,f4,no,g4,no,a4,no,no,no,f3,no,f3,no,g4,no,f4,no,
+
+		e4,no,no,no,f4,no,no,no,e4,no,no,no,d4,no,no,no,d3,no,d3,no,e4,no,c4,no,d4,no,no,no,d3,no,d3,no,d5,no,e5,no,f5,no,no,no,d3,no,d3,no,e5,no,f5,no,g5,no,no,no,f5,no,no,no,f5,no,no,no,a5,no,no,no,g5,no,no,no,f5,no,no,no,
+
+		d5,no,no,no,A2,no,A2,no,d5,no,e5,no,f5,no,no,no,g5,no,no,no,a5,no,no,no,A5,no,no,no,d5,no,no,no,g5,no,no,no,f5,no,no,no,a2,no,a2,no,g5,no,e5,no,d5,no,no,no,a2,no,a2,no,e5,no,C5,no,a5,no,no,no,d3,no,d3,no,d3,no,d3,no,
+
+		A5,no,no,no,g2,no,g2,no,g2,no,g2,no,a5,no,no,no,a5,no,no,no,a5,no,no,no,a5,no,g5,no,no,no,c3,no,c3,no,c3,no,g5,no,no,no,g2,no,g2,no,g2,no,g2,no,f5,no,no,no,a2,no,a2,no,a2,no,a2,no,
+
+		f5,no,no,no,g5,no,no,no,e5,no,no,no,d5,no,no,no,no,no,d5,no,e5,no,f5,no,a5,no,no,no,no,no,d5,no,e5,no,f5,no,A5,no,no,no,no,no,d5,no,e5,no,f5,no,a5,no,no,no,a5,no,no,no,c6,no,no,no,a5,no,g5,no,no,no,c3,no,c3,no,c3,no,
+
+		g5,no,no,no,g2,no,g2,no,g2,no,g2,no,f5,no,no,no,a2,no,a2,no,a2,no,a2,no,f5,no,no,no,g5,no,no,no,e5,no,no,no,d5,no,no,no,no,no,d3,no,d3,no,d3,no,d4,d4,d4,d4,d4,d4,d4,d4,d4,d4,d4,d4
 };
 /*
 72
@@ -75,5 +94,8 @@ unsigned long theme_menu[]=
 72
 72
 60
+
+11*72+4*60
+1032
 
 */

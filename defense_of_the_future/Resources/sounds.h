@@ -2,8 +2,8 @@
 #define NOTAS_LOOP	384
 #define NOTAS_EXPL	5
 #define NOTAS_MENU1	1032
-#define NOTAS_SHOP 	216
-#define NOTAS_MENU	24
+#define NOTAS_MENU 	216
+#define NOTAS_VICT	24
 
 //http://tabnabber.com/view_Tab.asp?tabID=17601&sArtist=NYAN+CAT&sName=NYAN+VAT
 
@@ -102,7 +102,8 @@ unsigned long theme_menu1[]=
 
 */
 //shop
-unsigned long theme_shop[]=
+// speed
+unsigned long theme_menu[]=
 {
 		d5,no,no,a4,no,no,d5,no,no,a5,no,no,no,g5,no,no,no,F5,no,no,e5,no,no,C5,no,no,no,
 
@@ -121,7 +122,7 @@ unsigned long theme_shop[]=
 		a5,no,no,no,g5,no,no,F5,no,no,g5,no,no,no,F5,no,no,g5,no,no,F5,no,no,e5,no,no,d5
 };//27    * 8 = 216
 //victory
-unsigned long theme_menu[]=
+unsigned long theme_victory[]=
 {
 		c6,no,c6,no,c6,no,c6,no,no,G5,no,no,no,A5,no,no,no,c6,no,A5,no,c6,no,no
 /*
@@ -134,4 +135,5 @@ unsigned long theme_menu[]=
          * 31
          *
          * 86
+         * speed 5
          */

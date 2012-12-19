@@ -356,9 +356,9 @@ int make_victory_music(){
 			printf("Timer_set_square Failed!\n");
 			return 1;
 		}
+		end_music_note++;
+		if(end_music_note == NOTAS_VICT) END=2;
 	}
-	end_music_note++;
-	if(end_music_note == NOTAS_VICT) END=2;
 }
 
 void draw_game_info(game_info gi, int noelements){
@@ -388,8 +388,10 @@ void draw_game_info(game_info gi, int noelements){
 
 void check_game_over(){
 
-	if(bad_count == 0)
+	if(bad_count == 0){
 		END = 1;
+		timer_set_freq(2, no);
+	}
 }
 
 int make_music(){

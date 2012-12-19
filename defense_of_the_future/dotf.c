@@ -58,6 +58,7 @@ unsigned char packet[3];
 bool LMB_PRESSED = false;
 bool RMB_PRESSED = false;
 unsigned long byte;
+int packet = 0;
 
 int main(){
 
@@ -176,23 +177,25 @@ int menuloop(){
 							if(time % 6 == 0)
 								make_menu_music();
 						}
-						if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
-							lemouse = mouse_handler();
-							packet[0] = lemouse.bytes[0];
-							packet[1] = lemouse.bytes[1];
-							packet[2] = lemouse.bytes[2];
-							counter = lemouse.counter;
+						if(packet >= 3){
+							if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
+								lemouse = mouse_handler();
+								packet[0] = lemouse.bytes[0];
+								packet[1] = lemouse.bytes[1];
+								packet[2] = lemouse.bytes[2];
+								counter = lemouse.counter;
 
-							if(packet[0] & BIT(0))
-								LMB_PRESSED = true;
-							else
-								LMB_PRESSED = false;
+								if(packet[0] & BIT(0))
+									LMB_PRESSED = true;
+								else
+									LMB_PRESSED = false;
 
-							if(packet[0] & BIT(1))
-								RMB_PRESSED = true;
-							else
-								RMB_PRESSED = false;
-						}
+								if(packet[0] & BIT(1))
+									RMB_PRESSED = true;
+								else
+									RMB_PRESSED = false;
+							} else
+								packet++;
 						break;
 					default: break;
 				}

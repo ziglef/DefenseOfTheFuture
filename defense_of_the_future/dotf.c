@@ -146,14 +146,17 @@ int menuloop(){
 	int ipc_status;
 	message msg;
 	int r;
-/*
+
+	mouse_subscribe_exclusive();
+	turn_mouse_on();
+
 	do{
 		sys_inb(KBC_STAT, &(lemouse.status));
 		if(lemouse.status & KBC_STAT_OBF)
 			sys_inb(KBC_O_BUF, &byte);
 	}while(lemouse.status & KBC_STAT_OBF);
-*/
-	while(kscancode != ENTERBREAK){
+
+	while(LMB_PRESSED != true){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -163,34 +166,52 @@ int menuloop(){
 			if(is_ipc_notify(ipc_status)){
 
 				switch(_ENDPOINT_P(msg.m_source)){
-					case HARDWARE:/*
-						if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
-
-						}*/
-						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
-							kscancode = kbc_handler();
-							keystroke_handler();
-						}
+					case HARDWARE:
 						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
 							if(time % 6 == 0)
 								make_menu_music();
-						}break;
+						}
+						if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
+							lemouse = mouse_handler();
+							packet[0] = lemouse.bytes[0];
+							packet[1] = lemouse.bytes[1];
+							packet[2] = lemouse.bytes[2];
+							counter = lemouse.counter;
+
+							if(packet[0] & BIT(0))
+								LMB_PRESSED = true;
+							else
+								LMB_PRESSED = false;
+
+							if(packet[0] & BIT(1))
+								RMB_PRESSED = true;
+							else
+								RMB_PRESSED = false;
+							make_gun_selection();
+							do{
+								sys_inb(KBC_STAT, &(lemouse.status));
+								if(lemouse.status & KBC_STAT_OBF)
+									sys_inb(KBC_O_BUF, &byte);
+							}while(lemouse.status & KBC_STAT_OBF);
+						}
+						break;
 					default: break;
 				}
-/*
-				do{
-					sys_inb(KBC_STAT, &(lemouse.status));
-					if(lemouse.status & KBC_STAT_OBF)
-						sys_inb(KBC_O_BUF, &byte);
-				}while(lemouse.status & KBC_STAT_OBF);*/
 			}
 	}
-	//exit_game();
 	menu_music_enabled = 0;
 	music_enabled = 1;
 	atMenu = 0;
-	//unsubscribe();
+
+	turn_mouse_on();
+
+	do{
+		sys_inb(KBC_STAT, &(lemouse.status));
+		if(lemouse.status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &byte);
+	}while(lemouse.status & KBC_STAT_OBF);
+
 	if(speaker_ctrl(0)) {
 		printf("Timer_Test_Int Failed!\n");
 		return 1;
@@ -341,13 +362,7 @@ void mainloop(){
 	int ipc_status;
 	message msg;
 	int r;
-/*
-	do{
-		sys_inb(KBC_STAT, &(lemouse.status));
-		if(lemouse.status & KBC_STAT_OBF)
-			sys_inb(KBC_O_BUF, &byte);
-	}while(lemouse.status & KBC_STAT_OBF);
-*/
+
 	while((kscancode != ESC_BREAKCODE) && (END == 0)){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
@@ -374,30 +389,6 @@ void mainloop(){
 							if(time % 6 == 0)
 								make_music();
 						}
-						/*
-						if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
-							lemouse = mouse_handler();
-							packet[0] = lemouse.bytes[0];
-							packet[1] = lemouse.bytes[1];
-							packet[2] = lemouse.bytes[2];
-							counter = lemouse.counter;
-
-							if(packet[0] & BIT(0))
-								LMB_PRESSED = true;
-							else
-								LMB_PRESSED = false;
-
-							if(packet[0] & BIT(1))
-								RMB_PRESSED = true;
-							else
-								RMB_PRESSED = false;
-							make_gun_selection();
-							do{
-								sys_inb(KBC_STAT, &(lemouse.status));
-								if(lemouse.status & KBC_STAT_OBF)
-									sys_inb(KBC_O_BUF, &byte);
-							}while(lemouse.status & KBC_STAT_OBF);
-						}*/
 						break;
 					default: break;
 				}

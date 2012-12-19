@@ -305,7 +305,7 @@ int start_game(){
 	draw_game_info(cash, 5);
 
 	// Victory Sprite
-	victory = create_sprite(victory, 22, 364);
+	victory = create_sprite(victoryS, 22, 364);
 
 	mainloop();
 }

@@ -1,7 +1,7 @@
 #include "piano.h"
 #define NOTAS_LOOP	384
 #define NOTAS_EXPL	5
-#define NOTAS_MENU	144
+#define NOTAS_MENU	348
 
 //http://tabnabber.com/view_Tab.asp?tabID=17601&sArtist=NYAN+CAT&sName=NYAN+VAT
 
@@ -58,11 +58,22 @@ unsigned long explosion3[]=
 unsigned long theme_menu[]=
 {
 		
-d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,a3,no,c4,no,
+		d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,a3,no,c4,no,
 
-		d4,no,no,no,d4,no,no,no,d4,no,e4,no,f4,no,no,no,f4,no,no,no,f4,no,g4,no,e4,no,no,no,e4,no,no,no,d4,no,c4,no,c4,no,d4,no,no,no,no,no,a4,no,c4,no,d4,no,no,no,d4,no,no,no,d4,no,e4,no,f4,no,no,no,f4,no,no,no,f4,no,g4,no
+		d4,no,no,no,d4,no,no,no,d4,no,e4,no,f4,no,no,no,f4,no,no,no,f4,no,g4,no,e4,no,no,no,e4,no,no,no,d4,no,c4,no,c4,no,d4,no,no,no,no,no,a4,no,c4,no,d4,no,no,no,d4,no,no,no,d4,no,e4,no,f4,no,no,no,f4,no,no,no,f4,no,g4,no,
+
+		e4,no,no,no,e4,no,no,no,d4,no,c3,no,d3,no,no,no,no,no,no,no,a3,no,d4,no,d4,no,no,no,d4,no,no,no,d4,no,f4,no,g4,no,no,no,g4,no,no,no,g4,no,a4,no,A4,no,no,no,A4,no,no,no,a4,no,g4,no,a4,no,d4,no,no,no,no,no,d3,no,e4,no,
+
+		f4,no,no,no,f4,no,no,no,g4,no,no,no,a4,no,d4,no,no,no,no,no,d4,no,f4,no,e4,no,no,no,e4,no,no,no,f4,no,d4,no,e4,no,no,no,no,no,no,no,a4,no,c5,no,d5,no,no,no,d5,no,no,no,d5,no,e5,no,f5,no,no,no,f5,no,no,no,f5,no,g5,no,
+
+		e5,no,no,no,e5,no,no,no,d5,no,c5,no,c5,no,d5,no,no,no,no,no,a4,no,c5,no,d5,no,no,no,d5,no,no,no,d5,no,e5,no,f5,no,no,no,f5,no,no,no,f5,no,g5,no,e5,no,no,no,e5,no,no,no,d5,no,c5,no
+
 };
 /*
 72
+72
+72
+72
+60
 
 */

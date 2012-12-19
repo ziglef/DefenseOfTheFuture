@@ -6,7 +6,7 @@
 #include "i8042.h"
 #include "mouse.h"
 
-MouseController mouse = {0x0C,0,0,0,0,0,{0,0,0}};
+MouseController mouse = {0xC,0,0,0,0,0,{0,0,0}};
 
 int mouse_subscribe_exclusive() {
 

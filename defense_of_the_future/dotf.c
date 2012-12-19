@@ -668,5 +668,13 @@ int unsubscribe(){
 	if(kbc_unsubscribe())
 		return 1;
 
+	if(mouse_unsubscribe())
+		return 1;
+
+	do{
+		sys_inb(KBC_STAT, &(lemouse.status));
+		if(lemouse.status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &byte);
+	}while(lemouse.status & KBC_STAT_OBF);
 	return 0;
 }

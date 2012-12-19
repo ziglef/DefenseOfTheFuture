@@ -52,13 +52,6 @@ Sprite **menu_buttons;
 int atMenu = 1;
 int menuOption = 0;
 int gunOption = 0;
-MouseController lemouse = {0x0C,0,0,0,0,0,{0,0,0}};
-unsigned short counter;
-unsigned char packet[3];
-bool LMB_PRESSED = false;
-bool RMB_PRESSED = false;
-unsigned long byte;
-int packetcounter = 0;
 
 int main(){
 
@@ -84,18 +77,6 @@ void draw_menu(){
 
 void make_gun_selection(){
 	int i;
-
-	if(LMB_PRESSED)
-		if(gunOption = 0)
-			gunOption = 3;
-		else
-			gunOption--;
-
-	if(RMB_PRESSED)
-		if(gunOption = 3)
-			gunOption = 0;
-		else
-			gunOption++;
 
 	for(i=0; i<4; i++){
 		if(gunOption == i)

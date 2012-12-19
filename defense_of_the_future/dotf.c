@@ -432,6 +432,7 @@ int make_music(){
 void keystroke_handler(){
 	if((kscancode == WMAKE) || (kscancode == SMAKE) || (kscancode == DMAKE) || (kscancode == AMAKE)) make_player_movement();
 	if(kscancode == SPACEMAKE) make_shooting();
+	if((kscancode == NO1MAKE) || (kscancode == NO2MAKE) || (kscancode == NO3MAKE) || (kscancode == NO4MAKE)){ gunOption = kscancode-2; make_gun_selection();}
 	if(atMenu){
 		if(kscancode == DOWNMAKE)
 			if(menuOption != 5)

@@ -3,7 +3,7 @@
 #define NOTAS_EXPL	5
 #define NOTAS_MENU1	1032
 #define NOTAS_SHOP 	216
-#define NOTAS_MENU	86
+#define NOTAS_MENU	24
 
 //http://tabnabber.com/view_Tab.asp?tabID=17601&sArtist=NYAN+CAT&sName=NYAN+VAT
 
@@ -123,12 +123,12 @@ unsigned long theme_shop[]=
 //victory
 unsigned long theme_menu[]=
 {
-		c4,no,c4,no,c4,no,c4,no,no,G3,no,no,no,A3,no,no,no,c4,no,A3,no,c4,no,no,
-
+		c6,no,c6,no,c6,no,c6,no,no,G5,no,no,no,A5,no,no,no,c6,no,A5,no,c6,no,no
+/*
 		c4,no,A3,no,c4,no,A3,no,D4,no,D4,no,d4,no,D4,no,d4,no,no,d4,no,c4,no,A3,no,G3,no,A3,no,g3,no,
 
 		c4,no,A3,no,c4,no,A3,no,D4,no,D4,no,d4,no,D4,no,d4,no,no,d4,no,c4,no,A3,no,c4,no,D4,no,f4,no
-};
+*/};
         /*24
          * 31
          * 31

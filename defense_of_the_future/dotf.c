@@ -338,11 +338,8 @@ void mainloop(){
 									make_music();
 							}
 						} else {
-							if(end_music_note != NOTAS_VICT){
-								if(time % 5 == 0)
-									make_victory_music();
-							}else
-								END = 2;
+							if(time % 5 == 0)
+								make_victory_music();
 						}
 						break;
 					default: break;
@@ -361,6 +358,7 @@ int make_victory_music(){
 		}
 	}
 	end_music_note++;
+	if(end_music_note == NOTAS_VICT) END=2;
 }
 
 void draw_game_info(game_info gi, int noelements){

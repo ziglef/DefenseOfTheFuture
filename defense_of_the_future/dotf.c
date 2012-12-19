@@ -111,22 +111,22 @@ int start_menu(){
 	video_mem = vg_init(VIDEO_MODE);
 	vg_fill(0x0000);
 
-	menu = create_sprite(wallpaper, 0, 0);
+	menu = create_sprite(wallpaper, 500, 16);
 	vg_draw_sprite(menu);
 
 	menu_buttons = (Sprite **)malloc(12 * sizeof(Sprite));
-	menu_buttons[0] = create_sprite(starton, 0 ,5);
-	menu_buttons[1] = create_sprite(startoff, 0, 5);
-	menu_buttons[2] = create_sprite(optionson, 0, 132);
-	menu_buttons[3] = create_sprite(optionsoff, 0, 132);
-	menu_buttons[4] = create_sprite(highscoreson, 0, 259);
-	menu_buttons[5] = create_sprite(highscoresoff, 0, 259);
-	menu_buttons[6] = create_sprite(helpon, 0, 386);
-	menu_buttons[7] = create_sprite(helpoff, 0, 386);
-	menu_buttons[8] = create_sprite(creditson, 0, 513);
-	menu_buttons[9] = create_sprite(creditsoff, 0, 513);
-	menu_buttons[10] = create_sprite(exiton, 0, 640);
-	menu_buttons[11] = create_sprite(exitoff, 0, 640);
+	menu_buttons[0] = create_sprite(starton, 40, 25);
+	menu_buttons[1] = create_sprite(startoff, 40, 25);
+	menu_buttons[2] = create_sprite(optionson, 40, 152);
+	menu_buttons[3] = create_sprite(optionsoff, 40, 152);
+	menu_buttons[4] = create_sprite(highscoreson, 40, 279);
+	menu_buttons[5] = create_sprite(highscoresoff, 40, 279);
+	menu_buttons[6] = create_sprite(helpon, 40, 406);
+	menu_buttons[7] = create_sprite(helpoff, 40, 406);
+	menu_buttons[8] = create_sprite(creditson, 40, 533);
+	menu_buttons[9] = create_sprite(creditsoff, 40, 533);
+	menu_buttons[10] = create_sprite(exiton, 40, 660);
+	menu_buttons[11] = create_sprite(exitoff, 40, 660);
 
 	draw_menu();
 
@@ -280,19 +280,19 @@ int start_game(){
 
 	cPanel.guns = (Sprite **)malloc(8 * sizeof(Sprite));
 	cPanel.guns[0] = create_sprite(g1on, 343 ,704);
-	cPanel.guns[1] = create_sprite(g1off, -100, -100);
-	cPanel.guns[2] = create_sprite(g2on, -100, -100);
+	cPanel.guns[1] = create_sprite(g1off, 343, 704);
+	cPanel.guns[2] = create_sprite(g2on, 427, 704);
 	cPanel.guns[3] = create_sprite(g2off, 427, 704);
-	cPanel.guns[4] = create_sprite(g3on, -100, -100);
+	cPanel.guns[4] = create_sprite(g3on, 511, 704);
 	cPanel.guns[5] = create_sprite(g3off, 511, 704);
-	cPanel.guns[6] = create_sprite(g4on, -100, -100);
+	cPanel.guns[6] = create_sprite(g4on, 595, 704);
 	cPanel.guns[7] = create_sprite(g4off, 595, 704);
 
 	// Control Panel Draw
 	vg_draw_sprite(cPanel.guns[0]);
-	vg_draw_sprite(cPanel.guns[3]);
-	vg_draw_sprite(cPanel.guns[5]);
-	vg_draw_sprite(cPanel.guns[7]);
+	vg_draw_sprite(cPanel.guns[2]);
+	vg_draw_sprite(cPanel.guns[4]);
+	vg_draw_sprite(cPanel.guns[6]);
 
 	vg_draw_sprite(cPanel.lives);
 	vg_draw_sprite(cPanel.frames[0]);
@@ -348,7 +348,8 @@ void mainloop(){
 								make_shooting_movement();
 							if((time % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 								make_explosion();
-							if(time % 6 == 0)
+							if(time % 6 == 
+0)
 								make_music();
 						}else if((msg.NOTIFY_ARG & BIT(M_IRQ))){
 							lemouse = mouse_handler();

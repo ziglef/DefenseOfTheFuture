@@ -170,6 +170,8 @@ int menuloop(){
 				}
 			}
 	}
+	if(kscancode == ENTERBREAK)
+		exit_game();
 	menu_music_enabled = 0;
 	music_enabled = 1;
 	atMenu = 0;

@@ -351,6 +351,7 @@ void mainloop(){
 							if(time % 6 == 0)
 								make_music();
 						}else if((msg.NOTIFY_ARG & BIT(M_IRQ))){
+							vg_draw_rec(0,0,100,100,0xFF00FF);
 							lemouse = mouse_handler();
 							packet[0] = lemouse.bytes[0];
 							packet[1] = lemouse.bytes[1];
@@ -366,8 +367,12 @@ void mainloop(){
 								RMB_PRESSED = true;
 							else
 								RMB_PRESSED = false;
-
+							vg_draw_rec(0,0,150,150,0xFF00FF);
 							make_gun_selection();
+							sleep(1);
+							vg_draw_rec(0,0,200,200,0xFF00FF);
+							sleep(1);
+							vg_draw_rec(0,0,200,200,0x000000);
 
 						}break;
 					default: break;

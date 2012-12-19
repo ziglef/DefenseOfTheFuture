@@ -1,5 +1,5 @@
 /* XPM */
-static char * victory[] = {
+static char * victoryS[] = {
 "979 100 63",
 "!	0xFF1013",
 "#	0xFFA70D",

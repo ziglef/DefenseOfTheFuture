@@ -338,8 +338,11 @@ void mainloop(){
 									make_music();
 							}
 						} else {
-							if(time % 5 == 0)
-								make_victory_music();
+							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+								time = timer_int_handler(time);
+								if(time % 5 == 0)
+									make_victory_music();
+							}
 						}
 						break;
 					default: break;

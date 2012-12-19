@@ -148,7 +148,7 @@ int menuloop(){
 	message msg;
 	int r;
 
-	while(ENTERBREAK != true){
+	while(kscancode != ENTERBREAK){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -437,12 +437,14 @@ void keystroke_handler(){
 			if(menuOption != 5){
 				menuOption++;
 				draw_menu();
-			}
+			} else
+				menuOption = 0;
 		if(kscancode == UPMAKE)
 			if(menuOption != 0){
 				menuOption--;
 				draw_menu();
-			}
+			} else
+				menuOption = 5;
 	}
 }
 

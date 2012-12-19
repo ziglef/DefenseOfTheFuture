@@ -194,8 +194,9 @@ int menuloop(){
 									RMB_PRESSED = true;
 								else
 									RMB_PRESSED = false;
-							} else
-								packetcounter++;
+							}
+						}else
+							packetcounter++;
 						break;
 					default: break;
 				}

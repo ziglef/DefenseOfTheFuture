@@ -21,6 +21,7 @@ void draw_game_info(game_info gi, int noelements);
 int start_menu();
 void draw_menu();
 int make_menu_music();
+void make_gun_selection();
 
 Sprite *player;
 Sprite **player_shots;
@@ -50,6 +51,13 @@ Sprite *menu;
 Sprite **menu_buttons;
 int atMenu = 1;
 int menuOption = 0;
+int gunOption = 0;
+MouseController lemouse = {0x0C,0,0,0,0,0,{0,0,0}};
+unsigned short counter;
+unsigned char packet[3];
+bool LMB_PRESSED = false;
+bool RMB_PRESSED = false;
+unsigned long byte;
 
 int main(){
 
@@ -70,6 +78,29 @@ void draw_menu(){
 			vg_draw_sprite(menu_buttons[i*2]);
 		else
 			vg_draw_sprite(menu_buttons[(i*2)+1]);
+	}
+}
+
+void make_gun_selection(){
+	int i;
+
+	if(LMB_PRESSED)
+		if(gunOption = 0)
+			gunOption = 3;
+		else
+			gunOption--;
+
+	if(RMB_PRESSED)
+		if(gunOption = 3)
+			gunOption = 0;
+		else
+			gunOption++;
+
+	for(i=0; i<4; i++){
+		if(gunOption == i)
+			vg_draw_sprite(cPanel.guns[i*2]);
+		else
+			vg_draw_sprite(cPanel.guns[(i*2)+1]);
 	}
 }
 
@@ -319,6 +350,25 @@ void mainloop(){
 								make_explosion();
 							if(time % 6 == 0)
 								make_music();
+						}else if((msg.NOTIFY_ARG & BIT(M_IRQ))){
+							lemouse = mouse_handler();
+							packet[0] = lemouse.bytes[0];
+							packet[1] = lemouse.bytes[1];
+							packet[2] = lemouse.bytes[2];
+							counter = lemouse.counter;
+
+							if(packet[0] & BIT(0))
+								LMB_PRESSED = true;
+							else
+								LMB_PRESSED = false;
+
+							if(packet[0] & BIT(1))
+								RMB_PRESSED = true;
+							else
+								RMB_PRESSED = false;
+
+							make_gun_selection();
+
 						}break;
 					default: break;
 				}
@@ -596,6 +646,18 @@ int subscribe(){
 			printf("ERROR SUBSCRIBING TO TIMER!\n");
 			return 1;
 	}
+	if(mouse_subscribe_exclusive() < 0){
+			printf("ERROR SUBSCRIBING TO KBC!\n");
+			return 1;
+	}
+
+	turn_mouse_on();
+
+	do{
+		sys_inb(KBC_STAT, &(lemouse.status));
+		if(lemouse.status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &byte);
+	}while(lemouse.status & KBC_STAT_OBF);
 	return 0;
 }
 

@@ -1,8 +1,8 @@
 #include "piano.h"
 #define NOTAS_LOOP	384
 #define NOTAS_EXPL	5
-#define NOTAS_MENU	1032
-#define NOTAS_SHOP 	216
+#define NOTAS_MENU1	1032
+#define NOTAS_MENU 	216
 #define NOTAS_VICT	86
 
 //http://tabnabber.com/view_Tab.asp?tabID=17601&sArtist=NYAN+CAT&sName=NYAN+VAT
@@ -57,7 +57,7 @@ unsigned long explosion3[]=
 };
 
 
-unsigned long theme_menu[]=
+unsigned long theme_menu1[]=
 {
 		
 		d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,d4,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,no,no,d4,no,d4,no,a3,no,c4,no,
@@ -101,8 +101,8 @@ unsigned long theme_menu[]=
 1032
 
 */
-
-unsigned long theme_shop[]=
+//shop
+unsigned long theme_menu[]=
 {
 		d5,no,no,a4,no,no,d5,no,no,a5,no,no,no,g5,no,no,no,F5,no,no,e5,no,no,C5,no,no,no,
 
@@ -120,7 +120,7 @@ unsigned long theme_shop[]=
 
 		a5,no,no,no,g5,no,no,F5,no,no,g5,no,no,no,F5,no,no,g5,no,no,F5,no,no,e5,no,no,d5
 };//27    * 8 = 216
-
+//victory
 unsigned long theme_victory[]=
 {
 		c4,no,c4,no,c4,no,c4,no,no,G3,no,no,no,A3,no,no,no,c4,no,A3,no,c4,no,no,

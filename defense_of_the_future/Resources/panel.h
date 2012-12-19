@@ -213,7 +213,7 @@ static char *levelS[] = {
 /* XPM */
 static char *livesS[] = {
 /* columns rows colors chars-per-pixel */
-"236 42 18",
+"172 42 18",
 "c 0x000000",
 ". 0x191D53",
 "X 0x3F3352",
@@ -281,7 +281,7 @@ static char *livesS[] = {
 /* XPM */
 static char *scoreS[] = {
 /* columns rows colors chars-per-pixel */
-"79 24 11",
+"89 24 11",
 "c 0x000000",
 ". 0x191D53",
 "X 0x222770",

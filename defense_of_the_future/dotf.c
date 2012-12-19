@@ -391,14 +391,15 @@ void mainloop(){
 							else
 								RMB_PRESSED = false;
 							make_gun_selection();
-						}break;
+							do{
+								sys_inb(KBC_STAT, &(lemouse.status));
+								if(lemouse.status & KBC_STAT_OBF)
+									sys_inb(KBC_O_BUF, &byte);
+							}while(lemouse.status & KBC_STAT_OBF);
+						}
+						break;
 					default: break;
 				}
-				do{
-					sys_inb(KBC_STAT, &(lemouse.status));
-					if(lemouse.status & KBC_STAT_OBF)
-						sys_inb(KBC_O_BUF, &byte);
-				}while(lemouse.status & KBC_STAT_OBF);
 			}
 	}
 

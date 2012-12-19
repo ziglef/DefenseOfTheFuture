@@ -170,7 +170,8 @@ int menuloop(){
 						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
 							kscancode = kbc_handler();
 							keystroke_handler();
-						}else if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+						}
+						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
 							if(time % 6 == 0)
 								make_menu_music();
@@ -361,7 +362,8 @@ void mainloop(){
 						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
 							kscancode = kbc_handler();
 							keystroke_handler();
-						}else if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+						}
+						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 							time = timer_int_handler(time);
 							if(time % 60 == 0)
 								make_bad_movement();
@@ -371,7 +373,8 @@ void mainloop(){
 								make_explosion();
 							if(time % 6 == 0)
 								make_music();
-						}else if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
+						}
+						if((msg.NOTIFY_ARG & MOUSE_BIT_MASK)){
 							lemouse = mouse_handler();
 							packet[0] = lemouse.bytes[0];
 							packet[1] = lemouse.bytes[1];
@@ -388,15 +391,14 @@ void mainloop(){
 							else
 								RMB_PRESSED = false;
 							make_gun_selection();
-
-							do{
-								sys_inb(KBC_STAT, &(lemouse.status));
-								if(lemouse.status & KBC_STAT_OBF)
-									sys_inb(KBC_O_BUF, &byte);
-							}while(lemouse.status & KBC_STAT_OBF);
 						}break;
 					default: break;
 				}
+				do{
+					sys_inb(KBC_STAT, &(lemouse.status));
+					if(lemouse.status & KBC_STAT_OBF)
+						sys_inb(KBC_O_BUF, &byte);
+				}while(lemouse.status & KBC_STAT_OBF);
 			}
 	}
 

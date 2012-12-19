@@ -337,7 +337,7 @@ void mainloop(){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
-						if((msg.NOTIFY_ARG & KBC_IRQ)){
+						if((msg.NOTIFY_ARG & BIT(KBC_IRQ))){
 							kscancode = kbc_handler();
 							keystroke_handler();
 						}else if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){

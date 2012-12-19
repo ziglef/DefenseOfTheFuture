@@ -351,6 +351,7 @@ void mainloop(){
 							if(time % 6 == 0)
 								make_music();
 						}else if((msg.NOTIFY_ARG & BIT(M_IRQ))){
+							kbc_unsubscribe();
 							vg_draw_rec(0,0,100,100,0xFF00FF);
 							lemouse = mouse_handler();
 							packet[0] = lemouse.bytes[0];
@@ -373,7 +374,7 @@ void mainloop(){
 							vg_draw_rec(0,0,200,200,0xFF00FF);
 							sleep(1);
 							vg_draw_rec(0,0,200,200,0x000000);
-
+							kbc_subscribe_exclusive();
 						}break;
 					default: break;
 				}

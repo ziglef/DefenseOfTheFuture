@@ -273,9 +273,9 @@ int start_game(){
 
 	// Control Panel Draw
 	vg_draw_sprite(cPanel.guns[0]);
-	vg_draw_sprite(cPanel.guns[2]);
-	vg_draw_sprite(cPanel.guns[4]);
-	vg_draw_sprite(cPanel.guns[6]);
+	vg_draw_sprite(cPanel.guns[3]);
+	vg_draw_sprite(cPanel.guns[5]);
+	vg_draw_sprite(cPanel.guns[7]);
 
 	vg_draw_sprite(cPanel.lives);
 	vg_draw_sprite(cPanel.frames[0]);

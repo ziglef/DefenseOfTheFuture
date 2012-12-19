@@ -666,10 +666,11 @@ int exit_game(){
 }
 
 int subscribe(){
+	/*
 	if(mouse_subscribe_exclusive() < 0){
 			printf("ERROR SUBSCRIBING TO KBC!\n");
 			return 1;
-	}
+	}*/
 	if(kbc_subscribe_exclusive() < 0){
 			printf("ERROR SUBSCRIBING TO KBC!\n");
 			return 1;
@@ -680,13 +681,14 @@ int subscribe(){
 			return 1;
 	}
 
-	turn_mouse_on();
-
+	//turn_mouse_on();
+/*
 	do{
 		sys_inb(KBC_STAT, &(lemouse.status));
 		if(lemouse.status & KBC_STAT_OBF)
 			sys_inb(KBC_O_BUF, &byte);
 	}while(lemouse.status & KBC_STAT_OBF);
+	*/
 	return 0;
 }
 
@@ -696,7 +698,7 @@ int unsubscribe(){
 
 	if(kbc_unsubscribe())
 		return 1;
-
+/*
 	if(mouse_unsubscribe())
 		return 1;
 
@@ -704,6 +706,6 @@ int unsubscribe(){
 		sys_inb(KBC_STAT, &(lemouse.status));
 		if(lemouse.status & KBC_STAT_OBF)
 			sys_inb(KBC_O_BUF, &byte);
-	}while(lemouse.status & KBC_STAT_OBF);
+	}while(lemouse.status & KBC_STAT_OBF);*/
 	return 0;
 }

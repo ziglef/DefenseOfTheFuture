@@ -148,14 +148,6 @@ int menuloop(){
 	message msg;
 	int r;
 
-	do{
-		sys_inb(KBC_STAT, &(lemouse.status));
-		if(lemouse.status & KBC_STAT_OBF)
-			sys_inb(KBC_O_BUF, &byte);
-		ninjacounter++;
-	}while(ninjacounter != 5);
-	ninjacounter = 0;
-
 	while(kscancode != ENTERBREAK){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
@@ -181,14 +173,6 @@ int menuloop(){
 						}break;
 					default: break;
 				}
-
-				do{
-					sys_inb(KBC_STAT, &(lemouse.status));
-					if(lemouse.status & KBC_STAT_OBF)
-						sys_inb(KBC_O_BUF, &byte);
-					ninjacounter++;
-				}while(ninjacounter != 5);
-				ninjacounter = 0;
 			}
 	}
 	//exit_game();
@@ -347,14 +331,6 @@ void mainloop(){
 	message msg;
 	int r;
 
-	do{
-		sys_inb(KBC_STAT, &(lemouse.status));
-		if(lemouse.status & KBC_STAT_OBF)
-			sys_inb(KBC_O_BUF, &byte);
-		ninjacounter++;
-	}while(ninjacounter != 5);
-	ninjacounter = 0;
-
 	while((kscancode != ESC_BREAKCODE) && (END == 0)){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
@@ -394,13 +370,6 @@ void mainloop(){
 							else
 								RMB_PRESSED = false;
 							make_gun_selection();
-							do{
-								sys_inb(KBC_STAT, &(lemouse.status));
-								if(lemouse.status & KBC_STAT_OBF)
-									sys_inb(KBC_O_BUF, &byte);
-								ninjacounter++;
-							}while(ninjacounter != 5);
-							ninjacounter = 0;
 						}
 						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
 							kscancode = kbc_handler();

@@ -354,8 +354,6 @@ void mainloop(){
 				}
 			}
 	}
-
-	sleep(3);
 	exit_game();
 }
 

@@ -396,8 +396,8 @@ void mainloop(){
 								sys_inb(KBC_STAT, &(lemouse.status));
 								if(lemouse.status & KBC_STAT_OBF)
 									sys_inb(KBC_O_BUF, &byte);
-							}while(lemouse.status & KBC_STAT_OBF);*/
-						}
+							}while(lemouse.status & KBC_STAT_OBF);
+						}*/
 						break;
 					default: break;
 				}

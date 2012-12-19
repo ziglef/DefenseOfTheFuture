@@ -58,6 +58,7 @@ unsigned char packet[3];
 bool LMB_PRESSED = false;
 bool RMB_PRESSED = false;
 unsigned long byte;
+int ninjacounter = 0;
 
 int main(){
 
@@ -151,7 +152,9 @@ int menuloop(){
 		sys_inb(KBC_STAT, &(lemouse.status));
 		if(lemouse.status & KBC_STAT_OBF)
 			sys_inb(KBC_O_BUF, &byte);
-	}while(lemouse.status & KBC_STAT_OBF);
+		ninjacounter++;
+	}while(ninjacounter != 5);
+	ninjacounter = 0;
 
 	while(kscancode != ENTERBREAK){
 			r = driver_receive(ANY, &msg, &ipc_status);
@@ -183,7 +186,9 @@ int menuloop(){
 					sys_inb(KBC_STAT, &(lemouse.status));
 					if(lemouse.status & KBC_STAT_OBF)
 						sys_inb(KBC_O_BUF, &byte);
-				}while(lemouse.status & KBC_STAT_OBF);
+					ninjacounter++;
+				}while(ninjacounter != 5);
+				ninjacounter = 0;
 			}
 	}
 	//exit_game();
@@ -346,7 +351,9 @@ void mainloop(){
 		sys_inb(KBC_STAT, &(lemouse.status));
 		if(lemouse.status & KBC_STAT_OBF)
 			sys_inb(KBC_O_BUF, &byte);
-	}while(lemouse.status & KBC_STAT_OBF);
+		ninjacounter++;
+	}while(ninjacounter != 5);
+	ninjacounter = 0;
 
 	while((kscancode != ESC_BREAKCODE) && (END == 0)){
 			r = driver_receive(ANY, &msg, &ipc_status);
@@ -391,7 +398,9 @@ void mainloop(){
 								sys_inb(KBC_STAT, &(lemouse.status));
 								if(lemouse.status & KBC_STAT_OBF)
 									sys_inb(KBC_O_BUF, &byte);
-							}while(lemouse.status & KBC_STAT_OBF);
+								ninjacounter++;
+							}while(ninjacounter != 5);
+							ninjacounter = 0;
 						}
 						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
 							kscancode = kbc_handler();

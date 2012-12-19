@@ -147,7 +147,11 @@ int menuloop(){
 	message msg;
 	int r;
 
-	mouse_subscribe_exclusive();
+	if(mouse_subscribe_exclusive() < 0){
+			printf("ERROR SUBSCRIBING TO KBC!\n");
+			return 1;
+	}
+
 	turn_mouse_on();
 
 	do{
@@ -188,7 +192,6 @@ int menuloop(){
 								RMB_PRESSED = true;
 							else
 								RMB_PRESSED = false;
-							make_gun_selection();
 							do{
 								sys_inb(KBC_STAT, &(lemouse.status));
 								if(lemouse.status & KBC_STAT_OBF)
@@ -204,7 +207,8 @@ int menuloop(){
 	music_enabled = 1;
 	atMenu = 0;
 
-	turn_mouse_on();
+	if(mouse_unsubscribe())
+		return 1;
 
 	do{
 		sys_inb(KBC_STAT, &(lemouse.status));

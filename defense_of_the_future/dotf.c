@@ -355,8 +355,7 @@ void mainloop(){
 			}
 	}
 
-	vg_fill(0);
-	vg_draw_sprite(victory);
+	sleep(3);
 	exit_game();
 }
 
@@ -401,6 +400,8 @@ void check_game_over(){
 	if(bad_count == 0){
 		END = 1;
 		timer_set_square(2, no);
+		vg_fill(0);
+		vg_draw_sprite(victory);
 	}
 }
 

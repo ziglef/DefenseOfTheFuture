@@ -22,6 +22,7 @@ int start_menu();
 void draw_menu();
 int make_menu_music();
 void make_gun_selection();
+int make_victory_music();
 
 Sprite *player;
 Sprite **player_shots;
@@ -42,6 +43,7 @@ int sfx_shot = 0;
 char *video_mem;
 int bad_count = NO_ENEMIES;
 int END = 0;
+int end_music_note = 0;
 int life = 8;
 game_info lives = {229, 653, 3};
 game_info level = {974, 653, 1};
@@ -309,31 +311,38 @@ void mainloop(){
 	message msg;
 	int r;
 
-	while((kscancode != ESC_BREAKCODE) && (END == 0)){
+	while((kscancode != ESC_BREAKCODE) && (END != 2)){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
 				continue;
 			}
-
 			if(is_ipc_notify(ipc_status)){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
-						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
-							kscancode = kbc_handler();
-							keystroke_handler();
-						}
-						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
-							time = timer_int_handler(time);
-							if(time % 60 == 0)
-								make_bad_movement();
-							if(time % 5 == 0)
-								make_shooting_movement();
-							if((time % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
-								make_explosion();
-							if(time % 6 == 0)
-								make_music();
+						if(!END){
+							if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+								kscancode = kbc_handler();
+								keystroke_handler();
+							}
+							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+								time = timer_int_handler(time);
+								if(time % 60 == 0)
+									make_bad_movement();
+								if(time % 5 == 0)
+									make_shooting_movement();
+								if((time % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
+									make_explosion();
+								if(time % 6 == 0)
+									make_music();
+							}
+						} else {
+							if(end_music_note != NOTAS_VICT){
+								if(time % 5 == 0)
+									make_victory_music();
+							}else
+								END = 2;
 						}
 						break;
 					default: break;
@@ -342,6 +351,16 @@ void mainloop(){
 	}
 
 	exit_game();
+}
+
+int make_victory_music(){
+	if(END){
+		if(timer_set_square(2,theme_victory[end_music_note])){
+			printf("Timer_set_square Failed!\n");
+			return 1;
+		}
+	}
+	end_music_note++;
 }
 
 void draw_game_info(game_info gi, int noelements){

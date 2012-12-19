@@ -55,7 +55,7 @@
 #include "Resources/sounds.h"
 
 // Defines
-#define VIDEO_MODE				0x117
+#define VIDEO_MODE				0x118
 
 #define SHIP_START_X			484
 #define SHIP_START_Y			560
@@ -77,7 +77,7 @@
 #define SPACEMAKE				0x39
 #define UPMAKE					0x48
 #define DOWNMAKE				0x50
-#define ENTERMAKE				0x1C
+#define ENTERBREAK				0x9C
 
 // Panel
 typedef struct panel{

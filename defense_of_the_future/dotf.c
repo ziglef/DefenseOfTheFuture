@@ -77,7 +77,7 @@ int start_menu(){
 	subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	video_mem = vg_init(0x117);
+	video_mem = vg_init(VIDEO_MODE);
 	vg_fill(0x0000);
 
 	menu = create_sprite(wallpaper, 0, 0);
@@ -116,7 +116,7 @@ int menuloop(){
 	message msg;
 	int r;
 
-	while(kscancode != ENTERMAKE){
+	while(kscancode != ENTERBREAK){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -139,9 +139,10 @@ int menuloop(){
 				}
 			}
 	}
+	menu_music_enabled = 0;
 	music_enabled = 1;
 	atMenu = 0;
-	unsubscribe();
+	//unsubscribe();
 	if(speaker_ctrl(0)) {
 		printf("Timer_Test_Int Failed!\n");
 		return 1;
@@ -162,10 +163,10 @@ int make_menu_music(){
 int start_game(){
 	int i;
 
-	subscribe();
+	//subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
-	//video_mem = vg_init(0x117);
+	//video_mem = vg_init(VIDEO_MODE);
 	vg_fill(0x0000);
 
 	player = create_sprite(ship, SHIP_START_X, SHIP_START_Y);

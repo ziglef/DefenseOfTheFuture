@@ -774,7 +774,7 @@ static char * g4off[] = {
 
 
 /* XPM */
-static char * g4off[] = {
+static char * g4lock[] = {
 "84 60 11",
 "!	0x000000",
 "#	0x000008",

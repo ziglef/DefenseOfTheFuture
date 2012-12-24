@@ -84,11 +84,42 @@ void make_gun_selection(){
 
 	for(i=0; i<4; i++){
 		if(gunOption == i){
-			if(guns[i])
-				vg_draw_sprite(cPanel.guns[i*2]);
-		} else {
-			vg_draw_sprite(cPanel.guns[(i*2)+1]);
-		}
+			if(guns[i]){
+				switch(i){
+					case 0: vg_draw_sprite(cPanel.guns[0]); break;
+					case 1: vg_draw_sprite(cPanel.guns[2]); break;
+					case 2: vg_draw_sprite(cPanel.guns[5]); break;
+					case 3: vg_draw_sprite(cPanel.guns[8]); break;
+					default: break;
+				}
+			} else {
+				switch(i){
+					case 0: vg_draw_sprite(cPanel.guns[1]); break;
+					case 1: vg_draw_sprite(cPanel.guns[4]); break;
+					case 2: vg_draw_sprite(cPanel.guns[7]); break;
+					case 3: vg_draw_sprite(cPanel.guns[10]); break;
+					default: break;
+				}
+			}
+		}/* else {
+			if(guns[i]){
+				switch(i){
+					case 0: vg_draw_sprite(cPanel.guns[1]); break;
+					case 1: vg_draw_sprite(cPanel.guns[3]); break;
+					case 2: vg_draw_sprite(cPanel.guns[6]); break;
+					case 3: vg_draw_sprite(cPanel.guns[9]); break;
+					default: break;
+				}
+			} else {
+				switch(i){
+					case 0: vg_draw_sprite(cPanel.guns[1]); break;
+					case 1: vg_draw_sprite(cPanel.guns[4]); break;
+					case 2: vg_draw_sprite(cPanel.guns[7]); break;
+					case 3: vg_draw_sprite(cPanel.guns[10]); break;
+					default: break;
+				}
+			}
+		}*/
 	}
 }
 
@@ -283,7 +314,7 @@ int start_game(){
 	// Control Panel Draw
 	vg_draw_sprite(cPanel.guns[0]);
 	vg_draw_sprite(cPanel.guns[4]);
-	vg_draw_sprite(cPanel.guns[6]);
+	vg_draw_sprite(cPanel.guns[7]);
 	vg_draw_sprite(cPanel.guns[10]);
 
 	vg_draw_sprite(cPanel.lives);
@@ -446,7 +477,11 @@ int make_music(){
 void keystroke_handler(){
 	if((kscancode == WMAKE) || (kscancode == SMAKE) || (kscancode == DMAKE) || (kscancode == AMAKE)) make_player_movement();
 	if(kscancode == SPACEMAKE) make_shooting();
-	if((kscancode == NO1MAKE) || (kscancode == NO2MAKE) || (kscancode == NO3MAKE) || (kscancode == NO4MAKE)){ gunOption = kscancode-2; make_gun_selection();}
+	if((kscancode == NO1MAKE) || (kscancode == NO2MAKE) || (kscancode == NO3MAKE) || (kscancode == NO4MAKE)){
+		if(guns[kscancode-2] == 1)
+			gunOption = kscancode-2;
+		make_gun_selection();
+	}
 	if(atMenu){
 		if(kscancode == DOWNMAKE)
 			if(menuOption != 5)

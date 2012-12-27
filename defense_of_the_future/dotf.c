@@ -545,26 +545,13 @@ int check_collision(Sprite *spr){
 	for(i=0; i<spr->height; i++){
 		for(j=0; j<spr->width; j++){
 			for(k=0; k<NO_ENEMIES; k++){
-				if((j >= enemies[k]->x) && (j < enemies[k]->x+enemies[k]->width) && (i >= enemies[k]->y) && (i < enemies[k]->y+enemies[k]->height) && (vg_get_pixel(spr->x+j, spr->y+i) != 0)){
+				if((spr->x+j >= enemies[k]->x) && (spr->x+j < enemies[k]->x+enemies[k]->width) && (spr->y+i >= enemies[k]->y) && (spr->y+i < enemies[k]->y+enemies[k]->height) && (vg_get_pixel(spr->x+j, spr->y+i) != 0)){
 					remove_sprite(spr->x+j, spr->y+i);
 					return 1;
 				}
 			}
 		}
 	}
-
-	// OLD CHECK COLLISION; CHECKS FOR NON-BLACK PIXEL;
-	/*
-	int i,j;
-
-	for(i=0; i<spr->height; i++){
-		for(j=0; j<spr->width; j++){
-			if(vg_get_pixel(spr->x+j, spr->y+i) != 0){
-				remove_sprite(spr->x+j, spr->y+i);
-				return 1;
-			}
-		}
-	}*/
 
 	return 0;
 }

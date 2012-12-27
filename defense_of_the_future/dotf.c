@@ -55,7 +55,7 @@ int atMenu = 1;
 int menuOption = 0;
 int gunOption = 0;
 Sprite *victory;
-int guns[4] = {1, 0, 0, 0};
+int guns[4] = {1, 0, 1, 0};
 
 int main(){
 
@@ -78,7 +78,7 @@ void draw_menu(){
 			vg_draw_sprite(menu_buttons[(i*2)+1]);
 	}
 }
-// TODO: finish this //
+
 void make_gun_selection(){
 	int i;
 
@@ -101,7 +101,7 @@ void make_gun_selection(){
 					default: break;
 				}
 			}
-		}/* else {
+		} else {
 			if(guns[i]){
 				switch(i){
 					case 0: vg_draw_sprite(cPanel.guns[1]); break;
@@ -119,7 +119,7 @@ void make_gun_selection(){
 					default: break;
 				}
 			}
-		}*/
+		}
 	}
 }
 
@@ -312,10 +312,7 @@ int start_game(){
 	cPanel.guns[10] = create_sprite(g4lock, 595, 704);
 
 	// Control Panel Draw
-	vg_draw_sprite(cPanel.guns[0]);
-	vg_draw_sprite(cPanel.guns[4]);
-	vg_draw_sprite(cPanel.guns[7]);
-	vg_draw_sprite(cPanel.guns[10]);
+	make_gun_selection();
 
 	vg_draw_sprite(cPanel.lives);
 	vg_draw_sprite(cPanel.frames[0]);
@@ -543,6 +540,21 @@ void make_shooting_movement(){
 
 
 int check_collision(Sprite *spr){
+	int i,j,k;
+
+	for(i=0; i<spr->height; i++){
+		for(j=0; j<spr->width; j++){
+			for(k=0; k<NO_ENEMIES; k++){
+				if((j >= enemies[k]->x) && (j < enemies[k]->x+enemies[k]->width) && (i >= enemies[k]->y) && (i < enemies[k]->y+enemies[k]->height) && (vg_get_pixel(spr->x+j, spr->y+i) != 0)){
+					remove_sprite(spr->x+j, spr->y+i);
+					return 1;
+				}
+			}
+		}
+	}
+
+	// OLD CHECK COLLISION; CHECKS FOR NON-BLACK PIXEL;
+	/*
 	int i,j;
 
 	for(i=0; i<spr->height; i++){
@@ -552,7 +564,7 @@ int check_collision(Sprite *spr){
 				return 1;
 			}
 		}
-	}
+	}*/
 
 	return 0;
 }

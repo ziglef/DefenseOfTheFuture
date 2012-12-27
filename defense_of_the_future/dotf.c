@@ -31,7 +31,7 @@ Sprite ***enemies_shots;
 int bad_shot_random = 0;
 Sprite ***explosions;
 panel cPanel;
-unsigned long time = 0;
+unsigned long timec = 0;
 unsigned char kscancode = 0;
 char BAD_MOVE = 'L';
 int *EXPLOSIONS;
@@ -185,8 +185,8 @@ int menuloop(){
 							keystroke_handler();
 						}
 						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
-							time = timer_int_handler(time);
-							if(time % 5 == 0)
+							timec = timer_int_handler(timec);
+							if(timec % 5 == 0)
 								make_menu_music();
 						}
 						break;
@@ -375,20 +375,20 @@ void mainloop(){
 								keystroke_handler();
 							}
 							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
-								time = timer_int_handler(time);
-								if(time % 60 == 0)
+								timec = timer_int_handler(timec);
+								if(timec % 60 == 0)
 									make_bad_movement();
-								if(time % 5 == 0)
+								if(timec % 5 == 0)
 									make_shooting_movement();
-								if((time % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
+								if((timec % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 									make_explosion();
-								if(time % 6 == 0)
+								if(timec % 6 == 0)
 									make_music();
 							}
 						} else {
 							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
-								time = timer_int_handler(time);
-								if(time % 5 == 0)
+								timec = timer_int_handler(timec);
+								if(timec % 5 == 0)
 									make_victory_music();
 							}
 						}

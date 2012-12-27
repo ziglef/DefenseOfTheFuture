@@ -23,6 +23,8 @@ void draw_menu();
 int make_menu_music();
 void make_gun_selection();
 int make_victory_music();
+void make_bad_shooting();
+int is_in_screen_bads(Sprite *spr);
 
 Sprite *player;
 Sprite **player_shots;
@@ -378,8 +380,10 @@ void mainloop(){
 								timec = timer_int_handler(timec);
 								if(timec % 60 == 0)
 									make_bad_movement();
-								if(timec % 5 == 0)
+								if(timec % 5 == 0){
 									make_shooting_movement();
+									make_bad_shooting();
+								}
 								if((timec % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 									make_explosion();
 								if(timec % 6 == 0)
@@ -512,6 +516,13 @@ int is_in_screen(Sprite *spr){
 		return 0;
 }
 
+int is_in_screen_bads(Sprite *spr){
+	if((spr->y >= 0) && (spr->y < 640) && (spr->x >= 0) && (spr->x < 1024))
+		return 1;
+	else
+		return 0;
+}
+
 void make_shooting(){
 	int i;
 
@@ -527,8 +538,28 @@ void make_shooting(){
 	}
 }
 
+void make_bad_shooting(){
+	int i,j;
+
+	for(i=0; i<NO_ENEMIES; i++){
+		for(j=0; j<2; j++){
+			bad_shot_random = rand() % 100;
+			if(bad_shot_random % 50 == 0){
+				if(!is_in_screen(enemies_shots[i][j])){
+					enemies_shots[i][j]->x = enemies[i]->x+enemies[i]->width/2-enemies_shots[i][j]->width/2;
+					enemies_shots[i][j]->y = enemies[i]->y+enemies[i]->height;
+					enemies_shots[i][j]->yspeed = 30;
+					vg_draw_sprite(enemies_shots[i][j]);
+					sfx_shot = 1;
+					break;
+				}
+			}
+		}
+	}
+}
+
 void make_shooting_movement(){
-	int i;
+	int i, j;
 
 	for(i=0; i<NO_PSHOTS; i++){
 		if(is_in_screen(player_shots[i])){
@@ -548,6 +579,25 @@ void make_shooting_movement(){
 		}
 	}
 
+	for(i=0; i<NO_ENEMIES; i++){
+		for(j=0; j<2; j++){
+			if(is_in_screen_bads(enemies_shots[i][j])){
+				if(enemies_shots[i][j]->y+20 < SHIP_START_Y+player->height){
+					vg_draw_rec(enemies_shots[i][j]->x, enemies_shots[i][j]->y, enemies_shots[i][j]->x+enemies_shots[i][j]->width, enemies_shots[i][j]->y+enemies_shots[i][j]->height, 0x0000);
+					enemies_shots[i][j]->y += enemies_shots[i][j]->yspeed;
+					if(!check_collision(enemies_shots[i][j])){
+						vg_draw_sprite(enemies_shots[i][j]);
+					} else {
+						EXPLOSIONS[i%NO_PSHOTS] = 1;
+						sfx_explosion_enabled = 1;
+					}
+				} else {
+					vg_draw_rec(enemies_shots[i][j]->x, enemies_shots[i][j]->y, enemies_shots[i][j]->x+enemies_shots[i][j]->width, enemies_shots[i][j]->y+enemies_shots[i][j]->height, 0x0000);
+					enemies_shots[i][j]->y = -50;
+				}
+			}
+		}
+	}
 
 }
 

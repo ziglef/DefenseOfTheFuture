@@ -27,6 +27,8 @@ int make_victory_music();
 Sprite *player;
 Sprite **player_shots;
 Sprite **enemies;
+Sprite ***enemies_shots;
+int bad_shot_random = 0;
 Sprite ***explosions;
 panel cPanel;
 unsigned long time = 0;
@@ -60,6 +62,7 @@ int guns[4] = {1, 0, 1, 0};
 int main(){
 
 	sef_startup();
+	srand(time(NULL));
 
 	start_menu();
 	start_game();
@@ -241,6 +244,13 @@ int start_game(){
 			enemies[i] = create_sprite(bad, ENEMIES_START_X+ENEMIES_X_INCREMENT*i, ENEMIES_START_Y);
 		else
 			enemies[i] = create_sprite(bad, ENEMIES_START_X2+ENEMIES_X_INCREMENT*(i-8), ENEMIES_START_Y+ENEMIES_Y_INCREMENT);
+	}
+
+	enemies_shots = (Sprite ***)malloc(2*NO_ENEMIES * sizeof(Sprite));
+	for(i=0; i<NO_ENEMIES; i++){
+		enemies_shots[i] = (Sprite **)malloc(2 * sizeof(Sprite));
+		enemies_shots[i][0] = create_sprite(missbad, -50, -50);
+		enemies_shots[i][1] = create_sprite(missbad, -50, -50);
 	}
 
 	for(i=0; i<NO_ENEMIES; i++)
@@ -472,13 +482,6 @@ int make_music(){
 }
 
 void keystroke_handler(){
-	if((kscancode == WMAKE) || (kscancode == SMAKE) || (kscancode == DMAKE) || (kscancode == AMAKE)) make_player_movement();
-	if(kscancode == SPACEMAKE) make_shooting();
-	if((kscancode == NO1MAKE) || (kscancode == NO2MAKE) || (kscancode == NO3MAKE) || (kscancode == NO4MAKE)){
-		if(guns[kscancode-2] == 1)
-			gunOption = kscancode-2;
-		make_gun_selection();
-	}
 	if(atMenu){
 		if(kscancode == DOWNMAKE)
 			if(menuOption != 5)
@@ -491,6 +494,14 @@ void keystroke_handler(){
 			else
 				menuOption = 5;
 		draw_menu();
+	} else {
+		if((kscancode == WMAKE) || (kscancode == SMAKE) || (kscancode == DMAKE) || (kscancode == AMAKE)) make_player_movement();
+		if(kscancode == SPACEMAKE) make_shooting();
+		if((kscancode == NO1MAKE) || (kscancode == NO2MAKE) || (kscancode == NO3MAKE) || (kscancode == NO4MAKE)){
+			if(guns[kscancode-2] == 1)
+				gunOption = kscancode-2;
+			make_gun_selection();
+		}
 	}
 }
 
@@ -536,6 +547,8 @@ void make_shooting_movement(){
 			}
 		}
 	}
+
+
 }
 
 

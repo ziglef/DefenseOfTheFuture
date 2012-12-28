@@ -86,8 +86,10 @@ int main(){
 	sef_startup();
 	srand(time(NULL));
 
+	subscribe();
+
 	start_menu();
-	start_game();
+	//start_game();
 
 	//vg_exit();
 	return 0;
@@ -149,7 +151,7 @@ void make_gun_selection(){
 }
 
 int start_menu(){
-	subscribe();
+	//subscribe();
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
 	video_mem = vg_init(VIDEO_MODE);

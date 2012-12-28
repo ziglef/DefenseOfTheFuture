@@ -79,8 +79,8 @@
 #define SPACEMAKE				0x39
 #define UPMAKE					0x48
 #define DOWNMAKE				0x50
-#define LEFTMAKE				0x1B
-#define RIGHTMAKE				0x1D
+#define LEFTMAKE				0x4B
+#define RIGHTMAKE				0x4D
 #define ENTERBREAK				0x9C
 #define NO1MAKE					0x02
 #define NO2MAKE					0x03

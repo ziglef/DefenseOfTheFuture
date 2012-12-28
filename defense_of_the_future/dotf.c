@@ -81,6 +81,7 @@ Sprite **options_buttons;
 
 /******/
 
+
 int main(){
 
 	sef_startup();
@@ -230,26 +231,28 @@ int menuloop(){
 				printf("Timer_Test_Int Failed!\n");
 				return 1;
 			}
+
+			start_game();
 			break;
 		case 1:
 			Options_menu();
 			atMenu = 1;
-			start_menu;
+			start_menu();
 			break;
 		case 2:
 			draw_Highscores();
 			atMenu = 1;
-			start_menu;
+			start_menu();
 			break;
 		case 3:
 			draw_Help();
 			atMenu = 1;
-			start_menu;
+			start_menu();
 			break;
 		case 4:
 			draw_Credits();
 			atMenu = 1;
-			start_menu;
+			start_menu();
 			break;
 		case 5:
 			exit_game();
@@ -857,10 +860,10 @@ void Options_menu(){
 	options_buttons[5] = create_sprite(normaloff, 383, 100);
 	options_buttons[6] = create_sprite(insaneon, 595, 100);
 	options_buttons[7] = create_sprite(insaneoff, 595, 100);
-	options_buttons[8] = create_sprite(soundon, 367, 150);
-	options_buttons[9] = create_sprite(soundoff, 367, 150);
-	options_buttons[10] = create_sprite(speakeron, 412, 200);
-	options_buttons[11] = create_sprite(speakeroff, 412, 200);
+	options_buttons[8] = create_sprite(soundon, 412, 300);
+	options_buttons[9] = create_sprite(soundoff, 412, 300);
+	options_buttons[10] = create_sprite(speakeron, 412, 375);
+	options_buttons[11] = create_sprite(speakeroff, 412, 375);
 
 	vg_draw_sprite(options_buttons[0]);
 	vg_draw_sprite(options_buttons[2]);
@@ -871,7 +874,7 @@ void Options_menu(){
 
 
 
-		while(kscancode != ENTERBREAK){
+		while(kscancode != NO1MAKE){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -892,32 +895,32 @@ void Options_menu(){
 			}
 	}
 
-	start_menu;
-
 	}
 
 void option_handler(){
 	if(kscancode == DOWNMAKE)
-		if(optionsOption != 1)
-			optionsOption++;
+		if(optionsOption == 0)
+			optionsOption = 1;
 		else
 			optionsOption = 0;
 	if(kscancode == UPMAKE)
-		if(optionsOption != 1)
-			optionsOption++;
+		if(optionsOption == 0)
+			optionsOption = 1;
 		else
 			optionsOption = 0;
 
 	if(kscancode == RIGHTMAKE){
 		switch(optionsOption){
 			case 0:
-				if(optionsDifi == 1)
+				if(optionsDifi == 1){
 					optionsDifi = 2;
-				if(optionsDifi == 2)
+					break;}
+				if(optionsDifi == 2){
 					optionsDifi = 3;
-				if(optionsDifi == 3)
+					break;}
+				if(optionsDifi == 3){
 					optionsDifi = 1;
-			break;
+					break;}
 
 			case 1:
 				if(optionsSound == 1)
@@ -931,12 +934,15 @@ void option_handler(){
 	if(kscancode == LEFTMAKE){
 	switch(optionsOption){
 		case 0:
-			if(optionsDifi == 1)
+			if(optionsDifi == 1){
 				optionsDifi = 3;
-			if(optionsDifi == 2)
+				break;}
+			if(optionsDifi == 2){
 				optionsDifi = 1;
-			if(optionsDifi == 3)
+				break;}
+			if(optionsDifi == 3){
 				optionsDifi = 2;
+				break;}
 		break;
 
 		case 1:
@@ -959,9 +965,12 @@ void draw_Options()
 	vg_draw_sprite(options_buttons[0]);
 	vg_draw_sprite(options_buttons[9]);
 	}
-	else
+
+	if(optionsOption == 1)
+	{
 	vg_draw_sprite(options_buttons[1]);
 	vg_draw_sprite(options_buttons[8]);
+	}
 
 	switch(optionsDifi){
 		case 1:
@@ -985,12 +994,12 @@ void draw_Options()
 
 	switch(optionsSound){
 		case 1:
-			vg_draw_sprite(options_buttons[8]);
+			vg_draw_sprite(options_buttons[10]);
 		break;
 
-		case 2:
-			vg_draw_rec(367, 150, 567, 294, 0);
-			vg_draw_sprite(options_buttons[9]);
+		case 0:
+			vg_draw_rec(412, 375, 650, 519, 0x000000);
+			vg_draw_sprite(options_buttons[11]);
 		break;
 		}
 }
@@ -998,11 +1007,11 @@ void draw_Options()
 
 void draw_Highscores()
 {
-
+	vg_fill(0x000000);
 }
 void draw_Help(){
-
+	vg_fill(0x000000);
 }
 void draw_Credits(){
-
+	vg_fill(0x000000);
 }

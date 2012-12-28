@@ -51,6 +51,8 @@
 #include "Resources/guns.h"
 #include "Resources/menu.h"
 #include "Resources/geral.h"
+#include "Resources/help.h"
+#include "Resources/credits.h"
 
 // Sounds for the Project
 #include "Resources/piano.h"

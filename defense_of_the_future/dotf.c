@@ -78,6 +78,7 @@ int optionsOption = 0;
 int optionsDifi = 1;
 int optionsSound = 1;
 Sprite **options_buttons;
+Sprite **help;
 
 /******/
 
@@ -1045,6 +1046,49 @@ void draw_Help(){
 	int r;
 
 	vg_fill(0x000000);
+
+
+	help = (Sprite **)malloc(19 * sizeof(Sprite));
+	help[0] = create_sprite(help1, 423, 17);
+	help[1] = create_sprite(help2, 212, 93);
+	help[2] = create_sprite(help3, 732, 93);
+	help[3] = create_sprite(help4, 100, 141);
+	help[4] = create_sprite(help5_1, 200, 191);
+	help[5] = create_sprite(help5_2, 200, 234);
+	help[6] = create_sprite(help5_3, 200, 277);
+	help[7] = create_sprite(help6, 612, 141);
+	help[8] = create_sprite(help7_1, 662, 143);
+	help[9] = create_sprite(help7_2, 662, 184);
+	help[10] = create_sprite(help7_3, 662, 225);
+	help[11] = create_sprite(help7_4, 662, 266);
+	help[12] = create_sprite(help8, 100, 373);
+	help[13] = create_sprite(help9, 200, 373);
+	help[14] = create_sprite(help10, 549, 373);
+	help[15] = create_sprite(help11, 662, 373);
+	help[16] = create_sprite(help12, 581, 415);
+	help[17] = create_sprite(help13_1, 662, 415);
+	help[18] = create_sprite(help13_2, 662, 457);
+
+
+	vg_draw_sprite(help[0]);
+	vg_draw_sprite(help[1]);
+	vg_draw_sprite(help[2]);
+	vg_draw_sprite(help[3]);
+	vg_draw_sprite(help[4]);
+	vg_draw_sprite(help[5]);
+	vg_draw_sprite(help[6]);
+	vg_draw_sprite(help[7]);
+	vg_draw_sprite(help[8]);
+	vg_draw_sprite(help[9]);
+	vg_draw_sprite(help[10]);
+	vg_draw_sprite(help[11]);
+	vg_draw_sprite(help[12]);
+	vg_draw_sprite(help[13]);
+	vg_draw_sprite(help[14]);
+	vg_draw_sprite(help[15]);
+	vg_draw_sprite(help[16]);
+	vg_draw_sprite(help[17]);
+	vg_draw_sprite(help[18]);
 
 		while(kscancode != ENTERBREAK){
 		r = driver_receive(ANY, &msg, &ipc_status);

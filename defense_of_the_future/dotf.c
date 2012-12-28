@@ -34,6 +34,7 @@ void draw_Options();
 void draw_Highscores();
 void draw_Help();
 void draw_Credits();
+void draw_strings(char *string, int n, int xi,int yi);
 
 /******/
 
@@ -1119,6 +1120,12 @@ void draw_Credits(){
 
 	vg_fill(0x000000);
 
+	/******/
+	draw_strings(lalala, strlen(lalala), 20, 20);
+
+
+
+	/******/
 		while(kscancode != ENTERBREAK){
 		r = driver_receive(ANY, &msg, &ipc_status);
 		if( r != 0 ){
@@ -1139,4 +1146,247 @@ void draw_Credits(){
 		}
 	}
 	kscancode = 0;
+}
+
+
+
+void draw_strings(char *string, int n, int xi,int yi){
+	int i = 0;
+	int xaux = xi;
+	int yaux = yi;
+	char letra;
+	Sprite *x;
+
+		for(i=0; i<=n; i++){
+
+		if( (yaux + 50) > 768)
+				break;
+				//error message
+
+
+		if( (xaux + 34) >= 1024){
+			xaux = xi;
+			yaux += 50;
+			}
+
+		if( (xaux + 34) < 1024){
+			letra = string[i];
+
+			switch(letra){
+				case 'A':
+				case 'a':
+					x = create_sprite(aS, xaux, yaux);
+					vg_draw_sprite(x);
+					free(x);
+					xaux += 34;
+				break;
+
+				case 'B':
+				case 'b':
+					x = create_sprite(bS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'C':
+				case 'c':
+					x = create_sprite(cS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'D':
+				case 'd':
+					x = create_sprite(dS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'E':
+				case 'e':
+					x = create_sprite(eS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'F':
+				case 'f':
+					x = create_sprite(fS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'G':
+				case 'g':
+					x = create_sprite(gS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'H':
+				case 'h':
+					x = create_sprite(hS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'I':
+				case 'i':
+					x = create_sprite(iS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'J':
+				case 'j':
+					x = create_sprite(jS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'K':
+				case 'k':
+					x = create_sprite(kS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'L':
+				case 'l':
+					x = create_sprite(lS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'M':
+				case 'm':
+					x = create_sprite(mS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'N':
+				case 'n':
+					x = create_sprite(nS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'O':
+				case 'o':
+					x = create_sprite(oS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'P':
+				case 'p':
+					x = create_sprite(pS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'Q':
+				case 'q':
+					x = create_sprite(qS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'R':
+				case 'r':
+					x = create_sprite(rS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'S':
+				case 's':
+					x = create_sprite(sS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'T':
+				case 't':
+					x = create_sprite(tS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'U':
+				case 'u':
+					x = create_sprite(uS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'V':
+				case 'v':
+					x = create_sprite(vS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'W':
+				case 'w':
+					x = create_sprite(wS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'X':
+				case 'x':
+					x = create_sprite(xS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'Y':
+				case 'y':
+					x = create_sprite(yS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+				case 'Z':
+				case 'z':
+					x = create_sprite(zS, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					free(x);
+				break;
+
+
+				case ' ':
+					xaux +=34;
+				}}
+
+			}
+
+
 }

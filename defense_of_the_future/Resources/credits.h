@@ -1,0 +1,2 @@
+
+char *lalala="ola bixo";

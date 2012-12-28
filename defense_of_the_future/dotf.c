@@ -25,6 +25,7 @@ void make_gun_selection();
 int make_victory_music();
 void make_bad_shooting();
 int is_in_screen_bads(Sprite *spr);
+int check_collision_bad(Sprite *spr);
 
 /******/
 
@@ -617,7 +618,6 @@ void make_bad_shooting(){
 					enemies_shots[i][j]->y = enemies[i]->y+enemies[i]->height;
 					enemies_shots[i][j]->yspeed = 30;
 					vg_draw_sprite(enemies_shots[i][j]);
-					sfx_shot = 1;
 					break;
 				}
 			}
@@ -652,11 +652,10 @@ void make_shooting_movement(){
 				if(enemies_shots[i][j]->y+20 < SHIP_START_Y+player->height){
 					vg_draw_rec(enemies_shots[i][j]->x, enemies_shots[i][j]->y, enemies_shots[i][j]->x+enemies_shots[i][j]->width, enemies_shots[i][j]->y+enemies_shots[i][j]->height, 0x0000);
 					enemies_shots[i][j]->y += enemies_shots[i][j]->yspeed;
-					if(!check_collision(enemies_shots[i][j])){
+					if(!check_collision_bad(enemies_shots[i][j])){
 						vg_draw_sprite(enemies_shots[i][j]);
 					} else {
-						EXPLOSIONS[i%NO_PSHOTS] = 1;
-						sfx_explosion_enabled = 1;
+						/* player boom boom explosion*/
 					}
 				} else {
 					vg_draw_rec(enemies_shots[i][j]->x, enemies_shots[i][j]->y, enemies_shots[i][j]->x+enemies_shots[i][j]->width, enemies_shots[i][j]->y+enemies_shots[i][j]->height, 0x0000);
@@ -668,6 +667,19 @@ void make_shooting_movement(){
 
 }
 
+int check_collision_bad(Sprite *spr){
+	int i,j;
+
+	for(i=0; i<spr->height; i++){
+		for(j=0; j<spr->width; j++){
+			if((spr->x+j >= player->x) && (spr->x+j < player->x+player->width) && (spr->y+i >= player->y) && (spr->y+i < player->y+player->height) && (vg_get_pixel(spr->x+j, spr->y+i) != 0)){
+				// TODO: remove_sprite_bad
+				// remove_sprite(spr->x+j, spr->y+i);
+				return 1;
+			}
+		}
+	}
+}
 
 int check_collision(Sprite *spr){
 	int i,j,k;

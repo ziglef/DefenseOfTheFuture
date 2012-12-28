@@ -219,6 +219,7 @@ int menuloop(){
 				}
 			}
 	}
+	kscancode = 0;
 	atMenu = 0;
 
 	switch(menuOption){
@@ -865,16 +866,19 @@ void Options_menu(){
 	options_buttons[10] = create_sprite(speakeron, 412, 375);
 	options_buttons[11] = create_sprite(speakeroff, 412, 375);
 
+	/*
 	vg_draw_sprite(options_buttons[0]);
 	vg_draw_sprite(options_buttons[2]);
 	vg_draw_sprite(options_buttons[5]);
 	vg_draw_sprite(options_buttons[7]);
 	vg_draw_sprite(options_buttons[9]);
 	vg_draw_sprite(options_buttons[10]);
+*/
+	draw_Options();
+	optionsOption = 0;
 
 
-
-		while(kscancode != NO1MAKE){
+		while(kscancode != ENTERBREAK){
 			r = driver_receive(ANY, &msg, &ipc_status);
 			if( r != 0 ){
 				printf("driver_receive failed with %d\n", r);
@@ -894,6 +898,7 @@ void Options_menu(){
 				}
 			}
 	}
+		kscancode = 0;
 
 	}
 
@@ -1005,13 +1010,89 @@ void draw_Options()
 }
 
 
-void draw_Highscores()
-{
+void draw_Highscores(){
+	int ipc_status;
+	message msg;
+	int r;
+
 	vg_fill(0x000000);
+
+			while(kscancode != ENTERBREAK){
+			r = driver_receive(ANY, &msg, &ipc_status);
+			if( r != 0 ){
+				printf("driver_receive failed with %d\n", r);
+				continue;
+			}
+
+			if(is_ipc_notify(ipc_status)){
+
+				switch(_ENDPOINT_P(msg.m_source)){
+					case HARDWARE:
+						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+							kscancode = kbc_handler();
+						}
+						break;
+					default: break;
+				}
+			}
+	}
+		kscancode = 0;
 }
 void draw_Help(){
+
+	int ipc_status;
+	message msg;
+	int r;
+
 	vg_fill(0x000000);
+
+		while(kscancode != ENTERBREAK){
+		r = driver_receive(ANY, &msg, &ipc_status);
+		if( r != 0 ){
+			printf("driver_receive failed with %d\n", r);
+			continue;
+		}
+
+		if(is_ipc_notify(ipc_status)){
+
+			switch(_ENDPOINT_P(msg.m_source)){
+				case HARDWARE:
+					if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+						kscancode = kbc_handler();
+					}
+					break;
+				default: break;
+			}
+		}
+}
+kscancode = 0;
 }
 void draw_Credits(){
+
+	int ipc_status;
+	message msg;
+	int r;
+
 	vg_fill(0x000000);
+
+		while(kscancode != ENTERBREAK){
+		r = driver_receive(ANY, &msg, &ipc_status);
+		if( r != 0 ){
+			printf("driver_receive failed with %d\n", r);
+			continue;
+		}
+
+		if(is_ipc_notify(ipc_status)){
+
+			switch(_ENDPOINT_P(msg.m_source)){
+				case HARDWARE:
+					if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+						kscancode = kbc_handler();
+					}
+					break;
+				default: break;
+			}
+		}
+	}
+	kscancode = 0;
 }

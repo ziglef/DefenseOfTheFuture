@@ -888,8 +888,9 @@ void Options_menu(){
 	vg_draw_sprite(options_buttons[9]);
 	vg_draw_sprite(options_buttons[10]);
 */
-	draw_Options();
 	optionsOption = 0;
+	draw_Options();
+
 
 
 		while(kscancode != ENTERBREAK){
@@ -1189,7 +1190,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 				case 'a':
 					x = create_sprite(aS, xaux, yaux);
 					vg_draw_sprite(x);
-					free(x);
 					xaux += 34;
 				break;
 
@@ -1198,7 +1198,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(bS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'C':
@@ -1206,7 +1205,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(cS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'D':
@@ -1214,7 +1212,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(dS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'E':
@@ -1222,7 +1219,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(eS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'F':
@@ -1230,7 +1226,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(fS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'G':
@@ -1238,7 +1233,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(gS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'H':
@@ -1246,7 +1240,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(hS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'I':
@@ -1254,7 +1247,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(iS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'J':
@@ -1262,7 +1254,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(jS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'K':
@@ -1270,7 +1261,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(kS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'L':
@@ -1278,7 +1268,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(lS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'M':
@@ -1286,7 +1275,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(mS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'N':
@@ -1294,7 +1282,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(nS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'O':
@@ -1302,7 +1289,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(oS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'P':
@@ -1310,7 +1296,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(pS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'Q':
@@ -1318,7 +1303,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(qS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'R':
@@ -1326,7 +1310,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(rS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'S':
@@ -1334,7 +1317,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(sS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'T':
@@ -1342,7 +1324,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(tS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'U':
@@ -1350,7 +1331,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(uS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'V':
@@ -1358,7 +1338,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(vS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'W':
@@ -1366,7 +1345,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(wS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'X':
@@ -1374,7 +1352,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(xS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'Y':
@@ -1382,7 +1359,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(yS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 				case 'Z':
@@ -1390,7 +1366,6 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(zS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
-					free(x);
 				break;
 
 

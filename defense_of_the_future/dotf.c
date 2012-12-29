@@ -1368,6 +1368,66 @@ void draw_strings(char *string, int n, int xi,int yi){
 					xaux += 34;
 				break;
 
+				case '0':
+					x = create_sprite(alg0, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '1':
+					x = create_sprite(alg1, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '2':
+					x = create_sprite(alg2, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '3':
+					x = create_sprite(alg3, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '4':
+					x = create_sprite(alg4, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '5':
+					x = create_sprite(alg5, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '6':
+					x = create_sprite(alg6, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '7':
+					x = create_sprite(alg7, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '8':
+					x = create_sprite(alg8, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
+				case '9':
+					x = create_sprite(alg9, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+				break;
+
 
 				case ' ':
 					xaux +=34;

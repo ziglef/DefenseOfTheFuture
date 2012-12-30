@@ -764,9 +764,9 @@ void remove_sprite_bad(int x, int y){
 					}
 				}
 				PLAYEREXPLOSIONS[0] = 1;
-				PLAYEREXPLOSIONS[1] = 1;
-				PLAYEREXPLOSIONS[2] = 1;
-				PLAYEREXPLOSIONS[3] = 1;
+				//PLAYEREXPLOSIONS[1] = 1;
+				//PLAYEREXPLOSIONS[2] = 1;
+				//PLAYEREXPLOSIONS[3] = 1;
 				enemies_shots[i][j]->x = -100;
 				enemies_shots[i][j]->y = -100;
 			}
@@ -813,6 +813,12 @@ void make_explosion_bad(){
 						playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->y+playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->height,
 						0x0000);
 			PLAYEREXPLOSIONS[i] = 0;
+		}
+		if(PLAYEREXPLOSIONS[i] == 5){
+			if(i != NO_EXPLOSIONS-1)
+				PLAYEREXPLOSIONS[(i+1)%NO_EXPLOSIONS] = 1;
+			else
+				PLAYEREXPLOSIONS[0] = 1;
 		}
 	}
 }

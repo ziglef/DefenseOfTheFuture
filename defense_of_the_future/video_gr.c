@@ -312,8 +312,8 @@ void vg_draw_sprite(Sprite *spr){
 
 	for(i=0; i<spr->height; i++){
 		for(j=0; j<spr->width; j++){
-			if(*(spr->true_color+((i*spr->width)+j)) != 0)
-				vg_set_pixel(spr->x+j, spr->y+i, *(spr->true_color+((i*spr->width)+j)));
+			//if(*(spr->true_color+((i*spr->width)+j)) != 0)
+			vg_set_pixel(spr->x+j, spr->y+i, *(spr->true_color+((i*spr->width)+j)));
 		}
 	}
 }

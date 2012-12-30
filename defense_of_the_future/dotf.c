@@ -1,5 +1,9 @@
 #include "dotf.h"
 
+// TODO: player exploding
+// TODO: level 2 and level 3
+// TODO: write highscores at the end
+
 int start_game();
 int subscribe();
 int unsubscribe();

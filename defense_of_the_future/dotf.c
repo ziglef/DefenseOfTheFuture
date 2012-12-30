@@ -1390,19 +1390,15 @@ void draw_strings(char *string, int n, int xi,int yi){
 	char letra;
 	Sprite *x;
 
-		for(i=0; i<=n; i++){
+	for(i=0; i<n; i++){
 
-		if( (yaux + 50) > 768)
+		if( (yaux + 50) >= 768)
 				break;
-				//error message
-
 
 		if( (xaux + 34) >= 1024){
 			xaux = xi;
 			yaux += 50;
-			}
-
-		if( (xaux + 34) < 1024){
+		} else {
 			letra = string[i];
 
 			switch(letra){
@@ -1411,6 +1407,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(aS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'B':
@@ -1418,6 +1415,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(bS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'C':
@@ -1425,6 +1423,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(cS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'D':
@@ -1432,6 +1431,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(dS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'E':
@@ -1439,6 +1439,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(eS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'F':
@@ -1446,6 +1447,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(fS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'G':
@@ -1453,6 +1455,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(gS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'H':
@@ -1460,6 +1463,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(hS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'I':
@@ -1467,6 +1471,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(iS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'J':
@@ -1474,6 +1479,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(jS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'K':
@@ -1481,6 +1487,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(kS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'L':
@@ -1488,6 +1495,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(lS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'M':
@@ -1495,6 +1503,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(mS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'N':
@@ -1502,6 +1511,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(nS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'O':
@@ -1509,6 +1519,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(oS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'P':
@@ -1516,6 +1527,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(pS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'Q':
@@ -1523,6 +1535,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(qS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'R':
@@ -1530,6 +1543,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(rS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'S':
@@ -1537,6 +1551,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(sS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'T':
@@ -1544,6 +1559,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(tS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'U':
@@ -1551,6 +1567,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(uS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'V':
@@ -1558,6 +1575,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(vS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'W':
@@ -1565,6 +1583,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(wS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'X':
@@ -1572,6 +1591,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(xS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'Y':
@@ -1579,6 +1599,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(yS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case 'Z':
@@ -1586,77 +1607,87 @@ void draw_strings(char *string, int n, int xi,int yi){
 					x = create_sprite(zS, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '0':
 					x = create_sprite(alg0, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '1':
 					x = create_sprite(alg1, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '2':
 					x = create_sprite(alg2, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '3':
 					x = create_sprite(alg3, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '4':
 					x = create_sprite(alg4, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '5':
 					x = create_sprite(alg5, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '6':
 					x = create_sprite(alg6, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '7':
 					x = create_sprite(alg7, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '8':
 					x = create_sprite(alg8, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
 
 				case '9':
 					x = create_sprite(alg9, xaux, yaux);
 					vg_draw_sprite(x);
 					xaux += 34;
+					destroy_sprite(x);
 				break;
-
 
 				case ' ':
 					xaux +=34;
 				break;
 
-				}}
-
+				default: xaux +=34; break;
 			}
-
+		}
+	}
 }
 void Shop_menu()
 {

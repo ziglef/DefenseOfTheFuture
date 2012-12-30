@@ -655,28 +655,33 @@ void make_shooting(){
 		}
 
 	if(gunOption == 2){
-		if((!is_in_screen(player_shots[0])) && (!is_in_screen(player_shots[1])) && (!is_in_screen(player_shots[2])) && (!is_in_screen(player_shots[3])))
-		player_shots[0]->x = player->x;
-		player_shots[0]->y = player->y-player_shots[0]->height;
-		player_shots[0]->yspeed = 30;
-		vg_draw_sprite(player_shots[0]);
+		if((!is_in_screen(player_shots[0])) && (!is_in_screen(player_shots[1])) && (!is_in_screen(player_shots[2])) && (!is_in_screen(player_shots[3]))){
+			player_shots[0]->x = player->x;
+			player_shots[0]->y = player->y-player_shots[0]->height;
+			player_shots[0]->yspeed = 30;
+			player_shots[0]->xspeed = 15;
+			vg_draw_sprite(player_shots[0]);
 
-		player_shots[1]->x = player->x+player->width-player_shots[1]->width;
-		player_shots[1]->y = player->y-player_shots[1]->height;
-		player_shots[1]->yspeed = 30;
-		vg_draw_sprite(player_shots[1]);
+			player_shots[1]->x = player->x+player->width-player_shots[1]->width;
+			player_shots[1]->y = player->y-player_shots[1]->height;
+			player_shots[1]->yspeed = 30;
+			player_shots[1]->xspeed = -15;
+			vg_draw_sprite(player_shots[1]);
 
-		player_shots[2]->x = player->x-player->width/2;
-		player_shots[2]->y = player->y-player_shots[2]->height;
-		player_shots[2]->yspeed = 30;
-		vg_draw_sprite(player_shots[2]);
+			player_shots[2]->x = player->x-player->width/2;
+			player_shots[2]->y = player->y-player_shots[2]->height;
+			player_shots[2]->yspeed = 30;
+			player_shots[2]->xspeed = 30;
+			vg_draw_sprite(player_shots[2]);
 
-		player_shots[3]->x = player->x+player->width+player->width/2;
-		player_shots[3]->y = player->y-player_shots[3]->height;
-		player_shots[3]->yspeed = 30;
-		vg_draw_sprite(player_shots[3]);
+			player_shots[3]->x = player->x+player->width+player->width/2;
+			player_shots[3]->y = player->y-player_shots[3]->height;
+			player_shots[3]->yspeed = 30;
+			player_shots[3]->xspeed = -30;
+			vg_draw_sprite(player_shots[3]);
 
-		sfx_shot = 1;
+			sfx_shot = 1;
+		}
 	}
 }
 
@@ -707,6 +712,7 @@ void make_shooting_movement(){
 			if(player_shots[i]->y-20 > player_shots[i]->height){
 				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0x0000);
 				player_shots[i]->y -= player_shots[i]->yspeed;
+				player_shots[i]->x += player_shots[i]->xspeed;
 				if(!check_collision(player_shots[i])){
 					vg_draw_sprite(player_shots[i]);
 				} else {

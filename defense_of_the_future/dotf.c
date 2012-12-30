@@ -29,9 +29,6 @@ int check_collision_bad(Sprite *spr);
 void remove_sprite_bad(int x, int y);
 void make_explosion_bad();
 void draw_lifebar();
-
-/******/
-
 void Options_menu();
 void option_handler();
 void draw_Options();
@@ -42,8 +39,6 @@ void draw_strings(char *string, int n, int xi,int yi);
 void draw_shop();
 void Shop_menu();
 void shop_handler();
-
-/******/
 
 Sprite *player;
 Sprite **player_shots;
@@ -81,10 +76,7 @@ Sprite *victory;
 int guns[4] = {1, 1, 1, 1};
 Sprite ***playerExplosions;
 int *PLAYEREXPLOSIONS;
-int level = 1;
-
-
-/******/
+int levelvar = 1;
 int optionsOption = 0;
 int optionsDifi = 1;
 int optionsSound = 1;
@@ -93,9 +85,6 @@ Sprite **help;
 int lifebuy;
 char *nomoney = "not enough money";
 char *alreadyo = "already owned";
-
-/******/
-
 
 int main(){
 

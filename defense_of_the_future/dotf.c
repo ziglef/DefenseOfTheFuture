@@ -1359,8 +1359,8 @@ void draw_credits(){
 	vg_fill(0x000000);
 
 	/******/
-	//draw_strings(creditos, strlen(creditos), 20, 20);
-	shop_menu();
+	draw_strings(creditos, strlen(creditos), 20, 20);
+	//shop_menu();
 
 
 	/******/

@@ -1,2 +1,2 @@
 
-char *creditos="aA bB cC dD eE fF gG hH iI jJ kK lL mM nN oO pP qQ rR sS tT uU vV wW xX yY zZ 1234567890 mesmo boss este faria";
+char *creditos="   Trabalho realizado por                                   Pedro Faria    ei11167        Rui Rocha      ei11010                                      no ambito da cadeira de lcom         feup 2012/2013";

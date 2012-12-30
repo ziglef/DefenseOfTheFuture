@@ -29,15 +29,15 @@ int check_collision_bad(Sprite *spr);
 void remove_sprite_bad(int x, int y);
 void make_explosion_bad();
 void draw_lifebar();
-void Options_menu();
+void options_menu();
 void option_handler();
-void draw_Options();
-void draw_Highscores();
-void draw_Help();
-void draw_Credits();
+void draw_options();
+void draw_highscores();
+void draw_help();
+void draw_credits();
 void draw_strings(char *string, int n, int xi,int yi);
 void draw_shop();
-void Shop_menu();
+void shop_menu();
 void shop_handler();
 
 Sprite *player;
@@ -240,22 +240,22 @@ int menuloop(){
 			start_game();
 			break;
 		case 1:
-			Options_menu();
+			options_menu();
 			atMenu = 1;
 			start_menu();
 			break;
 		case 2:
-			draw_Highscores();
+			draw_highscores();
 			atMenu = 1;
 			start_menu();
 			break;
 		case 3:
-			draw_Help();
+			draw_help();
 			atMenu = 1;
 			start_menu();
 			break;
 		case 4:
-			draw_Credits();
+			draw_credits();
 			atMenu = 1;
 			start_menu();
 			break;
@@ -1057,7 +1057,7 @@ int unsubscribe(){
 }
 
 
-void Options_menu(){
+void options_menu(){
 
 	int ipc_status;
 	message msg;
@@ -1087,7 +1087,7 @@ void Options_menu(){
 	vg_draw_sprite(options_buttons[10]);
 */
 	optionsOption = 0;
-	draw_Options();
+	draw_options();
 
 
 
@@ -1173,10 +1173,10 @@ void option_handler(){
 		}
 
 
-	draw_Options();
+	draw_options();
 		}
 
-void draw_Options()
+void draw_options()
 {
 	if(optionsOption == 0)
 	{
@@ -1223,7 +1223,7 @@ void draw_Options()
 }
 
 
-void draw_Highscores(){
+void draw_highscores(){
 	int ipc_status;
 	message msg;
 	int r;
@@ -1273,7 +1273,7 @@ void draw_Highscores(){
 	kscancode = 0;
 	fclose(fp);
 }
-void draw_Help(){
+void draw_help(){
 
 	int ipc_status;
 	message msg;
@@ -1345,7 +1345,7 @@ void draw_Help(){
 }
 kscancode = 0;
 }
-void draw_Credits(){
+void draw_credits(){
 
 	int ipc_status;
 	message msg;
@@ -1355,7 +1355,7 @@ void draw_Credits(){
 
 	/******/
 	//draw_strings(creditos, strlen(creditos), 20, 20);
-	Shop_menu();
+	shop_menu();
 
 
 	/******/
@@ -1684,12 +1684,19 @@ void draw_strings(char *string, int n, int xi,int yi){
 					xaux +=34;
 				break;
 
+				case '/':
+					x = create_sprite(bar, xaux, yaux);
+					vg_draw_sprite(x);
+					xaux += 34;
+					destroy_sprite(x);
+				break;
+
 				default: xaux +=34; break;
 			}
 		}
 	}
 }
-void Shop_menu()
+void shop_menu()
 {
 	int ipc_status;
 	message msg;

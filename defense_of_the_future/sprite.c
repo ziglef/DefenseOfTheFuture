@@ -26,37 +26,13 @@ Sprite * create_sprite(char *pic[], int x, int y){
 	return spr;
 }
 
-/*
- void delete_sprite(Sprite *sprt, char *base)
+void destroy_sprite(Sprite *fig)
 {
-        char* bgMap = sprt->bgmap;
-        if(!bgMap){
-        int i, k;
-        for(i=0; i < sprt->height; i++)
-                for(k=0; k < sprt->width; k++)
-                        set_pixel(sprt->x+k,sprt->y+i, 0, base);
+        if (!fig) return;
 
-
-        return;}
-        sprt->draw=false;
-        int i, k;
-        for(i=0; i < sprt->height; i++)
-                for(k=0; k < sprt->width; k++)
-                        set_pixel(sprt->x+k,sprt->y+i, *(bgMap + sprt->width*i + k), base);
-
+		//free(fig->map);
+		free(fig->true_color);
+		free(fig);
 }
-
-
-
-
-
-void destroy_sprite(Sprite *sprt)
-{
-        if (!sprt) return;
-        free(sprt->map);
-        free(sprt->bgmap);
-        free(sprt);
-}
- */
 
 //https://code.google.com/p/sebuxoid/source/browse/trunk/LCOM/SPRITE.C

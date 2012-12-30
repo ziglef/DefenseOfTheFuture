@@ -50,7 +50,7 @@ int animate_sprite(Sprite *fig, char *base);
 /** The "fig" sprite is erased from memory whose address is "base"
  * and used resources released.
  */
-void destroy_sprite(Sprite *fig, char *base);
+void destroy_sprite(Sprite *fig);
 
 /** Move in memory whose address is 'base', the 'fig' cursor, a
  * standard sprite, from its current position to a new position

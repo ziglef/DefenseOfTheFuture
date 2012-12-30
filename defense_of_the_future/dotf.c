@@ -28,6 +28,7 @@ int is_in_screen_bads(Sprite *spr);
 int check_collision_bad(Sprite *spr);
 void remove_sprite_bad(int x, int y);
 void make_explosion_bad();
+void draw_lifebar();
 
 /******/
 
@@ -730,6 +731,42 @@ int check_collision(Sprite *spr){
 	return 0;
 }
 
+void draw_life_bar(){
+	vg_draw_sprite(cPanel.lifebar[0]);
+	vg_draw_sprite(cPanel.lifebar[1]);
+	vg_draw_sprite(cPanel.lifebar[2]);
+	vg_draw_sprite(cPanel.lifebar[3]);
+	vg_draw_sprite(cPanel.lifebar[4]);
+	vg_draw_sprite(cPanel.lifebar[5]);
+	vg_draw_sprite(cPanel.lifebar[6]);
+	vg_draw_sprite(cPanel.lifebar[7]);
+}
+
+void make_life_bar(char lcolor){
+	int i;
+
+	for(i=0; i<life; i++){
+		destroy_sprite(cPanel.lifebar[i]);
+		switch(lcolor){
+			case 'r':
+				cPanel.lifebar[i] = create_sprite(lbarr, 10+41*i, 709);
+				break;
+			case 'y':
+				cPanel.lifebar[i] = create_sprite(lbary, 10+41*i, 709);
+				break;
+			case 'g':
+				cPanel.lifebar[i] = create_sprite(lbarg, 10+41*i, 709);
+				break;
+			default: break;
+		}
+	}
+
+	for(i=life; i<8; i++){
+		destroy_sprite(cPanel.lifebar[i]);
+		cPanel.lifebar[i] = create_sprite(lbarb, 10+41*i, 709);
+	}
+}
+
 void remove_sprite_bad(int x, int y){
 	int i,j,k,l;
 
@@ -737,38 +774,48 @@ void remove_sprite_bad(int x, int y){
 		for(j=0; j<2; j++){
 			if((x >= enemies_shots[i][j]->x) && (x < enemies_shots[i][j]->x+enemies_shots[i][j]->width) && (y >= enemies_shots[i][j]->y) && (y < enemies_shots[i][j]->y+enemies_shots[i][j]->height)){
 				vg_draw_rec(enemies_shots[i][j]->x, enemies_shots[i][j]->y, enemies_shots[i][j]->x+enemies_shots[i][j]->width, enemies_shots[i][j]->y+enemies_shots[i][j]->height, 0x0000);
-				for(k=0; k<NO_PSHOTS; k++){
-					for(l=0; l<NO_EXPLOSIONS; l++){
-						playerExplosions[k][l]->x = enemies_shots[i][j]->x - playerExplosions[k][l]->width/2;
-						playerExplosions[k][l]->y = enemies_shots[i][j]->y - playerExplosions[k][l]->height/2;
-
-						switch(k){
-							case 0:
-								playerExplosions[k][l]->x -= 48;
-								playerExplosions[k][l]->y -= 54;
-								break;
-							case 1:
-								playerExplosions[k][l]->x -= 18;
-								playerExplosions[k][l]->y += 24;
-								break;
-							case 2:
-								playerExplosions[k][l]->x += 16;
-								playerExplosions[k][l]->y -= 33;
-								break;
-							case 3:
-								playerExplosions[k][l]->x -= 73;
-								playerExplosions[k][l]->y += 15;
-								break;
-							default: break;
-						}
-					}
-				}
-				PLAYEREXPLOSIONS[0] = 1;
-				PLAYEREXPLOSIONS[1] = 3;
-				PLAYEREXPLOSIONS[2] = 5;
-				PLAYEREXPLOSIONS[3] = 7;
 				enemies_shots[i][j]->x = -100;
 				enemies_shots[i][j]->y = -100;
+				life -= 1*optionsDifi;
+				if(life <= 2)
+					make_life_bar('r');
+				else if(life <= 4)
+					make_life_bar('y');
+				else
+					make_life_bar('g');
+				draw_life_bar();
+					if(life <= 0){
+						for(k=0; k<NO_PSHOTS; k++){
+							for(l=0; l<NO_EXPLOSIONS; l++){
+								playerExplosions[k][l]->x = enemies_shots[i][j]->x - playerExplosions[k][l]->width/2;
+								playerExplosions[k][l]->y = enemies_shots[i][j]->y - playerExplosions[k][l]->height/2;
+
+								switch(k){
+									case 0:
+										playerExplosions[k][l]->x -= 48;
+										playerExplosions[k][l]->y -= 54;
+										break;
+									case 1:
+										playerExplosions[k][l]->x -= 18;
+										playerExplosions[k][l]->y += 24;
+										break;
+									case 2:
+										playerExplosions[k][l]->x += 16;
+										playerExplosions[k][l]->y -= 33;
+										break;
+									case 3:
+										playerExplosions[k][l]->x -= 73;
+										playerExplosions[k][l]->y += 15;
+										break;
+									default: break;
+								}
+							}
+						}
+						PLAYEREXPLOSIONS[0] = 1;
+						PLAYEREXPLOSIONS[1] = 3;
+						PLAYEREXPLOSIONS[2] = 5;
+						PLAYEREXPLOSIONS[3] = 7;
+					}
 			}
 		}
 	}

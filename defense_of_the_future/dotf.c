@@ -26,6 +26,7 @@ int make_victory_music();
 void make_bad_shooting();
 int is_in_screen_bads(Sprite *spr);
 int check_collision_bad(Sprite *spr);
+void remove_sprite_bad(int x, int y);
 
 /******/
 
@@ -76,6 +77,8 @@ int menuOption = 0;
 int gunOption = 0;
 Sprite *victory;
 int guns[4] = {1, 0, 0, 0};
+Sprite ***playerExplosions;
+int *PLAYEREXPLOSIONS;
 
 
 /******/
@@ -347,7 +350,23 @@ int start_game(){
 		explosions[i][9] = create_sprite(boom10, -75, -75);
 	}
 
+	playerExplosions = (Sprite ***)malloc(NO_EXPLOSIONS*NO_PSHOTS * sizeof(Sprite));
+	for(i=0; i<NO_PSHOTS; i++){
+		playerExplosions[i] = (Sprite **)malloc(NO_EXPLOSIONS * sizeof(Sprite));
+		playerExplosions[i][0] = create_sprite(boom1, -75, -75);
+		playerExplosions[i][1] = create_sprite(boom2, -75, -75);
+		playerExplosions[i][2] = create_sprite(boom3, -75, -75);
+		playerExplosions[i][3] = create_sprite(boom4, -75, -75);
+		playerExplosions[i][4] = create_sprite(boom5, -75, -75);
+		playerExplosions[i][5] = create_sprite(boom6, -75, -75);
+		playerExplosions[i][6] = create_sprite(boom7, -75, -75);
+		playerExplosions[i][7] = create_sprite(boom8, -75, -75);
+		playerExplosions[i][8] = create_sprite(boom9, -75, -75);
+		playerExplosions[i][9] = create_sprite(boom10, -75, -75);
+	}
+
 	EXPLOSIONS = (int *)calloc(NO_EXPLOSIONS,sizeof(int));
+	PLAYEREXPLOSIONS = (int *)calloc(NO_EXPLOSIONS,sizeof(int));
 
 	// Control Panel Creation
 	// Frame
@@ -490,7 +509,7 @@ int make_victory_music(){
 }
 
 void draw_game_info(game_info gi, int noelements){
-	int i = 0;
+	int i = noelements-1;
 	int num;
 	int elements[noelements];
 
@@ -500,14 +519,14 @@ void draw_game_info(game_info gi, int noelements){
 		vg_draw_sprite(cPanel.algarisms[gi.value]);
 	}else{
 		num = gi.value;
-		while (num > 0){
+		while (i >= 0){
 		    elements[i] = num % 10;
 		    num = num / 10;
-		    //i++;
+		    i--;
 		}
 
-		for(i=noelements-1; i>=0; i--){
-			cPanel.algarisms[elements[i]]->x = gi.x+60*(noelements-(i+1));
+		for(i=0; i<noelements; i++){
+			cPanel.algarisms[elements[i]]->x = gi.x+60*i;
 			cPanel.algarisms[elements[i]]->y = gi.y;
 			vg_draw_sprite(cPanel.algarisms[elements[i]]);
 		}
@@ -646,6 +665,8 @@ void make_shooting_movement(){
 					sfx_explosion_enabled = 1;
 					cash.value += 500;
 					score.value += 50;
+					draw_game_info(score, 4);
+					draw_game_info(cash, 5);
 				}
 			} else {
 				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0x0000);
@@ -663,7 +684,7 @@ void make_shooting_movement(){
 					if(!check_collision_bad(enemies_shots[i][j])){
 						vg_draw_sprite(enemies_shots[i][j]);
 					} else {
-						/* player boom boom explosion*/
+
 					}
 				} else {
 					vg_draw_rec(enemies_shots[i][j]->x, enemies_shots[i][j]->y, enemies_shots[i][j]->x+enemies_shots[i][j]->width, enemies_shots[i][j]->y+enemies_shots[i][j]->height, 0x0000);
@@ -681,8 +702,7 @@ int check_collision_bad(Sprite *spr){
 	for(i=0; i<spr->height; i++){
 		for(j=0; j<spr->width; j++){
 			if((spr->x+j >= player->x) && (spr->x+j < player->x+player->width) && (spr->y+i >= player->y) && (spr->y+i < player->y+player->height) && (vg_get_pixel(spr->x+j, spr->y+i) != 0)){
-				// TODO: remove_sprite_bad
-				// remove_sprite(spr->x+j, spr->y+i);
+				remove_sprite_bad(spr->x+j, spr->y+i);
 				return 1;
 			}
 		}
@@ -705,6 +725,24 @@ int check_collision(Sprite *spr){
 	}
 
 	return 0;
+}
+
+void remove_sprite_bad(int x, int y){
+	int i,j,k;
+
+	for(i=0; i<NO_ENEMIES; i++){
+		for(j=0; j<2; j++){
+			if((x >= enemies_shots[i][j]->x) && (x < enemies_shots[i][j]->x+enemies_shots[i][j]->width) && (y >= enemies_shots[i][j]->y) && (y < enemies_shots[i][j]->y+enemies_shots[i][j]->height)){
+				vg_draw_rec(enemies_shots[i][j]->x, enemies_shots[i][j]->y, enemies_shots[i][j]->x+enemies_shots[i][j]->width, enemies_shots[i][j]->y+enemies_shots[i][j]->height, 0x0000);
+				for(j=0; j<NO_EXPLOSIONS; j++){
+					playerExplosions[i][j]->x = enemies_shots[i][j]->x - playerExplosions[i][j]->width/2;
+					playerExplosions[i][j]->y = enemies_shots[i][j]->y - playerExplosions[i][j]->height/2;
+				}
+				enemies_shots[i][j]->x = -100;
+				enemies_shots[i][j]->y = -100;
+			}
+		}
+	}
 }
 
 void remove_sprite(int x, int y){
@@ -731,6 +769,24 @@ void remove_sprite(int x, int y){
 		}
 	}
 
+}
+
+void make_explosion_bad(){
+	int i;
+
+	for(i=0; i<NO_EXPLOSIONS; i++){
+		if((PLAYEREXPLOSIONS[i] != 11) && (PLAYEREXPLOSIONS[i] != 0)){
+			vg_draw_sprite(playerExplosions[i][PLAYEREXPLOSIONS[i]-1]);
+			PLAYEREXPLOSIONS[i]++;
+		} else if(PLAYEREXPLOSIONS[i] != 0){
+			vg_draw_rec(playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->x, playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->y,
+						playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->x+playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->width,
+						playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->y+playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->height,
+						0x0000);
+			PLAYEREXPLOSIONS[i] = 0;
+			check_game_over();
+		}
+	}
 }
 
 void make_explosion(){

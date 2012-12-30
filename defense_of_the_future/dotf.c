@@ -1239,9 +1239,16 @@ void draw_Highscores(){
 
 	for(i=0; i<10; i++){
 		fgets(HIGHSCORES[i].name, 4, fp);
-		fscanf(fp, "%d %d %d %d", &(HIGHSCORES[i].score), &(HIGHSCORES[i].day),
-								  &(HIGHSCORES[i].month), &(HIGHSCORES[i].year));
+		fgets(HIGHSCORES[i].score, 5, fp);
+		fgets(HIGHSCORES[i].day, 3, fp);
+		fgets(HIGHSCORES[i].month, 3, fp);
+		fgets(HIGHSCORES[i].year, 3, fp);
+
 		draw_strings(HIGHSCORES[i].name, 3, 223, 89+(60*i));
+		draw_strings(HIGHSCORES[i].score, 4, 359, 89+(60*i));
+		draw_strings(HIGHSCORES[i].day, 3, 529, 89+(60*i));
+		draw_strings(HIGHSCORES[i].month, 3, 631, 89+(60*i));
+		draw_strings(HIGHSCORES[i].year, 3, 733, 89+(60*i));
 	}
 
 	while(kscancode != ENTERBREAK){

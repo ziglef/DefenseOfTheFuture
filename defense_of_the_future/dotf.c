@@ -81,6 +81,7 @@ Sprite *victory;
 int guns[4] = {1, 1, 1, 1};
 Sprite ***playerExplosions;
 int *PLAYEREXPLOSIONS;
+int level = 1;
 
 
 /******/
@@ -629,6 +630,7 @@ void make_shooting(){
 				player_shots[i]->x = player->x+player->width/2-player_shots[i]->width/2;
 				player_shots[i]->y = player->y-player_shots[i]->height;
 				player_shots[i]->yspeed = 30;
+				player_shots[i]->xspeed = 0;
 				vg_draw_sprite(player_shots[i]);
 
 				sfx_shot = 1;
@@ -642,11 +644,13 @@ void make_shooting(){
 				player_shots[i*2]->x = player->x;
 				player_shots[i*2]->y = player->y-player_shots[i*2]->height;
 				player_shots[i*2]->yspeed = 30;
+				player_shots[i*2]->xspeed = 0;
 				vg_draw_sprite(player_shots[i*2]);
 
 				player_shots[i*2+1]->x = player->x+player->width-player_shots[i*2]->width;
 				player_shots[i*2+1]->y = player->y-player_shots[i*2]->height;
 				player_shots[i*2+1]->yspeed = 30;
+				player_shots[i*2+1]->xspeed = 0;
 				vg_draw_sprite(player_shots[i*2+1]);
 
 				sfx_shot = 1;
@@ -659,25 +663,25 @@ void make_shooting(){
 			player_shots[0]->x = player->x;
 			player_shots[0]->y = player->y-player_shots[0]->height;
 			player_shots[0]->yspeed = 30;
-			player_shots[0]->xspeed = 15;
+			player_shots[0]->xspeed = 10;
 			vg_draw_sprite(player_shots[0]);
 
 			player_shots[1]->x = player->x+player->width-player_shots[1]->width;
 			player_shots[1]->y = player->y-player_shots[1]->height;
 			player_shots[1]->yspeed = 30;
-			player_shots[1]->xspeed = -15;
+			player_shots[1]->xspeed = -10;
 			vg_draw_sprite(player_shots[1]);
 
 			player_shots[2]->x = player->x-player->width/2;
 			player_shots[2]->y = player->y-player_shots[2]->height;
 			player_shots[2]->yspeed = 30;
-			player_shots[2]->xspeed = 30;
+			player_shots[2]->xspeed = 20;
 			vg_draw_sprite(player_shots[2]);
 
 			player_shots[3]->x = player->x+player->width+player->width/2;
 			player_shots[3]->y = player->y-player_shots[3]->height;
 			player_shots[3]->yspeed = 30;
-			player_shots[3]->xspeed = -30;
+			player_shots[3]->xspeed = -20;
 			vg_draw_sprite(player_shots[3]);
 
 			sfx_shot = 1;
@@ -1037,6 +1041,15 @@ int subscribe(){
 }
 
 int unsubscribe(){
+	unsigned long status;
+	unsigned long garbage;
+
+	do{
+		sys_inb(KBC_STAT, &status);
+		if(status & KBC_STAT_OBF)
+			sys_inb(KBC_O_BUF, &garbage);
+	}while(status & KBC_STAT_OBF);
+
 	if(kbc_unsubscribe())
 		return 1;
 

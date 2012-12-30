@@ -790,38 +790,38 @@ void remove_sprite_bad(int x, int y){
 					draw_life_bar();
 				}
 
-					if(life == 0){
-						for(k=0; k<NO_PSHOTS; k++){
-							for(l=0; l<NO_EXPLOSIONS; l++){
-								playerExplosions[k][l]->x = enemies_shots[i][j]->x - playerExplosions[k][l]->width/2;
-								playerExplosions[k][l]->y = enemies_shots[i][j]->y - playerExplosions[k][l]->height/2;
+				if(life == 0){
+					for(k=0; k<NO_PSHOTS; k++){
+						for(l=0; l<NO_EXPLOSIONS; l++){
+							playerExplosions[k][l]->x = enemies_shots[i][j]->x - playerExplosions[k][l]->width/2;
+							playerExplosions[k][l]->y = enemies_shots[i][j]->y - playerExplosions[k][l]->height/2;
 
-								switch(k){
-									case 0:
-										playerExplosions[k][l]->x -= 48;
-										playerExplosions[k][l]->y -= 54;
-										break;
-									case 1:
-										playerExplosions[k][l]->x -= 18;
-										playerExplosions[k][l]->y += 24;
-										break;
-									case 2:
-										playerExplosions[k][l]->x += 16;
-										playerExplosions[k][l]->y -= 33;
-										break;
-									case 3:
-										playerExplosions[k][l]->x -= 73;
-										playerExplosions[k][l]->y += 15;
-										break;
-									default: break;
-								}
+							switch(k){
+								case 0:
+									playerExplosions[k][l]->x -= 48;
+									playerExplosions[k][l]->y -= 54;
+									break;
+								case 1:
+									playerExplosions[k][l]->x -= 18;
+									playerExplosions[k][l]->y += 24;
+									break;
+								case 2:
+									playerExplosions[k][l]->x += 16;
+									playerExplosions[k][l]->y -= 33;
+									break;
+								case 3:
+									playerExplosions[k][l]->x -= 73;
+									playerExplosions[k][l]->y += 15;
+									break;
+								default: break;
 							}
 						}
-						PLAYEREXPLOSIONS[0] = 1;
-						PLAYEREXPLOSIONS[1] = 3;
-						PLAYEREXPLOSIONS[2] = 5;
-						PLAYEREXPLOSIONS[3] = 7;
 					}
+					PLAYEREXPLOSIONS[0] = 1;
+					PLAYEREXPLOSIONS[1] = 3;
+					PLAYEREXPLOSIONS[2] = 5;
+					PLAYEREXPLOSIONS[3] = 7;
+				}
 			}
 		}
 	}
@@ -889,7 +889,6 @@ void make_explosion(){
 }
 
 void make_player_movement(){
-	// MAKE MOVEMENT FUNCTION
 	switch(kscancode){
 		case WMAKE:
 			if(player->y-20 >= 500){

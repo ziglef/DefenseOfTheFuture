@@ -40,6 +40,7 @@ void draw_shop();
 void shop_menu();
 void shop_handler();
 
+Sprite *laser;
 Sprite *player;
 Sprite **player_shots;
 Sprite **enemies;
@@ -296,6 +297,8 @@ int start_game(){
 	 printf("Speaker_ctrl Failed!\n");
 	 return 1;
 	}
+
+	laser = create_sprite(laserS, -50, -50);
 
 	// Initializes the video memory in VIDEO_MODE (0x117)
 	//video_mem = vg_init(VIDEO_MODE);
@@ -681,6 +684,17 @@ void make_shooting(){
 			sfx_shot = 1;
 		}
 	}
+
+	if(gunOption == 3)
+		if(!is_in_screen(laser)){
+			laser->x = player->x+player->width/2-laser->width/2;
+			laser->y = player->y-laser->height;
+			laser->yspeed = 90;
+			laser->xspeed = 0;
+			vg_draw_sprite(laser);
+
+			sfx_shot = 1;
+		}
 }
 
 void make_bad_shooting(){
@@ -746,6 +760,28 @@ void make_shooting_movement(){
 			}
 		}
 	}
+
+	if(is_in_screen(laser)){
+		if(laser->y-20 > laser->height){
+			vg_draw_rec(laser->x, laser->y, laser->x+laser->width, laser->y+laser->height, 0x0000);
+			laser->y -= laser->yspeed;
+			laser->x += laser->xspeed;
+			if(!check_collision(laser)){
+				vg_draw_sprite(laser);
+			} else {
+				EXPLOSIONS[i] = 1;
+				sfx_explosion_enabled = 1;
+				cash.value += 500;
+				score.value += 50;
+				draw_game_info(score, 4);
+				draw_game_info(cash, 5);
+			}
+		} else {
+			vg_draw_rec(laser->x, laser->y, laser->x+laser->width, laser->y+laser->height, 0x0000);
+			laser->y = -50;
+		}
+	}
+
 
 }
 

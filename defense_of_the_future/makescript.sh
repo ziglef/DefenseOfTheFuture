@@ -4,7 +4,7 @@ make clean install
 wait
 
 echo "Striping the Executable"
-strip /usr/sbin/dotf
+strip -s /usr/sbin/dotf
 
 wait
 

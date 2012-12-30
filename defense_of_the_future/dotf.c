@@ -1238,25 +1238,17 @@ void draw_Highscores(){
 	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "r");
 
 	for(i=0; i<10; i++){
-		fgets(HIGHSCORES[i].name, 4, fp);
-		fgets(HIGHSCORES[i].score, 5, fp);
-		fgets(HIGHSCORES[i].day, 3, fp);
-		fgets(HIGHSCORES[i].month, 3, fp);
-		fgets(HIGHSCORES[i].year, 3, fp);
+		fgets(HIGHSCORES[i].name, 5, fp);
+		fgets(HIGHSCORES[i].score, 6, fp);
+		fgets(HIGHSCORES[i].day, 4, fp);
+		fgets(HIGHSCORES[i].month, 4, fp);
+		fgets(HIGHSCORES[i].year, 4, fp);
 
-		draw_strings(HIGHSCORES[i].name, 3, 0, 89+(60*i));
-		draw_strings(HIGHSCORES[i].score, 4, 136, 89+(60*i));
-		draw_strings(HIGHSCORES[i].day, 3, 206, 89+(60*i));
-		draw_strings(HIGHSCORES[i].month, 3, 308, 89+(60*i));
-		draw_strings(HIGHSCORES[i].year, 3, 410, 89+(60*i));
-
-		/*
 		draw_strings(HIGHSCORES[i].name, 3, 223, 89+(60*i));
 		draw_strings(HIGHSCORES[i].score, 4, 359, 89+(60*i));
 		draw_strings(HIGHSCORES[i].day, 3, 529, 89+(60*i));
 		draw_strings(HIGHSCORES[i].month, 3, 631, 89+(60*i));
 		draw_strings(HIGHSCORES[i].year, 3, 733, 89+(60*i));
-		*/
 	}
 
 	while(kscancode != ENTERBREAK){

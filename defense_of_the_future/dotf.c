@@ -27,6 +27,7 @@ void make_bad_shooting();
 int is_in_screen_bads(Sprite *spr);
 int check_collision_bad(Sprite *spr);
 void remove_sprite_bad(int x, int y);
+void make_explosion_bad();
 
 /******/
 
@@ -479,6 +480,8 @@ void mainloop(){
 								}
 								if((timec % 3 == 0) && ((EXPLOSIONS[0] != 0) || (EXPLOSIONS[1] != 0) || (EXPLOSIONS[2] != 0) || (EXPLOSIONS[3] != 0)))
 									make_explosion();
+								if((timec % 3 == 0) && ((PLAYEREXPLOSIONS[0] != 0) || (PLAYEREXPLOSIONS[1] != 0) || (PLAYEREXPLOSIONS[2] != 0) || (PLAYEREXPLOSIONS[3] != 0)))
+									make_explosion_bad();
 								if(timec % 6 == 0)
 									make_music();
 							}
@@ -728,16 +731,42 @@ int check_collision(Sprite *spr){
 }
 
 void remove_sprite_bad(int x, int y){
-	int i,j,k;
+	int i,j,k,l;
 
 	for(i=0; i<NO_ENEMIES; i++){
 		for(j=0; j<2; j++){
 			if((x >= enemies_shots[i][j]->x) && (x < enemies_shots[i][j]->x+enemies_shots[i][j]->width) && (y >= enemies_shots[i][j]->y) && (y < enemies_shots[i][j]->y+enemies_shots[i][j]->height)){
 				vg_draw_rec(enemies_shots[i][j]->x, enemies_shots[i][j]->y, enemies_shots[i][j]->x+enemies_shots[i][j]->width, enemies_shots[i][j]->y+enemies_shots[i][j]->height, 0x0000);
-				for(j=0; j<NO_EXPLOSIONS; j++){
-					playerExplosions[i][j]->x = enemies_shots[i][j]->x - playerExplosions[i][j]->width/2;
-					playerExplosions[i][j]->y = enemies_shots[i][j]->y - playerExplosions[i][j]->height/2;
+				for(k=0; k<NO_PSHOTS; k++){
+					for(l=0; l<NO_EXPLOSIONS; l++){
+						playerExplosions[k][l]->x = enemies_shots[i][j]->x - playerExplosions[k][l]->width/2;
+						playerExplosions[k][l]->y = enemies_shots[i][j]->y - playerExplosions[k][l]->height/2;
+
+						switch(k){
+							case 0:
+								playerExplosions[k][l]->x -= 48;
+								playerExplosions[k][l]->y -= 54;
+								break;
+							case 1:
+								playerExplosions[k][l]->x -= 18;
+								playerExplosions[k][l]->y += 24;
+								break;
+							case 2:
+								playerExplosions[k][l]->x += 16;
+								playerExplosions[k][l]->y -= 33;
+								break;
+							case 3:
+								playerExplosions[k][l]->x -= 73;
+								playerExplosions[k][l]->y += 15;
+								break;
+							default: break;
+						}
+					}
 				}
+				PLAYEREXPLOSIONS[0] = 1;
+				PLAYEREXPLOSIONS[1] = 1;
+				PLAYEREXPLOSIONS[2] = 1;
+				PLAYEREXPLOSIONS[3] = 1;
 				enemies_shots[i][j]->x = -100;
 				enemies_shots[i][j]->y = -100;
 			}
@@ -784,7 +813,6 @@ void make_explosion_bad(){
 						playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->y+playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->height,
 						0x0000);
 			PLAYEREXPLOSIONS[i] = 0;
-			check_game_over();
 		}
 	}
 }
@@ -906,10 +934,10 @@ int subscribe(){
 }
 
 int unsubscribe(){
-	if(timer_unsubscribe_int())
+	if(kbc_unsubscribe())
 		return 1;
 
-	if(kbc_unsubscribe())
+	if(timer_unsubscribe_int())
 		return 1;
 /*
 	if(mouse_unsubscribe())

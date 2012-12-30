@@ -108,11 +108,11 @@ typedef struct game_info{
 }game_info;
 
 typedef struct highscore{
-	char name[3];
+	char name[4];
 	int score;
 	int day;
 	int month;
 	int year;
-};
+}highscore;
 
 #endif

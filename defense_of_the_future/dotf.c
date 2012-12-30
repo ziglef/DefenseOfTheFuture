@@ -1227,11 +1227,22 @@ void draw_Highscores(){
 	int ipc_status;
 	message msg;
 	int r;
+	int i;
 
 	vg_fill(0x000000);
 
 	// LE DRAW //
 	highscore HIGHSCORES[10];
+	FILE *fp;
+
+	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "r");
+
+	for(i=0; i<10; i++){
+		fgets(HIGHSCORES[i].name, 4, fp);
+		fscanf(fp, "%d %d %d %d", &(HIGHSCORES[i].score), &(HIGHSCORES[i].day),
+								  &(HIGHSCORES[i].month), &(HIGHSCORES[i].year));
+		draw_strings(HIGHSCORES[i].name, 3, 223, 89+(60*i));
+	}
 
 	while(kscancode != ENTERBREAK){
 		r = driver_receive(ANY, &msg, &ipc_status);
@@ -1253,6 +1264,7 @@ void draw_Highscores(){
 		}
 	}
 	kscancode = 0;
+	fclose(fp);
 }
 void draw_Help(){
 

@@ -689,7 +689,7 @@ void make_shooting(){
 		if(!is_in_screen(laser)){
 			laser->x = player->x+player->width/2-laser->width/2;
 			laser->y = player->y-laser->height;
-			laser->yspeed = 90;
+			laser->yspeed = 1;
 			laser->xspeed = 0;
 			vg_draw_sprite(laser);
 
@@ -763,18 +763,21 @@ void make_shooting_movement(){
 
 	if(is_in_screen(laser)){
 		if(laser->y-20 > laser->height){
-			vg_draw_rec(laser->x, laser->y, laser->x+laser->width, laser->y+laser->height, 0x0000);
-			laser->y -= laser->yspeed;
-			laser->x += laser->xspeed;
-			if(!check_collision(laser)){
+			//vg_draw_rec(laser->x, laser->y, laser->x+laser->width, laser->y+laser->height, 0x0000);
+			for(i=0; i<90; i++){
+				laser->y -= laser->yspeed;
+				laser->x += laser->xspeed;
 				vg_draw_sprite(laser);
-			} else {
-				EXPLOSIONS[i] = 1;
-				sfx_explosion_enabled = 1;
-				cash.value += 500;
-				score.value += 50;
-				draw_game_info(score, 4);
-				draw_game_info(cash, 5);
+				if(!check_collision(laser)){
+				} else {
+					EXPLOSIONS[i] = 1;
+					sfx_explosion_enabled = 1;
+					cash.value += 500;
+					score.value += 50;
+					draw_game_info(score, 4);
+					draw_game_info(cash, 5);
+					break;
+				}
 			}
 		} else {
 			vg_draw_rec(laser->x, laser->y, laser->x+laser->width, laser->y+laser->height, 0x0000);

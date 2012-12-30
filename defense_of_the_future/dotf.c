@@ -1224,42 +1224,35 @@ void draw_Options()
 
 
 void draw_Highscores(){
-
-	//sistema rating:
-	/*
-
-		scores
-		(2*dinheiro*nivel + nivel*segundos vivo*100 )/10 (vai acumulando)
-		final
-		acumulado + dinheiro restante/10
-	 */
-
 	int ipc_status;
 	message msg;
 	int r;
 
 	vg_fill(0x000000);
 
-			while(kscancode != ENTERBREAK){
-			r = driver_receive(ANY, &msg, &ipc_status);
-			if( r != 0 ){
-				printf("driver_receive failed with %d\n", r);
-				continue;
-			}
+	// LE DRAW //
+	highscore HIGHSCORES[10];
 
-			if(is_ipc_notify(ipc_status)){
+	while(kscancode != ENTERBREAK){
+		r = driver_receive(ANY, &msg, &ipc_status);
+		if( r != 0 ){
+			printf("driver_receive failed with %d\n", r);
+			continue;
+		}
 
-				switch(_ENDPOINT_P(msg.m_source)){
-					case HARDWARE:
-						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
-							kscancode = kbc_handler();
-						}
-						break;
-					default: break;
-				}
+		if(is_ipc_notify(ipc_status)){
+
+			switch(_ENDPOINT_P(msg.m_source)){
+				case HARDWARE:
+					if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+						kscancode = kbc_handler();
+					}
+					break;
+				default: break;
 			}
+		}
 	}
-		kscancode = 0;
+	kscancode = 0;
 }
 void draw_Help(){
 

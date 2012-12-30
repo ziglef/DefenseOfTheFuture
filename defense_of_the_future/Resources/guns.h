@@ -850,7 +850,7 @@ static char * g4lock[] = {
 
 
 /* XPM */
-static char * laser[] = {
+static char * laserS[] = {
 "47 1 44",
 "!	0x005401",
 "#	0x005B04",

@@ -777,14 +777,20 @@ void remove_sprite_bad(int x, int y){
 				enemies_shots[i][j]->x = -100;
 				enemies_shots[i][j]->y = -100;
 				life -= 1*optionsDifi;
-				if(life <= 2)
-					make_life_bar('r');
-				else if(life <= 4)
-					make_life_bar('y');
-				else
-					make_life_bar('g');
-				draw_life_bar();
-					if(life <= 0){
+				if(life < 0)
+					life = 0;
+
+				if(life != 0){
+					if(life <= 2)
+						make_life_bar('r');
+					else if(life <= 4)
+						make_life_bar('y');
+					else
+						make_life_bar('g');
+					draw_life_bar();
+				}
+
+					if(life == 0){
 						for(k=0; k<NO_PSHOTS; k++){
 							for(l=0; l<NO_EXPLOSIONS; l++){
 								playerExplosions[k][l]->x = enemies_shots[i][j]->x - playerExplosions[k][l]->width/2;

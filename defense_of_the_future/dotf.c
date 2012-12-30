@@ -1244,11 +1244,19 @@ void draw_Highscores(){
 		fgets(HIGHSCORES[i].month, 3, fp);
 		fgets(HIGHSCORES[i].year, 3, fp);
 
+		draw_strings(HIGHSCORES[i].name, 3, 0, 89+(60*i));
+		draw_strings(HIGHSCORES[i].score, 4, 136, 89+(60*i));
+		draw_strings(HIGHSCORES[i].day, 3, 206, 89+(60*i));
+		draw_strings(HIGHSCORES[i].month, 3, 308, 89+(60*i));
+		draw_strings(HIGHSCORES[i].year, 3, 410, 89+(60*i));
+
+		/*
 		draw_strings(HIGHSCORES[i].name, 3, 223, 89+(60*i));
 		draw_strings(HIGHSCORES[i].score, 4, 359, 89+(60*i));
 		draw_strings(HIGHSCORES[i].day, 3, 529, 89+(60*i));
 		draw_strings(HIGHSCORES[i].month, 3, 631, 89+(60*i));
 		draw_strings(HIGHSCORES[i].year, 3, 733, 89+(60*i));
+		*/
 	}
 
 	while(kscancode != ENTERBREAK){

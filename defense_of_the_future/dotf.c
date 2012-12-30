@@ -36,6 +36,9 @@ void draw_Highscores();
 void draw_Help();
 void draw_Credits();
 void draw_strings(char *string, int n, int xi,int yi);
+void draw_shop();
+void Shop_menu();
+void shop_handler();
 
 /******/
 
@@ -65,7 +68,7 @@ int life = 8;
 game_info lives = {229, 653, 3};
 game_info level = {974, 653, 1};
 game_info score = {795, 703, 4252};
-game_info cash = {359, 653, 64825};
+game_info cash = {359, 653, 10000};
 Sprite *menu;
 Sprite **menu_buttons;
 int atMenu = 1;
@@ -81,6 +84,9 @@ int optionsDifi = 1;
 int optionsSound = 1;
 Sprite **options_buttons;
 Sprite **help;
+int lifebuy;
+char *nomoney = "not enough money";
+char *alreadyo = "already owned";
 
 /******/
 
@@ -1026,6 +1032,16 @@ void draw_Options()
 
 
 void draw_Highscores(){
+
+	//sistema rating:
+	/*
+
+		scores
+		(2*dinheiro*nivel + nivel*segundos vivo*100 )/10 (vai acumulando)
+		final
+		acumulado + dinheiro restante/10
+	 */
+
 	int ipc_status;
 	message msg;
 	int r;
@@ -1134,8 +1150,8 @@ void draw_Credits(){
 	vg_fill(0x000000);
 
 	/******/
-	draw_strings(lalala, strlen(lalala), 20, 20);
-
+	//draw_strings(creditos, strlen(creditos), 20, 20);
+	Shop_menu();
 
 
 	/******/
@@ -1431,9 +1447,188 @@ void draw_strings(char *string, int n, int xi,int yi){
 
 				case ' ':
 					xaux +=34;
+				break;
+
 				}}
 
 			}
 
+}
+void Shop_menu()
+{
+	int ipc_status;
+	message msg;
+	int r;
+	lifebuy = 1;
+
+	if(life < 8)
+		lifebuy = 1;
+
+	vg_fill(0x000000);
+	draw_shop();
+
+	while(kscancode != ENTERBREAK){
+	r = driver_receive(ANY, &msg, &ipc_status);
+	if( r != 0 ){
+		printf("driver_receive failed with %d\n", r);
+		continue;
+	}
+
+	if(is_ipc_notify(ipc_status)){
+
+		switch(_ENDPOINT_P(msg.m_source)){
+			case HARDWARE:
+				if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+					kscancode = kbc_handler();
+					shop_handler();
+				}
+				break;
+			default: break;
+		}
+	}
+
+	}
+	kscancode = 0;
+}
+
+void shop_handler()
+{
+	vg_draw_rec(200, 550, 800, 592, 0x000000);
+
+	switch(kscancode){
+		case NO1MAKE:
+			if(cash.value >= 1000){
+				if(lifebuy == 1){
+					lifebuy = 0;
+					life = 8;
+					cash.value -= 1000;
+				}
+				else
+					draw_strings(alreadyo, strlen(alreadyo), 320, 550);
+
+			}
+			else
+				draw_strings(nomoney, strlen(nomoney), 256, 550);
+			break;
+
+		case NO2MAKE:
+			if(guns[1] == 0){
+				if(cash.value >= 3000){
+					guns[1] = 1;
+					cash.value -= 3000;
+				}
+				else
+					draw_strings(nomoney, strlen(nomoney), 256, 550);
+			}
+			else
+				draw_strings(alreadyo, strlen(alreadyo), 320, 550);
+			break;
+
+		case NO3MAKE:
+			if(guns[2] == 0){
+				if(cash.value >= 5000){
+					guns[2] = 1;
+					cash.value -= 5000;
+				}
+				else
+					draw_strings(nomoney, strlen(nomoney), 256, 550);
+			}
+			else
+				draw_strings(alreadyo, strlen(alreadyo), 320, 550);
+			break;
+
+		case NO4MAKE:
+			if(guns[3] == 0){
+				if(cash.value >= 9500){
+					guns[3] = 1;
+					cash.value -= 9500;
+				}
+				else
+					draw_strings(nomoney, strlen(nomoney), 256, 550);
+			}
+			else
+				draw_strings(alreadyo, strlen(alreadyo), 320, 550);
+			break;
+
+
+	}
+
+
+	draw_shop();
+}
+//por alguma razao, o 1º algarismo dentro do jogo, com cash.value < 10000, é um 2
+void draw_shop(){
+	/* dinheiro por inimigo
+	 * lvl1 = 15 pequenos 500$ cada
+	 * lvl2 = 4 pequenos 500$ cada, boss 1 2000$
+	 * lvl3 = boss 2 5000$
+	 * ou seja, se compra a gun2 e gun3, nao compra a 4
+	 */
+
+	int money = cash.value;
+	int i = 4;
+	char string[5]={"00000"};
+	Sprite *dolar;
+	Sprite **shop;
+	shop = (Sprite **)malloc(8 * sizeof(Sprite));
+
+	while (i >= 0){
+		string[i] = ((char)(48+(money % 10)));
+	    money = money / 10;
+	    i--;
+	}
+
+	draw_strings(string, 5, 416, 600);
+	dolar = create_sprite(dolarS, 600, 600);
+	vg_draw_sprite(dolar);
+
+	draw_strings("Shop", 4, 430, 50);
+
+	draw_strings("1000", 4, 15, 320);
+	draw_strings("3000", 4, 289, 320);
+	draw_strings("5000", 4, 550, 320);
+	draw_strings("9500", 4, 810, 320);
+
+
+	if(lifebuy == 1)
+		{
+			shop[0]= create_sprite(lbarg, 60, 250);
+			vg_draw_sprite(shop[0]);
+			shop[7]= create_sprite(hp, 71, 268);
+			vg_draw_sprite(shop[7]);
+		}
+	else{
+			vg_draw_rec(60, 250, 121, 300, 0x000000);
+	 	}
+
+	if(guns[1] == 0)
+		{
+			shop[1]= create_sprite(g2lock, 316, 250);
+			vg_draw_sprite(shop[1]);
+		}
+		else{
+			shop[2]= create_sprite(g2off, 316, 250);
+			vg_draw_sprite(shop[2]);
+			}
+
+	if(guns[2] == 0)
+		{
+			shop[3]= create_sprite(g3lock, 572, 250);
+			vg_draw_sprite(shop[3]);
+		}
+		else{
+			shop[4]= create_sprite(g3off, 572, 250);
+			vg_draw_sprite(shop[4]);
+			}
+
+	if(guns[3] == 0)
+		{
+			shop[5]= create_sprite(g4lock, 828, 250);
+			vg_draw_sprite(shop[5]);
+		}
+		else{
+			shop[6]= create_sprite(g4off, 828, 250);
+			vg_draw_sprite(shop[6]);
+			}
 
 }

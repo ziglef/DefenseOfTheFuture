@@ -477,6 +477,11 @@ void mainloop(){
 									make_music();
 							}
 						} else {
+							if(levelvar != 3){
+								shop_menu();
+								END = 0;
+								break;
+							}
 							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 								timec = timer_int_handler(timec);
 								if(timec % 5 == 0)
@@ -1242,7 +1247,7 @@ void draw_highscores(){
 		fgets(HIGHSCORES[i].score, 6, fp);
 		fgets(HIGHSCORES[i].day, 4, fp);
 		fgets(HIGHSCORES[i].month, 4, fp);
-		fgets(HIGHSCORES[i].year, 4, fp);
+		fgets(HIGHSCORES[i].year, 3, fp);
 
 		draw_strings(HIGHSCORES[i].name, 3, 223, 89+(60*i));
 		draw_strings(HIGHSCORES[i].score, 4, 359, 89+(60*i));

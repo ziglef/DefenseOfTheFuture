@@ -67,7 +67,7 @@ int end_music_note = 0;
 int life = 8;
 game_info lives = {229, 653, 3};
 game_info level = {974, 653, 1};
-game_info score = {795, 703, 4252};
+game_info score = {795, 703, 0};
 game_info cash = {359, 653, 10000};
 Sprite *menu;
 Sprite **menu_buttons;
@@ -75,7 +75,7 @@ int atMenu = 1;
 int menuOption = 0;
 int gunOption = 0;
 Sprite *victory;
-int guns[4] = {1, 0, 1, 0};
+int guns[4] = {1, 0, 0, 0};
 
 
 /******/
@@ -503,7 +503,7 @@ void draw_game_info(game_info gi, int noelements){
 		while (num > 0){
 		    elements[i] = num % 10;
 		    num = num / 10;
-		    i++;
+		    //i++;
 		}
 
 		for(i=noelements-1; i>=0; i--){
@@ -644,6 +644,8 @@ void make_shooting_movement(){
 				} else {
 					EXPLOSIONS[i] = 1;
 					sfx_explosion_enabled = 1;
+					cash.value += 500;
+					score.value += 50;
 				}
 			} else {
 				vg_draw_rec(player_shots[i]->x, player_shots[i]->y, player_shots[i]->x+player_shots[i]->width, player_shots[i]->y+player_shots[i]->height, 0x0000);
@@ -685,6 +687,7 @@ int check_collision_bad(Sprite *spr){
 			}
 		}
 	}
+	return 0;
 }
 
 int check_collision(Sprite *spr){

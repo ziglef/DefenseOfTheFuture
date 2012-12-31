@@ -251,8 +251,6 @@ int menuloop(){
 			break;
 		case 2:
 			draw_highscores();
-			atMenu = 1;
-			start_menu();
 			break;
 		case 3:
 			draw_help();
@@ -1333,6 +1331,8 @@ void draw_highscores(){
 	}
 	kscancode = 0;
 	fclose(fp);
+	atMenu = 1;
+	start_menu();
 }
 void draw_help(){
 

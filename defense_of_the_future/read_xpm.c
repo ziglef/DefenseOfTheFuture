@@ -56,7 +56,6 @@ unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
   char symbol;
   unsigned long *pixtmp, *pix;
   unsigned long col_aux;
-  tabela_dispersao *symtd = tabela_cria(256, hash_lcom);
 
   /* read width, height, colors */
   if (sscanf(map[0],"%d %d %d", &width, &height, &colors) != 3) {

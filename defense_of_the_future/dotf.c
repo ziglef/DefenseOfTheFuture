@@ -278,14 +278,16 @@ int menuloop(){
 }
 
 int make_menu_music(){
-	if(menu_music_enabled){
-		if(timer_set_square(2,theme_menu[menu_music_note])){
-			printf("Timer_set_square Failed!\n");
-			return 1;
+	if(optionsSound){
+		if(menu_music_enabled){
+			if(timer_set_square(2,theme_menu[menu_music_note])){
+				printf("Timer_set_square Failed!\n");
+				return 1;
+			}
 		}
+		menu_music_note++;
+		if(menu_music_note == NOTAS_MENU) menu_music_note = 0;
 	}
-	menu_music_note++;
-	if(menu_music_note == NOTAS_MENU) menu_music_note = 0;
 }
 
 int start_game(){
@@ -514,13 +516,15 @@ void mainloop(){
 }
 
 int make_victory_music(){
-	if(END == 1){
-		if(timer_set_square(2,theme_victory[end_music_note])){
-			printf("Timer_set_square Failed!\n");
-			return 1;
+	if(optionsSound){
+		if(END == 1){
+			if(timer_set_square(2,theme_victory[end_music_note])){
+				printf("Timer_set_square Failed!\n");
+				return 1;
+			}
+			end_music_note++;
+			if(end_music_note == NOTAS_VICT) END=2;
 		}
-		end_music_note++;
-		if(end_music_note == NOTAS_VICT) END=2;
 	}
 }
 
@@ -557,38 +561,38 @@ void check_game_over(){
 }
 
 int make_music(){
-
-	if(music_enabled){
-		if(timer_set_square(2,theme_loop[music_note])){
-			printf("Timer_set_square Failed!\n");
-			return 1;
+	if(optionsSound){
+		if(music_enabled){
+			if(timer_set_square(2,theme_loop[music_note])){
+				printf("Timer_set_square Failed!\n");
+				return 1;
+			}
 		}
-	}
-	music_note++;
-	if(music_note == NOTAS_LOOP) music_note = 0;
+		music_note++;
+		if(music_note == NOTAS_LOOP) music_note = 0;
 
-	if(sfx_explosion_enabled){
-		if(timer_set_square(2,explosion1[sfx_explosion_note])){
-			printf("Timer_set_square Failed!\n");
-			return 1;
+		if(sfx_explosion_enabled){
+			if(timer_set_square(2,explosion1[sfx_explosion_note])){
+				printf("Timer_set_square Failed!\n");
+				return 1;
+			}
+			sfx_explosion_note++;
+			if(sfx_explosion_note == NOTAS_EXPL){
+				sfx_explosion_note = 0;
+				sfx_explosion_enabled = 0;
+				music_enabled = 1;
+			}
 		}
-		sfx_explosion_note++;
-		if(sfx_explosion_note == NOTAS_EXPL){
-			sfx_explosion_note = 0;
-			sfx_explosion_enabled = 0;
+
+		if(sfx_shot){
+			if(timer_set_square(2,shots[0])){
+				printf("Timer_set_square Failed!\n");
+				return 1;
+			}
+			sfx_shot = 0;
 			music_enabled = 1;
 		}
 	}
-
-	if(sfx_shot){
-		if(timer_set_square(2,shots[0])){
-			printf("Timer_set_square Failed!\n");
-			return 1;
-		}
-		sfx_shot = 0;
-		music_enabled = 1;
-	}
-
 }
 
 void keystroke_handler(){
@@ -1206,8 +1210,10 @@ void option_handler(){
 					break;}
 
 			case 1:
-				if(optionsSound == 1)
+				if(optionsSound == 1){
 					optionsSound = 0;
+					timer_set_square(2,no);
+				}
 				else
 					optionsSound = 1;
 			break;

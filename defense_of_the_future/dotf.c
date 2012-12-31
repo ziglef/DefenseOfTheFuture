@@ -710,7 +710,7 @@ void make_bad_shooting(){
 
 	for(i=0; i<NO_ENEMIES; i++){
 		for(j=0; j<2; j++){
-			bad_shot_random = rand() % 100;
+			bad_shot_random = rand() % (140-40*optionsDifi);
 			if(bad_shot_random % 50 == 0){
 				if(!is_in_screen(enemies_shots[i][j])){
 					enemies_shots[i][j]->x = enemies[i]->x+enemies[i]->width/2-enemies_shots[i][j]->width/2;
@@ -739,7 +739,7 @@ void make_shooting_movement(){
 					EXPLOSIONS[i] = 1;
 					sfx_explosion_enabled = 1;
 					cash.value += 500;
-					score.value += 50;
+					score.value += 50*optionsDifi;
 					draw_game_info(score, 4);
 					draw_game_info(cash, 5);
 				}
@@ -779,7 +779,7 @@ void make_shooting_movement(){
 			} else {
 				EXPLOSIONS[0] = 1;
 				cash.value += 500;
-				score.value += 50;
+				score.value += 50*optionsDifi;
 				draw_game_info(score, 4);
 				draw_game_info(cash, 5);
 			}
@@ -887,24 +887,20 @@ void remove_sprite_bad(int x, int y){
 						for(l=0; l<NO_EXPLOSIONS; l++){
 							switch(k){
 								case 0:
-									playerExplosions[k][l]->x -= 48;
-									playerExplosions[k][l]->y -= 54;
-									vg_draw_rec(100,100,500,500,6758);
+									playerExplosions[k][l]->x = player->x - 48;
+									playerExplosions[k][l]->y = player->y - 54;
 									break;
 								case 1:
-									playerExplosions[k][l]->x -= 18;
-									playerExplosions[k][l]->y += 24;
-									vg_draw_rec(100,100,500,500,6758);
+									playerExplosions[k][l]->x = player->x - 18;
+									playerExplosions[k][l]->y = player->y + 24;
 									break;
 								case 2:
-									playerExplosions[k][l]->x += 16;
-									playerExplosions[k][l]->y -= 33;
-									vg_draw_rec(100,100,500,500,6758);
+									playerExplosions[k][l]->x = player->x + 16;
+									playerExplosions[k][l]->y = player->y - 33;
 									break;
 								case 3:
-									playerExplosions[k][l]->x -= 73;
-									playerExplosions[k][l]->y += 15;
-									vg_draw_rec(100,100,500,500,6758);
+									playerExplosions[k][l]->x = player->x - 73;
+									playerExplosions[k][l]->y = player->y - 15;
 									break;
 								default: break;
 							}
@@ -959,7 +955,6 @@ void make_explosion_bad(){
 	for(i=0; i<NO_EXPLOSIONS; i++){
 		if((PLAYEREXPLOSIONS[i] != 11) && (PLAYEREXPLOSIONS[i] != 0)){
 			vg_draw_sprite(playerExplosions[i][PLAYEREXPLOSIONS[i]-1]);
-			//vg_draw_rec(100,100,500,500,6758);
 			PLAYEREXPLOSIONS[i]++;
 		} else if(PLAYEREXPLOSIONS[i] != 0){
 			vg_draw_rec(playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->x, playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->y,
@@ -969,6 +964,7 @@ void make_explosion_bad(){
 			PLAYEREXPLOSIONS[i] = 0;
 		}
 	}
+	draw_highscores();
 }
 
 void make_explosion(){

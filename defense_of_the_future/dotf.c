@@ -43,6 +43,7 @@ void draw_strings(char *string, int n, int xi,int yi);
 void draw_shop();
 void shop_menu();
 void shop_handler();
+void make_highscores();
 
 Sprite *laser;
 Sprite *player;
@@ -74,7 +75,7 @@ game_info score = {795, 703, 0};
 game_info cash = {359, 653, 10000};
 Sprite *menu;
 Sprite **menu_buttons;
-int atMenu = 1;
+int atMenu = 0;
 int menuOption = 0;
 int gunOption = 0;
 Sprite *victory;
@@ -163,39 +164,43 @@ void make_gun_selection(){
 int start_menu(){
 	//subscribe();
 
-	// Initializes the video memory in VIDEO_MODE (0x117)
-	video_mem = vg_init(VIDEO_MODE);
-	vg_fill(0x0000);
+	if(atMenu != 1){
+		// Initializes the video memory in VIDEO_MODE (0x117)
+		video_mem = vg_init(VIDEO_MODE);
+		//vg_fill(0x0000);
 
-	menu = create_sprite(wallpaper, 500, 16);
-	vg_draw_sprite(menu);
+		menu = create_sprite(wallpaper, 500, 16);
+		//vg_draw_sprite(menu);
 
-	menu_buttons = (Sprite **)malloc(12 * sizeof(Sprite));
-	menu_buttons[0] = create_sprite(starton, 40, 25);
-	menu_buttons[1] = create_sprite(startoff, 40, 25);
-	menu_buttons[2] = create_sprite(optionson, 40, 152);
-	menu_buttons[3] = create_sprite(optionsoff, 40, 152);
-	menu_buttons[4] = create_sprite(highscoreson, 40, 279);
-	menu_buttons[5] = create_sprite(highscoresoff, 40, 279);
-	menu_buttons[6] = create_sprite(helpon, 40, 406);
-	menu_buttons[7] = create_sprite(helpoff, 40, 406);
-	menu_buttons[8] = create_sprite(creditson, 40, 533);
-	menu_buttons[9] = create_sprite(creditsoff, 40, 533);
-	menu_buttons[10] = create_sprite(exiton, 40, 660);
-	menu_buttons[11] = create_sprite(exitoff, 40, 660);
+		menu_buttons = (Sprite **)malloc(12 * sizeof(Sprite));
+		menu_buttons[0] = create_sprite(starton, 40, 25);
+		menu_buttons[1] = create_sprite(startoff, 40, 25);
+		menu_buttons[2] = create_sprite(optionson, 40, 152);
+		menu_buttons[3] = create_sprite(optionsoff, 40, 152);
+		menu_buttons[4] = create_sprite(highscoreson, 40, 279);
+		menu_buttons[5] = create_sprite(highscoresoff, 40, 279);
+		menu_buttons[6] = create_sprite(helpon, 40, 406);
+		menu_buttons[7] = create_sprite(helpoff, 40, 406);
+		menu_buttons[8] = create_sprite(creditson, 40, 533);
+		menu_buttons[9] = create_sprite(creditsoff, 40, 533);
+		menu_buttons[10] = create_sprite(exiton, 40, 660);
+		menu_buttons[11] = create_sprite(exitoff, 40, 660);
 
-	draw_menu();
+		timer_set_square(0,60);
 
-	timer_set_square(0,60);
-
-	timer_set_square(2,no);
-	if(speaker_ctrl(1))
-	{
-	 printf("Speaker_ctrl Failed!\n");
-	 return 1;
+		timer_set_square(2,no);
+		if(speaker_ctrl(1))
+		{
+		 printf("Speaker_ctrl Failed!\n");
+		 return 1;
+		}
+		atMenu = 1;
 	}
-
+	vg_fill(0x0000);
+	vg_draw_sprite(menu);
+	draw_menu();
 	menuloop();
+	return 0;
 }
 
 int menuloop(){
@@ -265,17 +270,8 @@ int menuloop(){
 		case 5:
 			exit_game();
 			break;
-						}
-	/*
-	//butões menu
-	menu_music_enabled = 0;
-	music_enabled = 1;
-	atMenu = 0;
-
-	if(speaker_ctrl(0)) {
-		printf("Timer_Test_Int Failed!\n");
-		return 1;
-	}*/
+	}
+	return 0;
 }
 
 int make_menu_music(){
@@ -962,7 +958,7 @@ void make_explosion_bad(){
 			PLAYEREXPLOSIONS[i] = 0;
 		}
 	}
-	draw_highscores();
+	make_highscores();
 }
 
 void make_explosion(){
@@ -1107,7 +1103,6 @@ int unsubscribe(){
 	return 0;
 }
 
-
 void options_menu(){
 	unsigned long status;
 	unsigned long garbage;
@@ -1137,18 +1132,8 @@ void options_menu(){
 	options_buttons[10] = create_sprite(speakeron, 412, 375);
 	options_buttons[11] = create_sprite(speakeroff, 412, 375);
 
-	/*
-	vg_draw_sprite(options_buttons[0]);
-	vg_draw_sprite(options_buttons[2]);
-	vg_draw_sprite(options_buttons[5]);
-	vg_draw_sprite(options_buttons[7]);
-	vg_draw_sprite(options_buttons[9]);
-	vg_draw_sprite(options_buttons[10]);
-*/
 	optionsOption = 0;
 	draw_options();
-
-
 
 		while(kscancode != ENTERBREAK){
 			r = driver_receive(ANY, &msg, &ipc_status);
@@ -1170,9 +1155,9 @@ void options_menu(){
 				}
 			}
 	}
-		kscancode = 0;
+	kscancode = 0;
 
-	}
+}
 
 void option_handler(){
 	if(kscancode == DOWNMAKE)
@@ -1228,12 +1213,10 @@ void option_handler(){
 			else
 				optionsSound = 1;
 		break;
-		}
-		}
-
-
+	}
+}
 	draw_options();
-		}
+}
 
 void draw_options()
 {
@@ -1280,7 +1263,6 @@ void draw_options()
 		break;
 		}
 }
-
 
 void draw_highscores(){
 	int ipc_status;
@@ -1334,6 +1316,7 @@ void draw_highscores(){
 	atMenu = 1;
 	start_menu();
 }
+
 void draw_help(){
 
 	int ipc_status;
@@ -1406,6 +1389,7 @@ void draw_help(){
 }
 kscancode = 0;
 }
+
 void draw_credits(){
 
 	int ipc_status;
@@ -1441,8 +1425,6 @@ void draw_credits(){
 	}
 	kscancode = 0;
 }
-
-
 
 void draw_strings(char *string, int n, int xi,int yi){
 	int i = 0;
@@ -1757,6 +1739,7 @@ void draw_strings(char *string, int n, int xi,int yi){
 		}
 	}
 }
+
 void shop_menu()
 {
 	int ipc_status;
@@ -1856,7 +1839,6 @@ void shop_handler()
 
 	}
 
-
 	draw_shop();
 }
 
@@ -1934,4 +1916,46 @@ void draw_shop(){
 			vg_draw_sprite(shop[6]);
 			}
 
+}
+
+void make_highscores(){
+	int i,j;
+
+	highscore HIGHSCORES[10];
+	FILE *fp;
+
+	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "r");
+	for(i=0; i<10; i++){
+		fgets(HIGHSCORES[i].name, 5, fp);
+		fgets(HIGHSCORES[i].score, 6, fp);
+		fgets(HIGHSCORES[i].day, 4, fp);
+		fgets(HIGHSCORES[i].month, 4, fp);
+		fgets(HIGHSCORES[i].year, 3, fp);
+	}
+	fclose(fp);
+
+	for(i=0; i<10; i++){
+		if(score.value > atoi(HIGHSCORES[i].score)){
+			for(j=i+1; j<10; j++){
+				strcpy(HIGHSCORES[j].name, HIGHSCORES[j-1].name);
+				strcpy(HIGHSCORES[j].score, HIGHSCORES[j-1].score);
+				strcpy(HIGHSCORES[j].day, HIGHSCORES[j-1].day);
+				strcpy(HIGHSCORES[j].month, HIGHSCORES[j-1].month);
+				strcpy(HIGHSCORES[j].year, HIGHSCORES[j-1].year);
+			}
+			itoa(score.value, HIGHSCORES[i].score, 10);
+		}
+	}
+
+	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "w");
+	for(i=0; i<10; i++){
+		fputs(HIGHSCORES[i].name, fp);
+		fputs(HIGHSCORES[i].score, fp);
+		fputs(HIGHSCORES[i].day, fp);
+		fputs(HIGHSCORES[i].month, fp);
+		fputs(HIGHSCORES[i].year, fp);
+	}
+	fclose(fp);
+
+	draw_highscores();
 }

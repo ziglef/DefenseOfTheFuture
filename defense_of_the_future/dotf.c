@@ -71,14 +71,14 @@ int end_music_note = 0;
 int life = 8;
 game_info level = {974, 653, 1};
 game_info score = {795, 703, 0};
-game_info cash = {359, 653, 10000};
+game_info cash = {359, 653, 0};
 Sprite *menu;
 Sprite **menu_buttons;
 int atMenu = 0;
 int menuOption = 0;
 int gunOption = 0;
 Sprite *victory;
-int guns[4] = {1, 1, 1, 1};
+int guns[4] = {1, 0, 0, 0};
 Sprite ***playerExplosions;
 int *PLAYEREXPLOSIONS;
 int levelvar = 1;
@@ -91,6 +91,7 @@ int lifebuy;
 char *nomoney = "not enough money";
 char *alreadyo = "already owned";
 unsigned long REGB;
+int noVictory = 1;
 
 int main(){
 
@@ -489,8 +490,14 @@ void mainloop(){
 						} else {
 							if(levelvar != 3){
 								shop_menu();
-								END = 0;
+								levelvar = 3;
 								break;
+							}
+							if(noVictory){
+								timer_set_square(2, no);
+								vg_fill(0);
+								vg_draw_sprite(victory);
+								noVictory = 0;
 							}
 							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 								timec = timer_int_handler(timec);
@@ -546,9 +553,6 @@ void check_game_over(){
 
 	if(bad_count == 0){
 		END = 1;
-		/*timer_set_square(2, no);
-		vg_fill(0);
-		vg_draw_sprite(victory);*/
 	}
 }
 
@@ -1939,7 +1943,6 @@ void make_highscores(){
 	char switchaux;
 
 	highscore HIGHSCORES[10];
-	highscore HIGHSCOREAUX;
 	FILE *fp;
 
 	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "r+");
@@ -1956,7 +1959,7 @@ void make_highscores(){
 		memcpy(aux, HIGHSCORES[i].score, sizeof(char)*4);
 		aux[4] = '\0';
 		if(score.value > atoi(aux)){
-			for(j=i+1; j<10; j++){
+			for(j=9; j>i; j--){
 				strcpy(HIGHSCORES[j].name, HIGHSCORES[j-1].name);
 				strcpy(HIGHSCORES[j].score, HIGHSCORES[j-1].score);
 				strcpy(HIGHSCORES[j].day, HIGHSCORES[j-1].day);

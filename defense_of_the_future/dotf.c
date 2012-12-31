@@ -1,6 +1,5 @@
 #include "dotf.h"
 
-// TODO: player exploding
 // TODO: level 2 and level 3
 // TODO: write highscores at the end
 
@@ -44,6 +43,7 @@ void draw_shop();
 void shop_menu();
 void shop_handler();
 void make_highscores();
+void draw_rtc();
 
 Sprite *laser;
 Sprite *player;
@@ -69,7 +69,6 @@ int bad_count = NO_ENEMIES;
 int END = 0;
 int end_music_note = 0;
 int life = 8;
-game_info lives = {229, 653, 3};
 game_info level = {974, 653, 1};
 game_info score = {795, 703, 0};
 game_info cash = {359, 653, 10000};
@@ -91,6 +90,7 @@ Sprite **help;
 int lifebuy;
 char *nomoney = "not enough money";
 char *alreadyo = "already owned";
+unsigned long REGB;
 
 int main(){
 
@@ -256,6 +256,8 @@ int menuloop(){
 			break;
 		case 2:
 			draw_highscores();
+			atMenu = 1;
+			start_menu();
 			break;
 		case 3:
 			draw_help();
@@ -369,7 +371,6 @@ int start_game(){
 	cPanel.frames[2] = create_sprite(upper_lower_frame, 0, 640);
 	cPanel.frames[3] = create_sprite(upper_lower_frame, 0, 764);
 
-	cPanel.lives = create_sprite(livesS, 20, 653);
 	cPanel.level = create_sprite(levelS, 698, 653);
 	cPanel.score = create_sprite(scoreS, 684, 720);
 	cPanel.dolar = create_sprite(dolarS, 653 ,653);
@@ -412,7 +413,6 @@ int start_game(){
 	// Control Panel Draw
 	make_gun_selection();
 
-	vg_draw_sprite(cPanel.lives);
 	vg_draw_sprite(cPanel.frames[0]);
 	vg_draw_sprite(cPanel.frames[1]);
 	vg_draw_sprite(cPanel.frames[2]);
@@ -431,7 +431,6 @@ int start_game(){
 
 	vg_draw_sprite(cPanel.dolar);
 
-	draw_game_info(lives, 1);
 	draw_game_info(level, 1);
 	draw_game_info(score, 4);
 	draw_game_info(cash, 5);
@@ -465,8 +464,10 @@ void mainloop(){
 							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
 								timec = timer_int_handler(timec);
 
-								if(timec % 60 == 0)
+								if(timec % 60 == 0){
 									make_bad_movement();
+									draw_rtc();
+								}
 
 								if(timec % 5 == 0){
 									make_shooting_movement();
@@ -480,6 +481,10 @@ void mainloop(){
 
 								if(timec % 6 == 0)
 									make_music();
+
+								if(msg.NOTIFY_ARG & RTC_BIT_MASK){
+									rtc_handler();
+								}
 							}
 						} else {
 							if(levelvar != 3){
@@ -956,9 +961,13 @@ void make_explosion_bad(){
 						playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->y+playerExplosions[i][PLAYEREXPLOSIONS[i]-2]->height,
 						0x0000);
 			PLAYEREXPLOSIONS[i] = 0;
+			if(i == 3){
+				usleep(200000);
+				make_highscores();
+				END = 2;
+			}
 		}
 	}
-	make_highscores();
 }
 
 void make_explosion(){
@@ -1065,6 +1074,12 @@ int subscribe(){
 			return 1;
 	}
 
+	rtc_read(RTC_REGB, &REGB);
+	rtc_write(RTC_REGB, (REGB ^ RTC_UIE));
+	if(rtc_subscribe() < 0){
+		printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON RTC\n");
+		return 1;
+	}
 	//turn_mouse_on();
 /*
 	do{
@@ -1090,6 +1105,8 @@ int unsubscribe(){
 		return 1;
 
 	if(timer_unsubscribe_int())
+		return 1;
+	if(rtc_unsubscribe())
 		return 1;
 /*
 	if(mouse_unsubscribe())
@@ -1313,8 +1330,6 @@ void draw_highscores(){
 	}
 	kscancode = 0;
 	fclose(fp);
-	atMenu = 1;
-	start_menu();
 }
 
 void draw_help(){
@@ -1919,12 +1934,15 @@ void draw_shop(){
 }
 
 void make_highscores(){
-	int i,j;
+	int i,j,k = 0;
+	char aux[256] = "";
+	char switchaux;
 
 	highscore HIGHSCORES[10];
+	highscore HIGHSCOREAUX;
 	FILE *fp;
 
-	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "r");
+	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "r+");
 	for(i=0; i<10; i++){
 		fgets(HIGHSCORES[i].name, 5, fp);
 		fgets(HIGHSCORES[i].score, 6, fp);
@@ -1935,7 +1953,9 @@ void make_highscores(){
 	fclose(fp);
 
 	for(i=0; i<10; i++){
-		if(score.value > atoi(HIGHSCORES[i].score)){
+		memcpy(aux, HIGHSCORES[i].score, sizeof(char)*4);
+		aux[4] = '\0';
+		if(score.value > atoi(aux)){
 			for(j=i+1; j<10; j++){
 				strcpy(HIGHSCORES[j].name, HIGHSCORES[j-1].name);
 				strcpy(HIGHSCORES[j].score, HIGHSCORES[j-1].score);
@@ -1943,11 +1963,26 @@ void make_highscores(){
 				strcpy(HIGHSCORES[j].month, HIGHSCORES[j-1].month);
 				strcpy(HIGHSCORES[j].year, HIGHSCORES[j-1].year);
 			}
-			itoa(score.value, HIGHSCORES[i].score, 10);
+			strcpy(aux, "");
+			while(k != 4){
+				aux[k] = ((char)(48+(score.value % 10)));
+				score.value = score.value / 10;
+				k++;
+			}
+			switchaux = aux[3];
+			aux[3] = aux[0];
+			aux[0] = switchaux;
+			switchaux = aux[2];
+			aux[2] = aux[1];
+			aux[1] = switchaux;
+			aux[4] = ' ';
+			strcpy(HIGHSCORES[i].score, aux);
+			//itoa(score.value, HIGHSCORES[i].score, 10);
 		}
+		strcpy(aux, "");
 	}
 
-	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "w");
+	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "w+");
 	for(i=0; i<10; i++){
 		fputs(HIGHSCORES[i].name, fp);
 		fputs(HIGHSCORES[i].score, fp);
@@ -1956,6 +1991,39 @@ void make_highscores(){
 		fputs(HIGHSCORES[i].year, fp);
 	}
 	fclose(fp);
-
 	draw_highscores();
+}
+
+void draw_rtc(){
+// 20 653
+	char aux[256];
+	int i = 0;
+
+	while (DATE.hours != 0){
+	aux[i] = ((char)(48+(DATE.hours % 10)));
+	DATE.hours = DATE.hours / 10;
+	i++;
+	}
+
+	aux[i] = ' ';
+	i++;
+
+	while (DATE.minutes != 0){
+	aux[i] = ((char)(48+(DATE.minutes % 10)));
+	DATE.minutes = DATE.minutes / 10;
+	i++;
+	}
+
+	aux[i] = ' ';
+	i++;
+
+	while (DATE.seconds != 0){
+	aux[i] = ((char)(48+(DATE.seconds % 10)));
+	DATE.seconds = DATE.seconds / 10;
+	i++;
+	}
+
+	aux[i] = ' ';
+	i++;
+	draw_strings(aux, strlen(aux), 20, 653);
 }

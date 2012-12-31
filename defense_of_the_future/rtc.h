@@ -87,6 +87,10 @@ typedef struct{
 	unsigned long year;
 }DATE_STRUCT;
 
+static RTC_STRUCT rtc = {1};
+static unsigned long REG_C;
+static DATE_STRUCT DATE;
+
 int rtc_handler();
 void print_date(DATE_STRUCT DATE);
 void enable();

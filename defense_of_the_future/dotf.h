@@ -91,7 +91,6 @@
 
 // Panel
 typedef struct panel{
-	Sprite *lives;
 	Sprite *level;
 	Sprite *score;
 	Sprite *dolar;

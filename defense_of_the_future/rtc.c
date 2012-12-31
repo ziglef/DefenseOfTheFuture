@@ -1,7 +1,5 @@
 #include "rtc.h"
 
-RTC_STRUCT rtc = {1};
-
 int rtc_subscribe(void ) {
 
 	if(sys_irqsetpolicy(RTC_IRQ, IRQ_REENABLE, &(rtc.hook_id)) != OK){
@@ -68,8 +66,6 @@ void rtc_write(unsigned long reg, unsigned long byte){
 }
 
 int rtc_handler(){
-	unsigned long REG_C;
-	DATE_STRUCT DATE;
 
 	rtc_read(RTC_REGC, &REG_C);
 
@@ -82,7 +78,15 @@ int rtc_handler(){
 		rtc_read(RTC_MONTH, &(DATE.month));
 		rtc_read(RTC_YEAR, &(DATE.year));
 
-		print_date(DATE);
+		DATE.seconds = BCD_to_DEC(DATE.seconds);
+		DATE.minutes = BCD_to_DEC(DATE.minutes);
+		DATE.hours = BCD_to_DEC(DATE.hours);
+		DATE.dayOfWeek = BCD_to_DEC(DATE.dayOfWeek);
+		DATE.dayOfMonth = BCD_to_DEC(DATE.dayOfMonth);
+		DATE.month = BCD_to_DEC(DATE.month);
+		DATE.year = BCD_to_DEC(DATE.year);
+
+		//print_date(DATE);
 		return 1;
 	}
 

@@ -3,6 +3,7 @@
 // TODO: player exploding
 // TODO: level 2 and level 3
 // TODO: write highscores at the end
+// TODO: clock instead of lives
 
 int start_game();
 int subscribe();
@@ -1746,7 +1747,7 @@ void shop_menu()
 	int ipc_status;
 	message msg;
 	int r;
-	lifebuy = 1;
+	lifebuy = 0;
 
 	if(life < 8)
 		lifebuy = 1;
@@ -1843,7 +1844,7 @@ void shop_handler()
 
 	draw_shop();
 }
-//por alguma razao, o 1º algarismo dentro do jogo, com cash.value < 10000, é um 2
+
 void draw_shop(){
 	/* dinheiro por inimigo
 	 * lvl1 = 15 pequenos 500$ cada

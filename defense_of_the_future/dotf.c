@@ -45,6 +45,7 @@ void shop_handler();
 void make_highscores();
 void draw_rtc();
 
+int HasDoneScores = 0;
 Sprite *laser;
 Sprite *player;
 Sprite **player_shots;
@@ -239,6 +240,7 @@ int menuloop(){
 
 	switch(menuOption){
 		case 0:
+			timer_set_square(2,no);
 			//butões menu
 			menu_music_enabled = 0;
 			music_enabled = 1;
@@ -251,26 +253,31 @@ int menuloop(){
 			start_game();
 			break;
 		case 1:
+			timer_set_square(2,no);
 			options_menu();
 			atMenu = 1;
 			start_menu();
 			break;
 		case 2:
+			timer_set_square(2,no);
 			draw_highscores();
 			atMenu = 1;
 			start_menu();
 			break;
 		case 3:
+			timer_set_square(2,no);
 			draw_help();
 			atMenu = 1;
 			start_menu();
 			break;
 		case 4:
+			timer_set_square(2,no);
 			draw_credits();
 			atMenu = 1;
 			start_menu();
 			break;
 		case 5:
+			timer_set_square(2,no);
 			exit_game();
 			break;
 	}
@@ -491,6 +498,7 @@ void mainloop(){
 							}
 						} else {
 							if(levelvar != 3){
+						timer_set_square(2,no);
 								shop_menu();
 								levelvar = 3;
 								break;
@@ -512,6 +520,8 @@ void mainloop(){
 				}
 			}
 	}
+	if(!HasDoneScores)
+		make_highscores();
 	exit_game();
 }
 
@@ -522,10 +532,12 @@ int make_victory_music(){
 				printf("Timer_set_square Failed!\n");
 				return 1;
 			}
-			end_music_note++;
-			if(end_music_note == NOTAS_VICT) END=2;
+			//end_music_note++;
+			//if(end_music_note == NOTAS_VICT) END=2;
 		}
 	}
+	end_music_note++;
+	if(end_music_note == NOTAS_VICT) END=2;
 }
 
 void draw_game_info(game_info gi, int noelements){
@@ -1951,6 +1963,8 @@ void make_highscores(){
 	highscore HIGHSCORES[10];
 	FILE *fp;
 
+	if(!HasDoneScores)
+		HasDoneScores = 1;
 	fp = fopen("/usr/lcom1213-t5g1/defense_of_the_future/highscores.txt", "r+");
 	for(i=0; i<10; i++){
 		fgets(HIGHSCORES[i].name, 5, fp);

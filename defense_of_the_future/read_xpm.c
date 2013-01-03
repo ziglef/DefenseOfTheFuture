@@ -10,7 +10,7 @@
 
 #define HRES 1024
 #define VRES 768
-#define SIXTYKCOLORS 1
+#define SIXTYKCOLORS 0
 
 typedef unsigned short uint16_t;
 typedef unsigned char uint8_t;

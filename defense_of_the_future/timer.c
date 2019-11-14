@@ -1,7 +1,6 @@
 #include <minix/syslib.h>
 #include <minix/drivers.h>
 #include "i8254.h"
-#include "timer.h"
 
 typedef struct{
 	int bit;

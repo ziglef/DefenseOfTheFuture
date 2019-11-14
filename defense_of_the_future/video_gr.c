@@ -118,7 +118,7 @@ int vg_fill(unsigned long color) {
 	printf("Color = 0x%X\n", color);
 #endif
 
-	int i, j, k;
+	unsigned int i, j, k;
 	char *write_address = video_mem;
 	long colour;
 
@@ -137,7 +137,7 @@ int vg_fill(unsigned long color) {
 
 int vg_set_pixel(unsigned long x, unsigned long y, unsigned long color) {
 
-	int i, j, k;
+	unsigned int k;
 	char *write_address = video_mem;
 	long colour;
 
@@ -320,7 +320,7 @@ void vg_draw_sprite(Sprite *spr){
 
 int vg_draw_rec(unsigned long xi, unsigned long yi,
 		 unsigned long xf, unsigned long yf, unsigned long color){
-	int i,j;
+	unsigned int i,j;
 
 	for(i=yi; i<yf; i++){
 		for(j=xi; j<xf; j++){

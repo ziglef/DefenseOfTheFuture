@@ -221,11 +221,11 @@ int menuloop(){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
-						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+						if((msg.m_notify.interrupts & KBC_BIT_MASK)){
 							kscancode = kbc_handler();
 							keystroke_handler();
 						}
-						if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+						if ((msg.m_notify.interrupts & TIMER_BIT_MASK)){
 							timec = timer_int_handler(timec);
 							if(timec % 5 == 0)
 								make_menu_music();
@@ -467,11 +467,11 @@ void mainloop(){
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
 						if(END == 0){
-							if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+							if((msg.m_notify.interrupts & KBC_BIT_MASK)){
 								kscancode = kbc_handler();
 								keystroke_handler();
 							}
-							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+							if ((msg.m_notify.interrupts & TIMER_BIT_MASK)){
 								timec = timer_int_handler(timec);
 
 								if(timec % 60 == 0){
@@ -492,7 +492,7 @@ void mainloop(){
 								if(timec % 6 == 0)
 									make_music();
 
-								// if(msg.NOTIFY_ARG & RTC_BIT_MASK){
+								// if(msg.m_notify.interrupts & RTC_BIT_MASK){
 								// 	rtc_handler();
 								// }
 							}
@@ -509,7 +509,7 @@ void mainloop(){
 								vg_draw_sprite(victory);
 								noVictory = 0;
 							}
-							if ((msg.NOTIFY_ARG & TIMER_BIT_MASK)){
+							if ((msg.m_notify.interrupts & TIMER_BIT_MASK)){
 								timec = timer_int_handler(timec);
 								if(timec % 5 == 0)
 									make_victory_music();
@@ -1183,7 +1183,7 @@ void options_menu(){
 
 				switch(_ENDPOINT_P(msg.m_source)){
 					case HARDWARE:
-						if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+						if((msg.m_notify.interrupts & KBC_BIT_MASK)){
 							kscancode = kbc_handler();
 							option_handler();
 						}
@@ -1342,7 +1342,7 @@ void draw_highscores(){
 
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+					if((msg.m_notify.interrupts & KBC_BIT_MASK)){
 						kscancode = kbc_handler();
 					}
 					break;
@@ -1416,7 +1416,7 @@ void draw_help(){
 
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+					if((msg.m_notify.interrupts & KBC_BIT_MASK)){
 						kscancode = kbc_handler();
 					}
 					break;
@@ -1452,7 +1452,7 @@ void draw_credits(){
 
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+					if((msg.m_notify.interrupts & KBC_BIT_MASK)){
 						kscancode = kbc_handler();
 					}
 					break;
@@ -1801,7 +1801,7 @@ void shop_menu()
 
 		switch(_ENDPOINT_P(msg.m_source)){
 			case HARDWARE:
-				if((msg.NOTIFY_ARG & KBC_BIT_MASK)){
+				if((msg.m_notify.interrupts & KBC_BIT_MASK)){
 					kscancode = kbc_handler();
 					shop_handler();
 				}

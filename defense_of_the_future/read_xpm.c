@@ -49,7 +49,7 @@ uint16_t drawRGB24toRGB565(uint8_t r, uint8_t g, uint8_t b)
 unsigned long *read_xpm(char *map[], unsigned long *cmap[], int *wd, int *ht)
 {
   int width, height, colors;
-  unsigned long col;
+  unsigned int col;
   int i, j;
   int *tmp;
   char *line;

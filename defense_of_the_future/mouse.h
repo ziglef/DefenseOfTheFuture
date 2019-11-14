@@ -2,10 +2,10 @@ typedef struct{
 	int hook_id;
 	unsigned int initialized;
 	unsigned short counter;
-	unsigned long status;
-	unsigned long data;
-	unsigned int pos;
-	unsigned char bytes[3];
+	uint32_t status;
+	uint32_t data;
+	uint32_t pos;
+	uint8_t bytes[3];
 } MouseController;
 
 void return_vars(unsigned short *counter, MouseController *mmouse, unsigned char *packet);

@@ -1,7 +1,7 @@
 typedef struct{
 	int hook_id;
-	unsigned long status;
-	unsigned long data;
+	uint32_t status;
+	uint32_t data;
 } KeyBoardController;
 
 int kbc_subscribe_exclusive(void);

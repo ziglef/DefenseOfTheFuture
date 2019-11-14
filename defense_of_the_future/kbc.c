@@ -137,4 +137,6 @@ int send_kbc_command(unsigned char cmd){
 		tickdelay(micros_to_ticks(DELAY_US)); 		// Wait the appropriate time
 		counter++;
 	}
+
+	return 0;
 }

@@ -342,6 +342,7 @@ int vg_draw_rec(unsigned long xi, unsigned long yi,
 	}
  *
  */
+	return 0;
 }
 
 int vg_exit() {

@@ -613,16 +613,20 @@ int make_music(){
 
 void keystroke_handler(){
 	if(atMenu){
-		if(kscancode == DOWNMAKE)
-			if(menuOption != 5)
+		if(kscancode == DOWNMAKE){
+			if(menuOption != 5){
 				menuOption++;
-			else
+			} else {
 				menuOption = 0;
-		if(kscancode == UPMAKE)
-			if(menuOption != 0)
+			}
+		}
+		if(kscancode == UPMAKE){
+			if(menuOption != 0){
 				menuOption--;
-			else
+			} else {
 				menuOption = 5;
+			}
+		}
 		draw_menu();
 	} else {
 		if((kscancode == WMAKE) || (kscancode == SMAKE) || (kscancode == DMAKE) || (kscancode == AMAKE)) make_player_movement();
@@ -633,7 +637,6 @@ void keystroke_handler(){
 			make_gun_selection();
 		}
 	}
-	return 0;
 }
 
 int is_in_screen(Sprite *spr){
@@ -1117,8 +1120,8 @@ int subscribe(){
 }
 
 int unsubscribe(){
-	unsigned long status;
-	unsigned long garbage;
+	uint32_t status;
+	uint32_t garbage;
 
 	do{
 		sys_inb(KBC_STAT, &status);
@@ -1146,8 +1149,8 @@ int unsubscribe(){
 }
 
 void options_menu(){
-	unsigned long status;
-	unsigned long garbage;
+	uint32_t status;
+	uint32_t garbage;
 
 	do{
 		sys_inb(KBC_STAT, &status);
@@ -1202,17 +1205,20 @@ void options_menu(){
 }
 
 void option_handler(){
-	if(kscancode == DOWNMAKE)
-		if(optionsOption == 0)
+	if(kscancode == DOWNMAKE){
+		if(optionsOption == 0){
 			optionsOption = 1;
-		else
+		}else{
 			optionsOption = 0;
-	if(kscancode == UPMAKE)
-		if(optionsOption == 0)
+		}
+	}
+	if(kscancode == UPMAKE){
+		if(optionsOption == 0){
 			optionsOption = 1;
-		else
+		}else{
 			optionsOption = 0;
-
+		}
+	}
 	if(kscancode == RIGHTMAKE){
 		switch(optionsOption){
 			case 0:

@@ -1,5 +1,5 @@
 #include <minix/syslib.h>
-#include <minix/drivers.h>
+#include <minix/driver.h>
 #include "i8254.h"
 
 typedef struct{
@@ -107,7 +107,7 @@ int timer_test_int(unsigned long time) {
 		if(is_ipc_notify(ipc_status)){
 			switch(_ENDPOINT_P(msg.m_source)){
 				case HARDWARE:
-					if((msg.NOTIFY_ARG & TIMER_BIT_MASK) && (timerInt.counter % 60 == 0)){
+					if((msg.m_notify.interrupts & TIMER_BIT_MASK) && (timerInt.counter % 60 == 0)){
 						// timer_int_handler();
 					}
 					break;

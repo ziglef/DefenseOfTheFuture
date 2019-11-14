@@ -32,7 +32,7 @@ void * vg_init(unsigned long mode) {
 	vbe_mode_info_t vmi;
 	
 	int r;
-	struct mem_range mr;
+	struct minix_mem_range mr;
 
 	reg86.ax = 0x4F02;
 	reg86.bx = 1<<14|mode;
@@ -141,7 +141,7 @@ int vg_set_pixel(unsigned long x, unsigned long y, unsigned long color) {
 	char *write_address = video_mem;
 	long colour;
 
-	if((x < 0) || (x > h_res) || (y < 0) || (y > v_res)){
+	if((x > h_res) || (y > v_res)){
 		return 1;
 	}
 
@@ -161,7 +161,7 @@ long vg_get_pixel(unsigned long x, unsigned long y) {
 
 	char *write_address = video_mem;
 
-	if((x < 0) || (x > h_res) || (y < 0) || (y > v_res)){
+	if((x > h_res) || (y > v_res)){
 		vg_draw_line(1,1,200,200,0xF4C3);
 		return 1;
 	}
@@ -199,7 +199,7 @@ int vg_draw_line(unsigned long xi, unsigned long yi,
 	int deltay = yf - yi;
 	int y, d, x;
 
-	if((xi < 0) || (xi > h_res) || (yi < 0) || (yi > v_res) || (xf < 0) || (xf > h_res) || (yf < 0) || (yf > v_res)){
+	if((xi > h_res) || (yi > v_res) || (xf > h_res) || (yf > v_res)){
 		return 1;
 	}
 

@@ -295,6 +295,7 @@ int make_menu_music(){
 		menu_music_note++;
 		if(menu_music_note == NOTAS_MENU) menu_music_note = 0;
 	}
+	return 0;
 }
 
 int start_game(){
@@ -449,6 +450,7 @@ int start_game(){
 	victory = create_sprite(victoryS, 22, 364);
 
 	mainloop();
+	return 0;
 }
 
 void mainloop(){
@@ -538,6 +540,7 @@ int make_victory_music(){
 	}
 	end_music_note++;
 	if(end_music_note == NOTAS_VICT) END=2;
+	return 0;
 }
 
 void draw_game_info(game_info gi, int noelements){
@@ -605,6 +608,7 @@ int make_music(){
 			music_enabled = 1;
 		}
 	}
+	return 0;
 }
 
 void keystroke_handler(){
@@ -629,6 +633,7 @@ void keystroke_handler(){
 			make_gun_selection();
 		}
 	}
+	return 0;
 }
 
 int is_in_screen(Sprite *spr){

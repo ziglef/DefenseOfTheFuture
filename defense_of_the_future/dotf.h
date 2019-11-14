@@ -3,7 +3,7 @@
 
 // System Libraries
 #include <minix/syslib.h>
-#include <minix/drivers.h>
+#include <minix/driver.h>
 #include <minix/sysutil.h>
 #include <machine/int86.h>
 #include <sys/mman.h>

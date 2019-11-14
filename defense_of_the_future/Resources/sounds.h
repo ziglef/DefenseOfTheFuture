@@ -43,7 +43,7 @@ unsigned long explosion1[]=
 {
 		c3,a2,g2,e2,c2
 };
-//duraçao: 0.5s
+//duraï¿½ao: 0.5s
 
 unsigned long explosion2[]=
 {

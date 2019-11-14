@@ -52,9 +52,10 @@ void disable(){
 }
 
 void rtc_read(unsigned long reg, unsigned long *byte){
+	uint32_t aux = (uint32_t)*byte;
 	disable();
 	sys_outb(RTC_ADDRESS_REG, reg);
-	sys_inb(RTC_DATA_REG, byte);
+	sys_inb(RTC_DATA_REG, aux);
 	enable();
 }
 

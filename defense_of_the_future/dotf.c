@@ -43,7 +43,7 @@ void draw_shop();
 void shop_menu();
 void shop_handler();
 void make_highscores();
-void draw_rtc();
+// void draw_rtc();
 
 int HasDoneScores = 0;
 Sprite *laser;
@@ -241,7 +241,7 @@ int menuloop(){
 	switch(menuOption){
 		case 0:
 			timer_set_square(2,no);
-			//butões menu
+			//butï¿½es menu
 			menu_music_enabled = 0;
 			music_enabled = 1;
 
@@ -476,7 +476,7 @@ void mainloop(){
 
 								if(timec % 60 == 0){
 									make_bad_movement();
-									draw_rtc();
+									//draw_rtc();
 								}
 
 								if(timec % 5 == 0){
@@ -492,9 +492,9 @@ void mainloop(){
 								if(timec % 6 == 0)
 									make_music();
 
-								if(msg.NOTIFY_ARG & RTC_BIT_MASK){
-									rtc_handler();
-								}
+								// if(msg.NOTIFY_ARG & RTC_BIT_MASK){
+								// 	rtc_handler();
+								// }
 							}
 						} else {
 							if(levelvar != 3){
@@ -1094,12 +1094,12 @@ int subscribe(){
 			return 1;
 	}
 
-	rtc_read(RTC_REGB, &REGB);
-	rtc_write(RTC_REGB, (REGB ^ RTC_UIE));
-	if(rtc_subscribe() < 0){
-		printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON RTC\n");
-		return 1;
-	}
+	// rtc_read(RTC_REGB, &REGB);
+	// rtc_write(RTC_REGB, (REGB ^ RTC_UIE));
+	// if(rtc_subscribe() < 0){
+	// 	printf("ERROR SUBSCRIBING/ENABLING INTERRUPTS ON RTC\n");
+	// 	return 1;
+	// }
 	//turn_mouse_on();
 /*
 	do{
@@ -1126,8 +1126,8 @@ int unsubscribe(){
 
 	if(timer_unsubscribe_int())
 		return 1;
-	if(rtc_unsubscribe())
-		return 1;
+	// if(rtc_unsubscribe())
+	// 	return 1;
 /*
 	if(mouse_unsubscribe())
 		return 1;
@@ -2017,36 +2017,36 @@ void make_highscores(){
 	draw_highscores();
 }
 
-void draw_rtc(){
-// 20 653
-	char aux[256];
-	int i = 0;
+// void draw_rtc(){
+// // 20 653
+// 	char aux[256];
+// 	int i = 0;
 
-	while (DATE.hours != 0){
-	aux[i] = ((char)(48+(DATE.hours % 10)));
-	DATE.hours = DATE.hours / 10;
-	i++;
-	}
+// 	while (DATE.hours != 0){
+// 	aux[i] = ((char)(48+(DATE.hours % 10)));
+// 	DATE.hours = DATE.hours / 10;
+// 	i++;
+// 	}
 
-	aux[i] = ' ';
-	i++;
+// 	aux[i] = ' ';
+// 	i++;
 
-	while (DATE.minutes != 0){
-	aux[i] = ((char)(48+(DATE.minutes % 10)));
-	DATE.minutes = DATE.minutes / 10;
-	i++;
-	}
+// 	while (DATE.minutes != 0){
+// 	aux[i] = ((char)(48+(DATE.minutes % 10)));
+// 	DATE.minutes = DATE.minutes / 10;
+// 	i++;
+// 	}
 
-	aux[i] = ' ';
-	i++;
+// 	aux[i] = ' ';
+// 	i++;
 
-	while (DATE.seconds != 0){
-	aux[i] = ((char)(48+(DATE.seconds % 10)));
-	DATE.seconds = DATE.seconds / 10;
-	i++;
-	}
+// 	while (DATE.seconds != 0){
+// 	aux[i] = ((char)(48+(DATE.seconds % 10)));
+// 	DATE.seconds = DATE.seconds / 10;
+// 	i++;
+// 	}
 
-	aux[i] = ' ';
-	i++;
-	draw_strings(aux, strlen(aux), 20, 653);
-}
+// 	aux[i] = ' ';
+// 	i++;
+// 	draw_strings(aux, strlen(aux), 20, 653);
+// }

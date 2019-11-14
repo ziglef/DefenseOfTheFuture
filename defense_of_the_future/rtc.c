@@ -207,7 +207,7 @@ void print_date(DATE_STRUCT DATE){
 			break;
 	}
 
-	printf("Today is %s, the %d%s of %s of 20%d.\nIt's %d:%d:%d.", dow, DATE.dayOfMonth, ext, month, DATE.year, DATE.hours, DATE.minutes, DATE.seconds);
+	printf("Today is %s, the %lu%s of %s of 20%lu.\nIt's %lu:%lu:%lu.", dow, DATE.dayOfMonth, ext, month, DATE.year, DATE.hours, DATE.minutes, DATE.seconds);
 }
 
 unsigned long BCD_to_DEC(unsigned long bcdByte){

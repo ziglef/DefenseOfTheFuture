@@ -28,15 +28,15 @@ void * vg_init(unsigned long mode) {
 	// -Non-Hardcoded Version-
 	// -----------------------
 
-	struct reg86u reg86;
+	reg86_t reg86;
 	vbe_mode_info_t vmi;
 	
 	int r;
 	struct mem_range mr;
 
-	reg86.u.w.ax = 0x4F02;
-	reg86.u.w.bx = 1<<14|mode;
-	reg86.u.b.intno = 0x10;
+	reg86.ax = 0x4F02;
+	reg86.bx = 1<<14|mode;
+	reg86.intno = 0x10;
 
 	if(sys_int86(&reg86) != OK) {
 		printf("set_vbe_mode: sys_int86() failed\n");
@@ -71,7 +71,7 @@ void * vg_init(unsigned long mode) {
 	// -Hardcoded Version-
 	// -------------------
 	/*
-	struct reg86u reg86;
+	reg86_t reg86;
 	vbe_mode_info_t vmi;
 
 	int r;
@@ -345,12 +345,12 @@ int vg_draw_rec(unsigned long xi, unsigned long yi,
 }
 
 int vg_exit() {
-  struct reg86u reg86;
+  reg86_t reg86;
 
-  reg86.u.b.intno = 0x10; /* BIOS video services */
+  reg86.intno = 0x10; /* BIOS video services */
 
-  reg86.u.b.ah = 0x00;    /* Set Video Mode function */
-  reg86.u.b.al = 0x03;    /* 80x25 text mode*/
+  reg86.ah = 0x00;    /* Set Video Mode function */
+  reg86.al = 0x03;    /* 80x25 text mode*/
 
   if( sys_int86(&reg86) != OK ) {
       printf("\tvg_exit(): sys_int86() failed \n");

@@ -13,18 +13,18 @@
 
 int vbe_get_mode_info(unsigned short mode, vbe_mode_info_t *vmi_p) {
   
-  struct reg86u reg86;
+  reg86_t reg86;
   mmap_t memory;
   
-  lm_init();
+  //lm_init();
   
   lm_alloc(VBE_MODE_INFO_SIZE, &memory);
   
-  reg86.u.w.ax = 0x4F01;
-  reg86.u.w.cx =  1 << 14 | mode;
-  reg86.u.w.es = PB2BASE(memory.phys);
-  reg86.u.w.di = PB2OFF(memory.phys);
-  reg86.u.b.intno = 0x10;
+  reg86.ax = 0x4F01;
+  reg86.cx =  1 << 14 | mode;
+  reg86.es = PB2BASE(memory.phys);
+  reg86.di = PB2OFF(memory.phys);
+  reg86.intno = 0x10;
   
   if(sys_int86(&reg86) != OK){
 	  printf("vbe_get_mode_info: sys_int86() failed \n");
